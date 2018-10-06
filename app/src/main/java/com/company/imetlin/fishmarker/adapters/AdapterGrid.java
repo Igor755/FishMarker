@@ -56,13 +56,18 @@ public class AdapterGrid extends BaseAdapter {
         ItemFirstActivity itemFirstActivity = this.listData.get(position);
         holder.NameWater.setText(itemFirstActivity.getName());
 
+
+
+
         int imageId = this.getMipmapResIdByName(itemFirstActivity.getPhoto());
+
+
+
         holder.PhotoWater.setImageResource(imageId);
 
         return convertView;
     }
 
-    // Find Image ID corresponding to the name of the image (in the directory mipmap).
     public int getMipmapResIdByName(String resName)  {
         String pkgName = context.getPackageName();
 
@@ -71,6 +76,8 @@ public class AdapterGrid extends BaseAdapter {
         Log.i("CustomGridView", "Res Name: "+ resName+"==> Res ID = "+ resID);
         return resID;
     }
+
+
 
     static class ViewHolder {
         ImageView PhotoWater;

@@ -1,5 +1,6 @@
 package com.company.imetlin.fishmarker;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         List<ItemFirstActivity> image_details = getListData();
 
         final GridView gridView = (GridView) findViewById(R.id.gridView);
+
+
         gridView.setAdapter(new AdapterGrid(this, image_details));
 
         // When the user clicks on the GridItem
@@ -31,26 +34,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-               // Object o = gridView.getItemAtPosition(position);
-               // ItemFirstActivity itemFirstActivity = (ItemFirstActivity) o;
-               // Toast.makeText(MainActivity.this, "Selected :"
-                   //     + " " + itemFirstActivity, Toast.LENGTH_LONG).show();
+                Object o = gridView.getItemAtPosition(position);
+                ItemFirstActivity itemFirstActivity = (ItemFirstActivity) o;
+                Toast.makeText(MainActivity.this, "Selected :"
+                        + " " + itemFirstActivity.getName(), Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getBaseContext(), WaterActivity.class);
+                intent.putExtra("fname", itemFirstActivity.getName());
+                startActivity(intent);
             }
         });
+
     }
 
     private  List<ItemFirstActivity> getListData() {
 
         List<ItemFirstActivity> list = new ArrayList<ItemFirstActivity>();
-        ItemFirstActivity vietnam = new ItemFirstActivity("Ocean", "ocean");
-        ItemFirstActivity usa = new ItemFirstActivity("Lake", "ozero");
-        ItemFirstActivity russia = new ItemFirstActivity("River", "river");
-        ItemFirstActivity australia = new ItemFirstActivity("Sea", "sea");
+        ItemFirstActivity ocean = new ItemFirstActivity("Ocean", "ocean");
+        ItemFirstActivity lake = new ItemFirstActivity("Lake", "ozero");
+        ItemFirstActivity river = new ItemFirstActivity("River", "river");
+        ItemFirstActivity sea = new ItemFirstActivity("Sea", "sea");
 
-        list.add(vietnam);
-        list.add(usa);
-        list.add(russia);
-        list.add(australia);
+        list.add(ocean);
+        list.add(lake);
+        list.add(river);
+        list.add(sea);
 
 
         return list;
