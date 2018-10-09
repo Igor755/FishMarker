@@ -49,8 +49,67 @@ public class WaterActivity extends AppCompatActivity {
         switch (txtName){
             case "Ocean":
 
+                ItemTwoActivity Quiet = new ItemTwoActivity("Quiet");
+                ItemTwoActivity Atlantic = new ItemTwoActivity("Atlantic");
+                ItemTwoActivity Indian = new ItemTwoActivity("Indian");
+                ItemTwoActivity Arctic = new ItemTwoActivity("Arctic");
+                list.add(Quiet);
+                list.add(Atlantic);
+                list.add(Indian);
+                list.add(Arctic);
+                break;
+
+            case "Sea":
                 ItemTwoActivity Black = new ItemTwoActivity("Black");
+                ItemTwoActivity Baltic = new ItemTwoActivity("Baltic");
+                ItemTwoActivity Red = new ItemTwoActivity("Red");
+                ItemTwoActivity Azov = new ItemTwoActivity("Azov");
+                ItemTwoActivity Laptev = new ItemTwoActivity("Laptev");
+                ItemTwoActivity Barentc = new ItemTwoActivity("Barentc");
+                ItemTwoActivity Japanese = new ItemTwoActivity("Japanese");
+                ItemTwoActivity South_China = new ItemTwoActivity("South_China");
                 list.add(Black);
+                list.add(Baltic);
+                list.add(Red);
+                list.add(Azov);
+                list.add(Laptev);
+                list.add(Barentc);
+                list.add(Japanese);
+                list.add(South_China);
+                break;
+
+            case "Lake":
+                ItemTwoActivity Baikal = new ItemTwoActivity("Baikal");
+                ItemTwoActivity Chelan = new ItemTwoActivity("Chelan");
+                ItemTwoActivity Victoria = new ItemTwoActivity("Victoria");
+                ItemTwoActivity Titicaca  = new ItemTwoActivity("Titicaca");
+                list.add(Baikal);
+                list.add(Chelan);
+                list.add(Victoria);
+                list.add(Titicaca);
+                break;
+
+            case "River":
+                ItemTwoActivity Dnieper = new ItemTwoActivity("Dnieper");
+                ItemTwoActivity Dniester = new ItemTwoActivity("Dniester");
+                ItemTwoActivity Southern_Bug = new ItemTwoActivity("Southern_Bug");
+                ItemTwoActivity Turunchuk  = new ItemTwoActivity("Turunchuk");
+                ItemTwoActivity Yenisei = new ItemTwoActivity("Yenisei");
+                ItemTwoActivity Lena = new ItemTwoActivity("Lena");
+                ItemTwoActivity Ob  = new ItemTwoActivity("Ob");
+                list.add(Dnieper);
+                list.add(Dniester);
+                list.add(Southern_Bug);
+                list.add(Turunchuk);
+                list.add(Yenisei);
+                list.add(Lena);
+                list.add(Ob);
+                break;
+
+
+
+            default:
+                break;
 
         }
         return list;
