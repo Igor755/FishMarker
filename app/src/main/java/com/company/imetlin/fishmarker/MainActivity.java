@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         + " " + itemFirstActivity.getName(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getBaseContext(), WaterActivity.class);
-                intent.putExtra("fname", itemFirstActivity.getName());
+                intent.putExtra("name", itemFirstActivity.getName());
                 startActivity(intent);
             }
         });

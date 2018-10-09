@@ -8,10 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.company.imetlin.fishmarker.R;
+import com.company.imetlin.fishmarker.pojo.ItemTwoActivity;
+
+import java.util.List;
 
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder>{
 
-    private String[] mDataset;
+    //private String[] mDataset;
+    private List<ItemTwoActivity> listData;
 
     // класс view holder-а с помощью которого мы получаем ссылку на каждый элемент
     // отдельного пункта списка
@@ -27,8 +31,9 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
 
 
     // Конструктор
-    public AdapterRecycler(String[] dataset) {
-        mDataset = dataset;
+    public AdapterRecycler( List<ItemTwoActivity> listData) {
+        //mDataset = dataset;
+        this.listData = listData;
     }
 
 
@@ -53,13 +58,14 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.mTextView.setText(mDataset[position]);
+        holder.mTextView.setText(listData.get(position).getName());
 
     }
 
     // Возвращает размер данных (вызывается layout manager-ом)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        //return listData.length;
+        return listData.size();
     }
 }

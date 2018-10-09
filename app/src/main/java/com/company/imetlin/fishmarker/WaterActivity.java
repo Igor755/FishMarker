@@ -6,6 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.company.imetlin.fishmarker.adapters.AdapterRecycler;
+import com.company.imetlin.fishmarker.pojo.ItemTwoActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class WaterActivity extends AppCompatActivity {
@@ -19,7 +23,8 @@ public class WaterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water);
 
-        String[] myDataset = getDataSet();
+        //String[] myDataset = getDataSet();
+        List<ItemTwoActivity> image_details = getListData();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -31,18 +36,31 @@ public class WaterActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         // создаем адаптер
-        mAdapter = new AdapterRecycler(myDataset);
+        mAdapter = new AdapterRecycler(image_details);
         mRecyclerView.setAdapter(mAdapter);
     }
 
 
-    private String[] getDataSet() {
+    private List<ItemTwoActivity> getListData(){
 
-        String[] mDataSet = new String[100];
+        String txtName = getIntent().getStringExtra("name");
+        List<ItemTwoActivity> list = new ArrayList<ItemTwoActivity>();
+
+        switch (txtName){
+            case "Ocean":
+
+                ItemTwoActivity Black = new ItemTwoActivity("Black");
+                list.add(Black);
+
+        }
+        return list;
+
+
+       /* String[] mDataSet = new String[100];
         for (int i = 0; i < 100; i++) {
             mDataSet[i] = "item" + i;
         }
-        return mDataSet;
+        return mDataSet;*/
     }
 
 }
