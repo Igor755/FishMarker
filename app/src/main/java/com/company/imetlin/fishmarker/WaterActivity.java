@@ -1,11 +1,17 @@
 package com.company.imetlin.fishmarker;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.adapters.AdapterRecycler;
+import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
 import com.company.imetlin.fishmarker.pojo.ItemTwoActivity;
 
 import java.util.ArrayList;
@@ -24,7 +30,7 @@ public class WaterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_water);
 
         //String[] myDataset = getDataSet();
-        List<ItemTwoActivity> image_details = getListData();
+        final List<ItemTwoActivity> image_details = getListData();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
@@ -34,10 +40,42 @@ public class WaterActivity extends AppCompatActivity {
 
         // используем linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+
         // создаем адаптер
-        mAdapter = new AdapterRecycler(image_details);
+        //mAdapter = new AdapterRecycler(image_details);
+        mAdapter = new AdapterRecycler(image_details, new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+              /*  int itemPosition = mRecyclerView.getChildLayoutPosition(view);
+                String item = image_details.get(itemPosition);
+                Object o = mRecyclerView.getChildLayoutPosition(view);
+                ItemTwoActivity itemTwoActivity = (ItemTwoActivity) o;
+               ItemTwoActivity itemtwoActivity = (ItemTwoActivity) p;
+                Toast.makeText(getBaseContext(), itemTwoActivity.getName(), Toast.LENGTH_LONG).show();
+*/
+
+
+
+
+                Intent intent = new Intent(WaterActivity.this,MapActivity.class);
+               // intent.putExtra(String.valueOf(view), position);
+                startActivity(intent);
+
+
+            }
+        });
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+      /*  mRecyclerView.setOnClickListener((View.OnClickListener) new AdapterRecycler(getListData(), new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+             *//*  Object o = mRecyclerView.;
+                ItemTwoActivity itemtwoActivity = (ItemTwoActivity) o;
+                Toast.makeText(WaterActivity.this, "Selected :"
+                        + " " + itemtwoActivity.getName(), Toast.LENGTH_LONG).show();*//*
+            }
+        }));*/
     }
 
 

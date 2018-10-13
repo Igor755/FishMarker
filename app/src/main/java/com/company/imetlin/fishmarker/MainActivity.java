@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = gridView.getItemAtPosition(position);
                 ItemFirstActivity itemFirstActivity = (ItemFirstActivity) o;
-                Toast.makeText(MainActivity.this, "Selected :"
-                        + " " + itemFirstActivity.getName(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, "Selected :"
+                    //    + " " + itemFirstActivity.getName(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getBaseContext(), WaterActivity.class);
                 intent.putExtra("name", itemFirstActivity.getName());
