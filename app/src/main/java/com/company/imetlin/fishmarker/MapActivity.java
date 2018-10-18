@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +17,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 
 import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
 
 
     //SupportMapFragment mapFragment;
@@ -44,24 +47,44 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
         mUiSettings = googleMap.getUiSettings();
-
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mUiSettings.setZoomControlsEnabled(true);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        googleMap.setMyLocationEnabled(true);
 
         mUiSettings.setMyLocationButtonEnabled(true);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            googleMap.setMyLocationEnabled(true);
+        } else {
+            // Show rationale and request permission.
+        }
+        setUpMap(googleMap);
+
+
+
+
     }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        return false;
+    }
+
+    private void setUpMap(GoogleMap google) {
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(-27,133))
+                .zoom(3)
+                .build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        //создаем координаты для позиции камеры с центром в городе Киев
+        //LatLng positions = new LatLng(50.452842, 30.524418);
+        //перемещаем камеру и оттдаляем ее что мы можно было увидеть город
+        //google.moveCamera(CameraUpdateFactory.newLatLngZoom(positions, 10));
+        google.animateCamera(cameraUpdate);
+        // Добавляем маркер с местоположением на Крещатике
+        // mMap.addMarker(new MarkerOptions().position(new LatLng(50.450137, 30.524180)).title("Крещатик")); }
+    }
+
 }
