@@ -9,7 +9,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
-import com.company.imetlin.fishmarker.pojo.ItemFirstActivity;
+import com.company.imetlin.fishmarker.pojo.ModelClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        List<ItemFirstActivity> image_details = getListData();
+        List<ModelClass> image_details = getListData();
 
         final GridView gridView = (GridView) findViewById(R.id.gridView);
 
@@ -35,25 +35,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = gridView.getItemAtPosition(position);
-                ItemFirstActivity itemFirstActivity = (ItemFirstActivity) o;
+                ModelClass _modelClass = (ModelClass) o;
                 //Toast.makeText(MainActivity.this, "Selected :"
-                    //    + " " + itemFirstActivity.getName(), Toast.LENGTH_LONG).show();
+                    //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getBaseContext(), WaterActivity.class);
-                intent.putExtra("name", itemFirstActivity.getName());
+                intent.putExtra("name", _modelClass.getName());
                 startActivity(intent);
             }
         });
 
     }
 
-    private  List<ItemFirstActivity> getListData() {
+    private  List<ModelClass> getListData() {
 
-        List<ItemFirstActivity> list = new ArrayList<ItemFirstActivity>();
-        ItemFirstActivity ocean = new ItemFirstActivity("Ocean", "ocean");
-        ItemFirstActivity lake = new ItemFirstActivity("Lake", "ozero");
-        ItemFirstActivity river = new ItemFirstActivity("River", "river");
-        ItemFirstActivity sea = new ItemFirstActivity("Sea", "sea");
+        List<ModelClass> list = new ArrayList<ModelClass>();
+        ModelClass ocean = new ModelClass("Ocean", "ocean");
+        ModelClass lake = new ModelClass("Lake", "ozero");
+        ModelClass river = new ModelClass("River", "river");
+        ModelClass sea = new ModelClass("Sea", "sea");
 
         list.add(ocean);
         list.add(lake);

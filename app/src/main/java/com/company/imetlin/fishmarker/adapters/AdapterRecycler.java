@@ -13,14 +13,14 @@ import com.company.imetlin.fishmarker.MapActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.WaterActivity;
 import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
-import com.company.imetlin.fishmarker.pojo.ItemTwoActivity;
+import com.company.imetlin.fishmarker.pojo.ModelClass;
 
 import java.util.List;
 
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHolder> {
 
     //private String[] mDataset;
-    private List<ItemTwoActivity> listData;
+    private List<ModelClass> listData;
     private OnItemClickListener itemClickListener;
 
     // класс view holder-а с помощью которого мы получаем ссылку на каждый элемент
@@ -37,7 +37,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
                 @Override
                 public void onClick(View v) {
                     int pos = ViewHolder.super.getAdapterPosition();
-                    //ItemTwoActivity cliced = listData.get(pos);
+                    //ModelClass cliced = listData.get(pos);
 
                     itemClickListener.onItemClick(v,pos);
                     //Toast.makeText(v.getContext(),"click" + mTextView.getText(),Toast.LENGTH_SHORT).show();
@@ -52,7 +52,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
 
 
     // Конструктор
-    public AdapterRecycler(List<ItemTwoActivity> listData,OnItemClickListener itemClickListener) {
+    public AdapterRecycler(List<ModelClass> listData,OnItemClickListener itemClickListener) {
         //mDataset = dataset;
         this.itemClickListener =itemClickListener;
         this.listData = listData;

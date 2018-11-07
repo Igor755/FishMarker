@@ -10,17 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.company.imetlin.fishmarker.R;
-import com.company.imetlin.fishmarker.pojo.ItemFirstActivity;
+import com.company.imetlin.fishmarker.pojo.ModelClass;
 
 import java.util.List;
 
 public class AdapterGrid extends BaseAdapter {
 
-    private List<ItemFirstActivity> listData;
+    private List<ModelClass> listData;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public AdapterGrid(Context aContext,  List<ItemFirstActivity> listData) {
+    public AdapterGrid(Context aContext,  List<ModelClass> listData) {
         this.context = aContext;
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
@@ -53,13 +53,13 @@ public class AdapterGrid extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ItemFirstActivity itemFirstActivity = this.listData.get(position);
-        holder.NameWater.setText(itemFirstActivity.getName());
+        ModelClass ModelClass = this.listData.get(position);
+        holder.NameWater.setText(ModelClass.getName());
 
 
 
 
-        int imageId = this.getMipmapResIdByName(itemFirstActivity.getPhoto());
+        int imageId = this.getMipmapResIdByName(ModelClass.getPhoto());
 
 
 
