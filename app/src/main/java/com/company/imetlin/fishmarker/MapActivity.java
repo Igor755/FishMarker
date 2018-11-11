@@ -1,12 +1,14 @@
 package com.company.imetlin.fishmarker;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +32,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     //SupportMapFragment mapFragment;
     //GoogleMap map;
     final String TAG = "myLogs";
-    GoogleMap googleMap;
+    GoogleMap gogleMap;
     private UiSettings mUiSettings;
 
     @Override
@@ -46,11 +48,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap gogleMap) {
 
 
-        mUiSettings = googleMap.getUiSettings();
-        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mUiSettings = gogleMap.getUiSettings();
+        gogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mUiSettings.setZoomControlsEnabled(true);
 
 
@@ -58,11 +60,33 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            googleMap.setMyLocationEnabled(true);
+            gogleMap.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
         }
-        setUpMap(googleMap);
+        setUpMap(gogleMap);
+
+
+        gogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+                builder.setTitle("232323")
+                        .setMessage(latLng.toString())
+                        .setCancelable(false)
+                        .setNegativeButton("ОК, иду на кухню",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
 
 
 
@@ -77,33 +101,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private void setUpMap(GoogleMap google) {
 
         double[] cats  = getIntent().getDoubleArrayExtra("coordinates");
-
-
-     /*   google.moveCamera(CameraUpdateFactory.zoomTo(5));
-        LatLngBounds ADELAIDE = new LatLngBounds(
-                new LatLng(40.95160008, 28.82555172), new LatLng(45.04704915, 38.11998531),10);
-        google.setLatLngBoundsForCameraTarget(ADELAIDE);
-*/
-
+        Integer myZoom = getIntent().getExtras().getInt("zoom");
 
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(cats[0], cats[1]))
-                .zoom(5)
+                .zoom(myZoom)
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         google.animateCamera(cameraUpdate);
-
-
-
-
-
-
-
-
-
-
-
 
         //создаем координаты для позиции камеры с центром в городе Киев
         //LatLng positions = new LatLng(50.452842, 30.524418);

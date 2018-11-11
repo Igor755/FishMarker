@@ -59,6 +59,7 @@ public class WaterActivity extends AppCompatActivity {
                 ModelClass m = image_details.get(position);
 
                 intent.putExtra("coordinates", m.getCoordinates());
+                intent.putExtra("zoom",m.getZoom());
                 startActivity(intent);
 
 
@@ -79,10 +80,10 @@ public class WaterActivity extends AppCompatActivity {
         switch (txtName){
             case "Ocean":
 
-                ModelClass Quiet = new ModelClass("Pacific",16.45031985,-165.30262298);
-                ModelClass Atlantic = new ModelClass("Atlantic",32.60344946, -37.84536021);
-                ModelClass Indian = new ModelClass("Indian",-22.0947353, 80.99712841);
-                ModelClass Arctic = new ModelClass("Arctic",84.3581025,47.48212893);
+                ModelClass Quiet = new ModelClass("Pacific",16.45031985,-165.30262298,4);
+                ModelClass Atlantic = new ModelClass("Atlantic",32.60344946, -37.84536021,4);
+                ModelClass Indian = new ModelClass("Indian",-22.0947353, 80.99712841,4);
+                ModelClass Arctic = new ModelClass("Arctic",84.3581025,47.48212893,4);
                 list.add(Quiet);
                 list.add(Atlantic);
                 list.add(Indian);
@@ -90,10 +91,10 @@ public class WaterActivity extends AppCompatActivity {
                 break;
 
             case "Sea":
-                ModelClass Black = new ModelClass("Black",43.28405855,34.38411636);
-                ModelClass Baltic = new ModelClass("Baltic",57.94983829,20.36551078);
-                ModelClass Red = new ModelClass("Red",26.52140003,51.90711662);
-                ModelClass Azov = new ModelClass("Azov",46.09045845,36.58556761);
+                ModelClass Black = new ModelClass("Black",43.28405855,34.38411636,7);
+                ModelClass Baltic = new ModelClass("Baltic",57.94983829,20.36551078,7);
+                ModelClass Red = new ModelClass("Red",26.52140003,51.90711662,7);
+                ModelClass Azov = new ModelClass("Azov",46.09045845,36.58556761,7);
                 list.add(Black);
                 list.add(Baltic);
                 list.add(Red);
@@ -102,19 +103,19 @@ public class WaterActivity extends AppCompatActivity {
                 break;
 
             case "Lake":
-                ModelClass Baikal = new ModelClass("Baikal",53.18212452,107.98451206);
-                ModelClass Victoria = new ModelClass("Victoria",-1.14207713, 32.9604879);
-                ModelClass Titicaca  = new ModelClass("Titicaca",-15.85597851,-69.33705471);
+                ModelClass Baikal = new ModelClass("Baikal",53.18212452,107.98451206,9);
+                ModelClass Victoria = new ModelClass("Victoria",-1.14207713, 32.9604879,9);
+                ModelClass Titicaca  = new ModelClass("Titicaca",-15.85597851,-69.33705471,8);
                 list.add(Baikal);
                 list.add(Victoria);
                 list.add(Titicaca);
                 break;
 
             case "River":
-                ModelClass Dnieper = new ModelClass("Dnieper",50.99943179, 30.51317977);
-                ModelClass Dniester = new ModelClass("Dniester",46.41115415,30.26159589);
-                ModelClass Southern_Bug = new ModelClass("Southern_Bug", 48.71731705,29.14673289);
-                ModelClass Turunchuk  = new ModelClass("Turunchuk",46.50142953, 30.04802302);
+                ModelClass Dnieper = new ModelClass("Dnieper",50.99943179, 30.51317977,10);
+                ModelClass Dniester = new ModelClass("Dniester",46.42348191674739,30.250095427036285,15);
+                ModelClass Southern_Bug = new ModelClass("Southern_Bug", 48.71731705,29.14673289,14);
+                ModelClass Turunchuk  = new ModelClass("Turunchuk",46.50142953, 30.04802302,16);
                 list.add(Dnieper);
                 list.add(Dniester);
                 list.add(Southern_Bug);
@@ -130,11 +131,7 @@ public class WaterActivity extends AppCompatActivity {
         return list;
 
 
-       /* String[] mDataSet = new String[100];
-        for (int i = 0; i < 100; i++) {
-            mDataSet[i] = "item" + i;
-        }
-        return mDataSet;*/
+
     }
 
 }

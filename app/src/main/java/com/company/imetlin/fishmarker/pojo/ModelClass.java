@@ -1,8 +1,5 @@
 package com.company.imetlin.fishmarker.pojo;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class ModelClass {
 
 
@@ -10,6 +7,7 @@ public class ModelClass {
     private String photo;
     private Double latitude;
     private Double longitude;
+    private Integer zoom;
 
     public ModelClass(String name, String photo) {
         this.name = name;
@@ -19,10 +17,20 @@ public class ModelClass {
         this.name = name;
     }
 
-    public ModelClass(String name, Double latitude, Double longitude) {
+    public Integer getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(Integer zoom) {
+        this.zoom = zoom;
+    }
+
+    public ModelClass(String name, Double latitude, Double longitude, Integer zoom) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.zoom = zoom;
+
     }
 
     public String getName() {
@@ -37,28 +45,13 @@ public class ModelClass {
         return photo;
     }
 
-    public Double getLatitude() {
-        return latitude;
-    }
     public  double[] getCoordinates(){
 
-        double[] cats = {longitude,longitude};
+        double[] cats = {latitude,longitude};
 
         return cats;
     }
 
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
 
     public void setPhoto(String photo) {
         this.photo = photo;
