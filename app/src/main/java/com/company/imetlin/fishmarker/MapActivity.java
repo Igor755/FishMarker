@@ -1,6 +1,7 @@
 package com.company.imetlin.fishmarker;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,6 +35,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     final String TAG = "myLogs";
     GoogleMap gogleMap;
     private UiSettings mUiSettings;
+    AlertDialog.Builder add_marker;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,53 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         setUpMap(gogleMap);
 
 
+        gogleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+
+
+                StringBuilder stringBuilder = new StringBuilder();
+
+                context = MapActivity.this;
+                add_marker = new AlertDialog.Builder(context);
+                add_marker.setTitle(R.string.addmarker);  // заголовок
+
+                stringBuilder.append("Coordinate will be add on base");
+                stringBuilder.append("\n");
+                stringBuilder.append(latLng.toString());
+                add_marker.setMessage(stringBuilder); // сообщение
+                add_marker.setIcon(R.drawable.fish2);
+
+
+                add_marker.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        Toast.makeText(context, "Вы сделали правильный выбор",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+                add_marker.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        Toast.makeText(context, "Возможно вы правы", Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+                add_marker.setCancelable(true);
+                add_marker.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    public void onCancel(DialogInterface dialog) {
+                        Toast.makeText(context, "Вы ничего не выбрали",
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                add_marker.show();
+            }
+
+
+
+        });
+
+/*
+
         gogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -77,7 +127,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 builder.setTitle("232323")
                         .setMessage(latLng.toString())
                         .setCancelable(false)
-                        .setNegativeButton("ОК, иду на кухню",
+                        .setNegativeButton("CANCEL",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();
@@ -88,7 +138,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
 
-
+*/
 
 
     }
@@ -100,7 +150,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private void setUpMap(GoogleMap google) {
 
-        double[] cats  = getIntent().getDoubleArrayExtra("coordinates");
+        double[] cats = getIntent().getDoubleArrayExtra("coordinates");
         Integer myZoom = getIntent().getExtras().getInt("zoom");
 
 

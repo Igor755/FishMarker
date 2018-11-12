@@ -2,4 +2,6 @@
     <string name="app_name">FishMarker</string>
     <string name="name_water">Name_Water</string>
     <string name="_75757575757">75757575757</string>
+    <string name="addmarker">Add marker on map?</string>
+    <string name="coordinate">Coordinate will be add on base</string>
 </resources>
