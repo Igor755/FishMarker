@@ -4,4 +4,27 @@
     <string name="_75757575757">75757575757</string>
     <string name="addmarker">Add marker on map?</string>
     <string name="coordinate">Coordinate will be add on base</string>
+
+
+
+
+
+    <string name="latlng">Longitude/Lotitude</string>
+    <string name="date">Date</string>
+    <string name="depth">depth</string>
+    <string name="Depth">Depth</string>
+    <string name="Number">Number of fish</string>
+    <string name="number">number_of_fish</string>
+    <string name="Note">Note</string>
+    <string name="note">note</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="longitude">longitude</string>
+    <string name="lontitude">lontitude</string>
+    <string name="selectdate">SELECT DATE</string>
+    Select Date
+
+
+
+
 </resources>

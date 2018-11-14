@@ -2,6 +2,7 @@ package com.company.imetlin.fishmarker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class WaterActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private Canvas canvas;
 
 
 
@@ -52,9 +54,20 @@ public class WaterActivity extends AppCompatActivity {
         //mAdapter = new AdapterRecycler(image_details);
 
 
+
+
+
         DividerItemDecoration divider = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-        divider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.devider));
+        divider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.separator));
         mRecyclerView.addItemDecoration(divider);
+
+
+
+        /*
+        This is standart divider
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), 1);
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
+        */
 
 
         mAdapter = new AdapterRecycler(image_details, new OnItemClickListener() {

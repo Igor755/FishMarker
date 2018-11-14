@@ -115,31 +115,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         });
 
-/*
-
-        gogleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
-                builder.setTitle("232323")
-                        .setMessage(latLng.toString())
-                        .setCancelable(false)
-                        .setNegativeButton("CANCEL",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
-
-*/
-
 
     }
 

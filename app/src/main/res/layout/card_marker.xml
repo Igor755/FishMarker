@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin">
+    <!-- tools:context=".EditorActivity"-->
+
+    <!---BLOCK 1-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/latlng" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
+
+            <EditText
+                android:id="@+id/edit_longitude"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/longitude"
+                android:inputType="textCapWords"
+                android:autofillHints="" />
+
+            <EditText
+                android:id="@+id/edit_lontitude"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/lontitude"
+                android:inputType="textCapWords"
+                android:autofillHints="" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!---BLOCK 2-->
+    <LinearLayout
+        android:id="@+id/container_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/date" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <!--
+            <Spinner
+                android:id="@+id/spinner_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:paddingRight="16dp"
+                android:spinnerMode="dropdown" />-->
+
+            <TextView
+                android:id="@+id/tvDate"
+                style="@style/CategoryStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:hint="@string/selectdate" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!---BLOCK 3-->
+    <LinearLayout
+        android:id="@+id/container_dept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/Depth" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingLeft="4dp">
+
+            <EditText
+                android:id="@+id/edit_dept"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/depth"
+                android:inputType="number"
+                android:autofillHints="" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <!---BLOCK 4-->
+
+    <LinearLayout
+        android:id="@+id/container_number_of_fish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/Number" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingLeft="4dp">
+
+            <EditText
+                android:id="@+id/edit_number_of_fish"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/number"
+                android:inputType="number"
+                android:autofillHints="" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <!---BLOCK 5-->
+    <LinearLayout
+        android:id="@+id/container_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/Note" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingLeft="4dp">
+
+            <EditText
+                android:id="@+id/edit_note"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/note"
+                android:inputType="number"
+                android:autofillHints="" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <!---BLOCK 6-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:paddingLeft="4dp">
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:text="@string/ok"></Button>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:text="@string/cancel"></Button>
+
+    </FrameLayout>
+
+
+
+
+</LinearLayout>
+
+
+
+
