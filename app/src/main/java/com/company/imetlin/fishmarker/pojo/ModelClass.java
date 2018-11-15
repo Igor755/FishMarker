@@ -56,9 +56,16 @@ public class ModelClass {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
     @Override
     public String toString() {
-        return super.toString();
+        return "ModelClass{" +
+                "name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", zoom=" + zoom +
+                '}';
     }
 }
 
