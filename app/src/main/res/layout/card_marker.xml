@@ -34,7 +34,7 @@
             <EditText
                 android:id="@+id/edit_lontitude"
                 style="@style/EditorFieldStyle"
-                android:hint="@string/lontitude"
+                android:hint="@string/latitude"
                 android:inputType="textCapWords"
                 android:autofillHints="" />
         </LinearLayout>
@@ -57,13 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="vertical">
-            <!--
-            <Spinner
-                android:id="@+id/spinner_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:paddingRight="16dp"
-                android:spinnerMode="dropdown" />-->
 
             <TextView
                 android:id="@+id/tvDate"

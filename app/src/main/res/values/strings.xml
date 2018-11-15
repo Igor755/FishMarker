@@ -9,18 +9,18 @@
 
 
 
-    <string name="latlng">Longitude/Lotitude</string>
+    <string name="latlng">Longitude/Latitude</string>
     <string name="date">Date</string>
     <string name="depth">depth</string>
     <string name="Depth">Depth</string>
-    <string name="Number">Number of fish</string>
-    <string name="number">number_of_fish</string>
+    <string name="Number">Amount of fish</string>
+    <string name="number">amount of fish</string>
     <string name="Note">Note</string>
     <string name="note">note</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="longitude">longitude</string>
-    <string name="lontitude">lontitude</string>
+    <string name="latitude">latitude</string>
     <string name="selectdate">SELECT DATE</string>
     Select Date
 

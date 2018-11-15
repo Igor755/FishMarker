@@ -92,6 +92,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     public void onClick(DialogInterface dialog, int arg1) {
                         Toast.makeText(context, "Вы сделали правильный выбор",
                                 Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getBaseContext(), CardMarkerActivity.class);
+                        startActivity(intent);
+
+
+
+
                     }
                 });
                 add_marker.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
