@@ -37,7 +37,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         CardMarkerActivity.this,
-                        android.R.style.Theme_Black_NoTitleBar_Fullscreen,
+                        android.R.style.Theme_Material_Dialog,
                         mDateSetListener,
                         year,month,day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
