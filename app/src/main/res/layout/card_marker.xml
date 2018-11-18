@@ -32,7 +32,7 @@
                 android:autofillHints="" />
 
             <EditText
-                android:id="@+id/edit_lontitude"
+                android:id="@+id/edit_latitude"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/latitude"
                 android:inputType="textCapWords"

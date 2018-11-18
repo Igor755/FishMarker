@@ -1,13 +1,16 @@
 package com.company.imetlin.fishmarker;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -17,7 +20,16 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     private static final String TAG = "CardMarkerActivity";
 
+
+
+    private EditText longitute;
+    private EditText latitude;
     private TextView mDisplayDate;
+    private EditText depth;
+    private EditText amountoffish;
+    private EditText note;
+    private Button ok,cancel;
+
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
 
@@ -25,7 +37,15 @@ public class CardMarkerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_marker);
+        longitute = (EditText) findViewById(R.id.edit_longitude);
+        latitude = (EditText) findViewById(R.id.edit_latitude);
         mDisplayDate = (TextView) findViewById(R.id.tvDate);
+        depth = (EditText) findViewById(R.id.edit_dept);
+        amountoffish = (EditText) findViewById(R.id.edit_number_of_fish);
+        note = (EditText) findViewById(R.id.edit_note);
+        ok = (Button) findViewById(R.id.btnOk);
+        cancel = (Button) findViewById(R.id.btnCancel);
+
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +75,15 @@ public class CardMarkerActivity extends AppCompatActivity {
                 mDisplayDate.setText(date);
             }
         };
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
     }
 }
 
