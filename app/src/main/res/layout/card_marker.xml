@@ -148,7 +148,7 @@
                 android:id="@+id/edit_note"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/note"
-                android:inputType="number"
+                android:inputType="textCapWords"
                 android:autofillHints="" />
 
         </RelativeLayout>

@@ -6,6 +6,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
+
+
+    private SQLiteDatabase mDB;
+
     public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

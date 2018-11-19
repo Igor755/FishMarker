@@ -1,6 +1,7 @@
 package com.company.imetlin.fishmarker;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -21,14 +23,15 @@ public class CardMarkerActivity extends AppCompatActivity {
     private static final String TAG = "CardMarkerActivity";
 
 
-
     private EditText longitute;
     private EditText latitude;
     private TextView mDisplayDate;
     private EditText depth;
     private EditText amountoffish;
     private EditText note;
-    private Button ok,cancel;
+    private Button ok, cancel;
+
+    private Context context = CardMarkerActivity.this;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
@@ -59,7 +62,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         CardMarkerActivity.this,
                         android.R.style.Theme_Material_Dialog,
                         mDateSetListener,
-                        year,month,day);
+                        year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -75,6 +78,43 @@ public class CardMarkerActivity extends AppCompatActivity {
                 mDisplayDate.setText(date);
             }
         };
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (longitute.getText().toString().equals("") ||
+                        latitude.getText().toString().equals("") ||
+                        mDisplayDate.getText().toString().equals("") ||
+                        depth.getText().toString().equals("") ||
+                        amountoffish.getText().toString().equals("") ||
+                        note.getText().toString().equals("")) {
+                    Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_LONG).show();
+
+                } else {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   //если есть текст, то здесь другой код
+
+
+                    Toast.makeText(context, "All fields are filled, SELEBRATION", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
 
         cancel.setOnClickListener(new View.OnClickListener() {
 
