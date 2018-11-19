@@ -48,6 +48,8 @@ public class CardMarkerActivity extends AppCompatActivity {
         note = (EditText) findViewById(R.id.edit_note);
         ok = (Button) findViewById(R.id.btnOk);
         cancel = (Button) findViewById(R.id.btnCancel);
+        longitute.setEnabled(false);
+        latitude.setEnabled(false);
 
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +81,15 @@ public class CardMarkerActivity extends AppCompatActivity {
             }
         };
 
+        String coordinate = getIntent().getStringExtra("coord");
+        String newcoord = coordinate.replace("lat/lng: (","").replace(")","");
+        String[] parts = newcoord.split(",");
+        String lon = parts[0];
+        String lat = parts[1];
+
+        longitute.setText(lon);
+        latitude.setText(lat);
+
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +103,9 @@ public class CardMarkerActivity extends AppCompatActivity {
                     Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_LONG).show();
 
                 } else {
+
+
+
 
 
 

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -72,7 +73,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         gogleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
-            public void onMapLongClick(LatLng latLng) {
+            public void onMapLongClick(final LatLng latLng) {
 
 
                 StringBuilder stringBuilder = new StringBuilder();
@@ -90,11 +91,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 add_marker.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg1) {
+
+
+
+
+
+
+
+
                         Toast.makeText(context, "Вы сделали правильный выбор",
                                 Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getBaseContext(), CardMarkerActivity.class);
+
+
+                        Intent intent = new Intent(MapActivity.this, CardMarkerActivity.class);
+                        intent.putExtra("coord", latLng.toString());
                         startActivity(intent);
 
+
+
+
+
+
+                       /* Intent intent = new Intent(getBaseContext(), CardMarkerActivity.class);
+                        startActivity(intent);
+*/
 
 
 
