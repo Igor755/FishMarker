@@ -60,9 +60,7 @@ public class CardMarkerActivity extends AppCompatActivity {
         etlatitude.setEnabled(false);
 
 
-        final SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        final ContentValues contentValues = new ContentValues();
 
         dbHelper = new SQLiteHelper(this);
 
@@ -74,6 +72,10 @@ public class CardMarkerActivity extends AppCompatActivity {
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
+
+
+
+
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         CardMarkerActivity.this,
@@ -109,6 +111,11 @@ public class CardMarkerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                ContentValues contentValues = new ContentValues();
+
                 if (etlongitute.getText().toString().equals("") ||
                         etlatitude.getText().toString().equals("") ||
                         etmDisplayDate.getText().toString().equals("") ||
@@ -140,11 +147,12 @@ public class CardMarkerActivity extends AppCompatActivity {
                    //если есть текст, то здесь другой код
 
 
-                    Toast.makeText(context, "All fields are filled, SELEBRATION", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "ADD to BASE, SELEBRATION", Toast.LENGTH_LONG).show();
 
 
 
                 }
+                dbHelper.close();
 
             }
         });
