@@ -1,8 +1,10 @@
 package com.company.imetlin.fishmarker;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.database.SQLiteHelper;
+
 import java.util.Calendar;
 
 public class CardMarkerActivity extends AppCompatActivity {
@@ -23,36 +27,47 @@ public class CardMarkerActivity extends AppCompatActivity {
     private static final String TAG = "CardMarkerActivity";
 
 
-    private EditText longitute;
-    private EditText latitude;
-    private TextView mDisplayDate;
-    private EditText depth;
-    private EditText amountoffish;
-    private EditText note;
+    private EditText etlongitute;
+    private EditText etlatitude;
+    private TextView etmDisplayDate;
+    private EditText etdepth;
+    private EditText etamountoffish;
+    private EditText etnote;
     private Button ok, cancel;
 
     private Context context = CardMarkerActivity.this;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+    private SQLiteHelper dbHelper;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_marker);
-        longitute = (EditText) findViewById(R.id.edit_longitude);
-        latitude = (EditText) findViewById(R.id.edit_latitude);
-        mDisplayDate = (TextView) findViewById(R.id.tvDate);
-        depth = (EditText) findViewById(R.id.edit_dept);
-        amountoffish = (EditText) findViewById(R.id.edit_number_of_fish);
-        note = (EditText) findViewById(R.id.edit_note);
+        etlongitute = (EditText) findViewById(R.id.edit_longitude);
+        etlatitude = (EditText) findViewById(R.id.edit_latitude);
+        etmDisplayDate = (TextView) findViewById(R.id.tvDate);
+        etdepth = (EditText) findViewById(R.id.edit_dept);
+        etamountoffish = (EditText) findViewById(R.id.edit_number_of_fish);
+        etnote = (EditText) findViewById(R.id.edit_note);
         ok = (Button) findViewById(R.id.btnOk);
         cancel = (Button) findViewById(R.id.btnCancel);
-        longitute.setEnabled(false);
-        latitude.setEnabled(false);
+        etlongitute.setEnabled(false);
+        etlatitude.setEnabled(false);
 
 
-        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+        final SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        final ContentValues contentValues = new ContentValues();
+
+        dbHelper = new SQLiteHelper(this);
+
+
+        etmDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
@@ -77,7 +92,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                 Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
                 String date = month + "/" + day + "/" + year;
-                mDisplayDate.setText(date);
+                etmDisplayDate.setText(date);
             }
         };
 
@@ -87,36 +102,37 @@ public class CardMarkerActivity extends AppCompatActivity {
         String lon = parts[0];
         String lat = parts[1];
 
-        longitute.setText(lon);
-        latitude.setText(lat);
+        etlongitute.setText(lon);
+        etlatitude.setText(lat);
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (longitute.getText().toString().equals("") ||
-                        latitude.getText().toString().equals("") ||
-                        mDisplayDate.getText().toString().equals("") ||
-                        depth.getText().toString().equals("") ||
-                        amountoffish.getText().toString().equals("") ||
-                        note.getText().toString().equals("")) {
+                if (etlongitute.getText().toString().equals("") ||
+                        etlatitude.getText().toString().equals("") ||
+                        etmDisplayDate.getText().toString().equals("") ||
+                        etdepth.getText().toString().equals("") ||
+                        etamountoffish.getText().toString().equals("") ||
+                        etnote.getText().toString().equals("")) {
                     Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_LONG).show();
 
                 } else {
+                    String longitude = etlongitute.getText().toString();
+                    String latitude = etlatitude.getText().toString();
+                    String displayDate = etmDisplayDate.getText().toString();
+                    String depth = etdepth.getText().toString();
+                    String amountoffish = etamountoffish.getText().toString();
+                    String note = etnote.getText().toString();
 
+                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
+                    contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
+                    contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
+                    contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
+                    contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
+                    contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
 
-
-
-
-
-
-
-
-
-
-
-
-
+                    database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
 
 
 
@@ -125,6 +141,9 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
                     Toast.makeText(context, "All fields are filled, SELEBRATION", Toast.LENGTH_LONG).show();
+
+
+
                 }
 
             }
