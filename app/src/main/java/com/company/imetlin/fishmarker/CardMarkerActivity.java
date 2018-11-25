@@ -142,12 +142,12 @@ public class CardMarkerActivity extends AppCompatActivity {
                     database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
 
 
-
-
-                   //если есть текст, то здесь другой код
-
-
                     Toast.makeText(context, "ADD to BASE, SELEBRATION", Toast.LENGTH_LONG).show();
+
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("result",displayDate);
+                    setResult(MapActivity.RESULT_OK,returnIntent);
+                    finish();
 
 
 
@@ -161,6 +161,8 @@ public class CardMarkerActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                setResult(MapActivity.RESULT_CANCELED, returnIntent);
                 finish();
 
             }

@@ -32,7 +32,12 @@ public class ModelClass {
         this.zoom = zoom;
 
     }
+    public ModelClass(Double latitude, Double longitude) {
 
+        this.latitude = latitude;
+        this.longitude = longitude;
+
+    }
     public String getName() {
         return name;
     }

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
@@ -34,9 +36,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     //SupportMapFragment mapFragment;
     //GoogleMap map;
     final String TAG = "myLogs";
-    GoogleMap gogleMap;
+    public GoogleMap googlemap;
     private UiSettings mUiSettings;
     AlertDialog.Builder add_marker;
+    private ModelClass modelClass;
     Context context;
 
     @Override
@@ -52,11 +55,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     @Override
-    public void onMapReady(GoogleMap gogleMap) {
+    public void onMapReady(GoogleMap google) {
 
-
-        mUiSettings = gogleMap.getUiSettings();
-        gogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        this.googlemap = google;
+        mUiSettings = google.getUiSettings();
+        google.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mUiSettings.setZoomControlsEnabled(true);
 
 
@@ -64,14 +67,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            gogleMap.setMyLocationEnabled(true);
+            google.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
         }
-        setUpMap(gogleMap);
+        setUpMap(google);
 
 
-        gogleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+        google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng latLng) {
 
@@ -79,6 +82,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 StringBuilder stringBuilder = new StringBuilder();
 
                 context = MapActivity.this;
+                ((MapActivity) context).modelClass = new ModelClass(latLng.latitude, latLng.longitude);
                 add_marker = new AlertDialog.Builder(context);
                 add_marker.setTitle(R.string.addmarker);  // заголовок
 
@@ -93,28 +97,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     public void onClick(DialogInterface dialog, int arg1) {
 
 
-
-
-
-
-
-
                         Toast.makeText(context, "Вы сделали правильный выбор",
                                 Toast.LENGTH_LONG).show();
 
 
                         Intent intent = new Intent(MapActivity.this, CardMarkerActivity.class);
                         intent.putExtra("coord", latLng.toString());
-                        startActivity(intent);
+                        startActivityForResult(intent, 1);
 
-
-
-
-
-
-                       /* Intent intent = new Intent(getBaseContext(), CardMarkerActivity.class);
-                        startActivity(intent);
-*/
 
 
 
@@ -138,7 +128,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
 
 
-
         });
 
 
@@ -151,6 +140,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private void setUpMap(GoogleMap google) {
 
+        this.googlemap = google;
         double[] cats = getIntent().getDoubleArrayExtra("coordinates");
         Integer myZoom = getIntent().getExtras().getInt("zoom");
 
@@ -162,12 +152,32 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         google.animateCamera(cameraUpdate);
 
-        //создаем координаты для позиции камеры с центром в городе Киев
-        //LatLng positions = new LatLng(50.452842, 30.524418);
-        //перемещаем камеру и оттдаляем ее что мы можно было увидеть город
-        //google.moveCamera(CameraUpdateFactory.newLatLngZoom(positions, 10));
+
         //Добавляем маркер с местоположением на Крещатике
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(50.450137, 30.524180)).title("Крещатик")); }
+       // google.addMarker(new MarkerOptions().position(new LatLng(cats[0], cats[1])).title("Крещатик"));
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+
+        if (requestCode == 1) {
+            if (resultCode == MapActivity.RESULT_OK) {
+                String result = data.getStringExtra("result");
+
+                googlemap.addMarker(new MarkerOptions()
+                .position(new LatLng(modelClass.getCoordinates()[0],modelClass.getCoordinates()[1]))
+                .title(result));
+
+            }
+            if (resultCode == MapActivity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+
+
+        }
+    }
 }
