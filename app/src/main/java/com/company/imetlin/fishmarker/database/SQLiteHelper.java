@@ -48,7 +48,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
     public SQLiteHelper(Context context){
-        super(context, DB_NAME, null, Const.DB_VERSION);
+        super(context, DB_NAME, null, DB_VERSION);
 
     }
     public SQLiteHelper(Context context, String name,  int version) {

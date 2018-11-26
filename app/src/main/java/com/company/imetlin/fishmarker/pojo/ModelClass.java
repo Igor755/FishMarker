@@ -9,6 +9,16 @@ public class ModelClass {
     private Double longitude;
     private Integer zoom;
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private String date;
+
     public ModelClass(String name, String photo) {
         this.name = name;
         this.photo = photo;
@@ -38,6 +48,14 @@ public class ModelClass {
         this.longitude = longitude;
 
     }
+    public ModelClass(String date, Double latitude, Double longitude) {
+
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.date = date;
+
+    }
+
     public String getName() {
         return name;
     }
