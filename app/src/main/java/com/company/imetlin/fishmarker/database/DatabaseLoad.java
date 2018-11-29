@@ -9,6 +9,9 @@ import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.pojo.ModelClass;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ public class DatabaseLoad  {
     private SQLiteHelper sqLiteHelper;
     private final Context context;
     private ModelClass modelClass;
-    //private List<ModelClass> markerlist;
+    public GoogleMap googlemap;
 
 
 
@@ -29,7 +32,7 @@ public class DatabaseLoad  {
 
 
 
-    public void LoaderData(){
+    public void LoaderData(GoogleMap googlemap){
 
         List<ModelClass> markerlist = new ArrayList<ModelClass>();
 
@@ -50,6 +53,12 @@ public class DatabaseLoad  {
                 Log.d("mlog"," long = " + cursor.getDouble((int) longitudeIndex) +
                         " lat = " + cursor.getDouble((int) latitudeIndex) +
                         " date = " + cursor.getString(Integer.parseInt(dateIndex)));
+
+
+
+                googlemap.addMarker(new MarkerOptions()
+                        .position(new LatLng(cursor.getDouble((int) longitudeIndex),cursor.getDouble((int) latitudeIndex)))
+                        .title(cursor.getString(Integer.parseInt(dateIndex))));
 
             }while (cursor.moveToNext());
         }else{

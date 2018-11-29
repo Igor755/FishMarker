@@ -48,8 +48,7 @@ public class ModelClass {
         this.longitude = longitude;
 
     }
-    public ModelClass(String date, Double latitude, Double longitude) {
-
+    public ModelClass( Double latitude, Double longitude,String date) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.date = date;

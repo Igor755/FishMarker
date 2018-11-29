@@ -54,8 +54,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mapFragment.getMapAsync(this);
 
         context = MapActivity.this;
-        this.databaseLoad = new DatabaseLoad(context);
-        databaseLoad.LoaderData();
+
 
 
 
@@ -158,6 +157,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         google.animateCamera(cameraUpdate);
+
+
+        this.databaseLoad = new DatabaseLoad(context);
+        databaseLoad.LoaderData(google);
 
 
 
