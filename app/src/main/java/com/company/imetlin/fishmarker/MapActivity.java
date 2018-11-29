@@ -25,9 +25,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 
 import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
@@ -56,8 +59,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         context = MapActivity.this;
 
 
-
-
     }
 
     @Override
@@ -79,6 +80,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             // Show rationale and request permission.
         }
         setUpMap(google);
+        google.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+                Toast.makeText(context, "ДЛИННЫЙ КЛИК МАРКЕР",
+                        Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+
+            }
+        });
 
 
         google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -110,8 +130,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                         Intent intent = new Intent(MapActivity.this, CardMarkerActivity.class);
                         intent.putExtra("coord", latLng.toString());
                         startActivityForResult(intent, 1);
-
-
 
 
                     }
@@ -163,11 +181,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         databaseLoad.LoaderData(google);
 
 
-
-
-
         //Добавляем маркер с местоположением на Крещатике
-       // google.addMarker(new MarkerOptions().position(new LatLng(cats[0], cats[1])).title("Крещатик"));
+        // google.addMarker(new MarkerOptions().position(new LatLng(cats[0], cats[1])).title("Крещатик"));
     }
 
 
@@ -176,14 +191,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onActivityResult(requestCode, resultCode, data);
 
 
-
         if (requestCode == 1) {
             if (resultCode == MapActivity.RESULT_OK) {
                 String result = data.getStringExtra("result");
 
                 googlemap.addMarker(new MarkerOptions()
-                .position(new LatLng(modelClass.getCoordinates()[0],modelClass.getCoordinates()[1]))
-                .title(result));
+                        .position(new LatLng(modelClass.getCoordinates()[0], modelClass.getCoordinates()[1]))
+                        .title(result)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico)));
 
             }
             if (resultCode == MapActivity.RESULT_CANCELED) {

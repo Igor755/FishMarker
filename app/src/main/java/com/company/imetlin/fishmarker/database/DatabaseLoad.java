@@ -8,15 +8,18 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseLoad  {
+public class DatabaseLoad {
 
     private SQLiteHelper sqLiteHelper;
     private final Context context;
@@ -24,15 +27,12 @@ public class DatabaseLoad  {
     public GoogleMap googlemap;
 
 
-
-    public DatabaseLoad(Context context){
+    public DatabaseLoad(Context context) {
         this.context = context;
     }
 
 
-
-
-    public void LoaderData(GoogleMap googlemap){
+    public void LoaderData(GoogleMap googlemap) {
 
         List<ModelClass> markerlist = new ArrayList<ModelClass>();
 
@@ -42,26 +42,28 @@ public class DatabaseLoad  {
         SQLiteDatabase database = sqLiteHelper.getWritableDatabase();
 
 
-        Cursor cursor = database.query(SQLiteHelper.DB_TABLE_NAME,null,null,null,null,null,null);
-        if (cursor.moveToFirst()){
+        Cursor cursor = database.query(SQLiteHelper.DB_TABLE_NAME, null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
 
             double longitudeIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_LONGITUDE);
             double latitudeIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_LATITUDE);
             String dateIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DATE));
 
             do {
-                Log.d("mlog"," long = " + cursor.getDouble((int) longitudeIndex) +
+                Log.d("mlog", " long = " + cursor.getDouble((int) longitudeIndex) +
                         " lat = " + cursor.getDouble((int) latitudeIndex) +
                         " date = " + cursor.getString(Integer.parseInt(dateIndex)));
 
 
-
                 googlemap.addMarker(new MarkerOptions()
-                        .position(new LatLng(cursor.getDouble((int) longitudeIndex),cursor.getDouble((int) latitudeIndex)))
-                        .title(cursor.getString(Integer.parseInt(dateIndex))));
+                        .position(new LatLng(cursor.getDouble((int) longitudeIndex), cursor.getDouble((int) latitudeIndex)))
+                        .title(cursor.getString(Integer.parseInt(dateIndex)))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico)));
 
-            }while (cursor.moveToNext());
-        }else{
+
+
+            } while (cursor.moveToNext());
+        } else {
             Toast.makeText(context, "Base EMPTY", Toast.LENGTH_LONG).show();
         }
 
