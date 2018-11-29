@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -41,6 +42,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     AlertDialog.Builder add_marker;
     private ModelClass modelClass;
     Context context;
+    public DatabaseLoad databaseLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +53,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        context = MapActivity.this;
+        this.databaseLoad = new DatabaseLoad(context);
+        databaseLoad.LoaderData();
+
+
 
     }
 
     @Override
     public void onMapReady(GoogleMap google) {
+
 
         this.googlemap = google;
         mUiSettings = google.getUiSettings();
@@ -81,7 +89,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                 StringBuilder stringBuilder = new StringBuilder();
 
-                context = MapActivity.this;
                 ((MapActivity) context).modelClass = new ModelClass(latLng.latitude, latLng.longitude);
                 add_marker = new AlertDialog.Builder(context);
                 add_marker.setTitle(R.string.addmarker);  // заголовок
@@ -151,6 +158,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         google.animateCamera(cameraUpdate);
+
+
+
 
 
         //Добавляем маркер с местоположением на Крещатике

@@ -1,49 +1,60 @@
 package com.company.imetlin.fishmarker.database;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 
-public class DatabaseLoad {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DatabaseLoad  {
 
     private SQLiteHelper sqLiteHelper;
-    private Context context;
+    private final Context context;
     private ModelClass modelClass;
-
-
-    SQLiteDatabase database = sqLiteHelper.getWritableDatabase();
+    //private List<ModelClass> markerlist;
 
 
 
-    public DatabaseLoad(SQLiteDatabase database) {
-        this.database = database;
+    public DatabaseLoad(Context context){
+        this.context = context;
     }
+
+
+
+
     public void LoaderData(){
 
+        List<ModelClass> markerlist = new ArrayList<ModelClass>();
+
+
+        sqLiteHelper = new SQLiteHelper(context);
+
+        SQLiteDatabase database = sqLiteHelper.getWritableDatabase();
 
 
         Cursor cursor = database.query(SQLiteHelper.DB_TABLE_NAME,null,null,null,null,null,null);
         if (cursor.moveToFirst()){
-          //  int idIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_ID);
-            int longitudeIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_LONGITUDE);
-            int latitudeIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_LATITUDE);
-            int dateIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_DATE);
-   /*         int depthIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_DEPTH);
-            int amountIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_AMOUNT);
-            int noteIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_NOTE);*/
 
+            double longitudeIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_LONGITUDE);
+            double latitudeIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_LATITUDE);
+            String dateIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DATE));
 
             do {
-                //cursor.getInt()
+                Log.d("mlog"," long = " + cursor.getDouble((int) longitudeIndex) +
+                        " lat = " + cursor.getDouble((int) latitudeIndex) +
+                        " date = " + cursor.getString(Integer.parseInt(dateIndex)));
 
             }while (cursor.moveToNext());
         }else{
             Toast.makeText(context, "Base EMPTY", Toast.LENGTH_LONG).show();
         }
-
 
 
     }
