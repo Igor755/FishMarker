@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
+import com.company.imetlin.fishmarker.myinterfaces.LinkMarkerLongClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -32,6 +33,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
@@ -80,25 +85,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             // Show rationale and request permission.
         }
         setUpMap(google);
-        google.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {
 
-                Toast.makeText(context, "ДЛИННЫЙ КЛИК МАРКЕР",
-                        Toast.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onMarkerDrag(Marker marker) {
-
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-
-            }
-        });
 
 
         google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -190,15 +177,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        List<Marker> markers2 = new ArrayList<Marker>();
+
 
         if (requestCode == 1) {
             if (resultCode == MapActivity.RESULT_OK) {
                 String result = data.getStringExtra("result");
 
-                googlemap.addMarker(new MarkerOptions()
-                        .position(new LatLng(modelClass.getCoordinates()[0], modelClass.getCoordinates()[1]))
-                        .title(result)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico)));
+
+                databaseLoad.CreateMarker(modelClass.getCoordinates()[0],modelClass.getCoordinates()[1],result);
+
 
             }
             if (resultCode == MapActivity.RESULT_CANCELED) {
@@ -208,4 +196,5 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         }
     }
+
 }
