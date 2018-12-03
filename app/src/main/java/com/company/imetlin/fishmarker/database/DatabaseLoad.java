@@ -1,7 +1,10 @@
 package com.company.imetlin.fishmarker.database;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -28,6 +31,7 @@ public class DatabaseLoad {
     private ModelClass modelClass;
     public GoogleMap googlemap;
     private List<Marker> markers;
+    private Cursor cursor;
 
     public DatabaseLoad(Context context) {
         this.context = context;
@@ -36,11 +40,10 @@ public class DatabaseLoad {
 
     public void LoaderData(GoogleMap _googlemap) {
 
-       // List<ModelClass> markerlist = new ArrayList<ModelClass>();
+        // List<ModelClass> markerlist = new ArrayList<ModelClass>();
         this.googlemap = _googlemap;
 
         this.markers = new ArrayList<Marker>();
-
 
 
         sqLiteHelper = new SQLiteHelper(context);
@@ -67,12 +70,10 @@ public class DatabaseLoad {
                 String title = cursor.getString(Integer.parseInt(dateIndex));
 
 
-                CreateMarker(lon,lat,title);
+                CreateMarker(lon, lat, title);
 
 
-
-               // Marker marker = DatabaseLoad.createMarker()
-
+                // Marker marker = DatabaseLoad.createMarker()
 
 
             } while (cursor.moveToNext());
@@ -82,7 +83,8 @@ public class DatabaseLoad {
 
 
     }
-    public void CreateMarker (double a,double b, String c){
+
+    public void CreateMarker(double a, double b, String c) {
 
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
@@ -97,15 +99,30 @@ public class DatabaseLoad {
             @Override
             public void onLongClickListener(Marker marker) {
 
-                Toast.makeText(context, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
-                        Toast.LENGTH_LONG).show();
+              //  SQLiteDatabase database = sqLiteHelper.getWritableDatabase();
+//                double longitudeIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_LONGITUDE);
+               // Cursor cursor = database.query(SQLiteHelper.DB_TABLE_NAME, null, null, null, null, null, null);
+
+
+                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
+                alertDialog.setTitle("Сomplete marker information");
+                alertDialog.setMessage("Double.toString(longitudeIndex)");
+
+                alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finish();
+                    }
+                });
+                alertDialog.show();
+
 
             }
         });
 
 
     }
-
 
 
 }
