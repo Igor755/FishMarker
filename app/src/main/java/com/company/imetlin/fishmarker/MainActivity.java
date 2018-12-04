@@ -1,6 +1,7 @@
 package com.company.imetlin.fishmarker;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,17 +10,30 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
+import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class MainActivity extends AppCompatActivity {
+
+    SQLiteHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+/*
+
+      //DROP BASE
+      dbHelper = new SQLiteHelper(this);
+      SQLiteDatabase database = dbHelper.getWritableDatabase();
+      database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
+*/
+
 
 
         List<ModelClass> image_details = getListData();
@@ -62,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         return list;
+
     }
 
 }

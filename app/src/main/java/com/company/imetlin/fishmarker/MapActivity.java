@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
+import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.myinterfaces.LinkMarkerLongClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.android.gms.maps.GoogleMap;
@@ -151,6 +153,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private void setUpMap(GoogleMap google) {
 
+
+
+
         this.googlemap = google;
         double[] cats = getIntent().getDoubleArrayExtra("coordinates");
         Integer myZoom = getIntent().getExtras().getInt("zoom");
@@ -164,7 +169,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         google.animateCamera(cameraUpdate);
 
 
-        this.databaseLoad = new DatabaseLoad(context);
+        this.databaseLoad = DatabaseLoad.getInstance(context);
         databaseLoad.LoaderData(google);
 
 
@@ -184,9 +189,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             if (resultCode == MapActivity.RESULT_OK) {
                 String result = data.getStringExtra("result");
 
+                String result2 = data.getStringExtra("id");
+                int res = Integer.parseInt(result2);
 
-                databaseLoad.CreateMarker(modelClass.getCoordinates()[0],modelClass.getCoordinates()[1],result);
-
+               databaseLoad.CreateMarker(res,modelClass.getCoordinates()[0],modelClass.getCoordinates()[1],result);
 
             }
             if (resultCode == MapActivity.RESULT_CANCELED) {

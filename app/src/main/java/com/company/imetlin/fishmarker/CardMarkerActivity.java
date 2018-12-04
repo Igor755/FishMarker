@@ -4,9 +4,11 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +19,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
+import com.company.imetlin.fishmarker.pojo.ModelClass;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
 
 public class CardMarkerActivity extends AppCompatActivity {
 
@@ -41,6 +48,10 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     private SQLiteHelper dbHelper;
 
+    private ArrayList<ModelClass> id_markers;
+    public DatabaseLoad databaseLoad;
+
+
 
 
 
@@ -58,6 +69,15 @@ public class CardMarkerActivity extends AppCompatActivity {
         cancel = (Button) findViewById(R.id.btnCancel);
         etlongitute.setEnabled(false);
         etlatitude.setEnabled(false);
+
+
+
+        this.databaseLoad = DatabaseLoad.getInstance(context);
+
+
+
+
+
 
 
 
@@ -101,8 +121,8 @@ public class CardMarkerActivity extends AppCompatActivity {
         String coordinate = getIntent().getStringExtra("coord");
         String newcoord = coordinate.replace("lat/lng: (","").replace(")","");
         String[] parts = newcoord.split(",");
-        String lon = parts[0];
-        String lat = parts[1];
+        String lat = parts[0];
+        String lon = parts[1];
 
         etlongitute.setText(lon);
         etlatitude.setText(lat);
@@ -132,6 +152,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                     String amountoffish = etamountoffish.getText().toString();
                     String note = etnote.getText().toString();
 
+
                     contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
                     contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
                     contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
@@ -144,9 +165,30 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     Toast.makeText(context, "ADD to BASE, SELEBRATION", Toast.LENGTH_LONG).show();
 
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result",displayDate);
-                    setResult(MapActivity.RESULT_OK,returnIntent);
+
+
+                    ModelClass modelClass = new ModelClass( databaseLoad.last_id + 1  ,
+                            Double.valueOf(longitude),
+                            Double.valueOf(latitude),
+                            displayDate,
+                            Double.valueOf(depth),
+                            Integer.parseInt(amountoffish),
+                            note);
+
+
+                    databaseLoad.alldatamarkers.add(modelClass);
+
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("result",displayDate);
+                    bundle.putString("id", String.valueOf(modelClass.getId()));
+
+
+                    Intent intent = new Intent();
+                    intent.putExtras(bundle);
+                    //returnIntent.putExtra("id",modelClass.getId());
+
+                    setResult(MapActivity.RESULT_OK,intent);
                     finish();
 
 
