@@ -76,6 +76,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mUiSettings = google.getUiSettings();
         google.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mUiSettings.setZoomControlsEnabled(true);
+        mUiSettings.setMapToolbarEnabled(false);
+
 
 
         mUiSettings.setMyLocationButtonEnabled(true);
@@ -173,8 +175,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         databaseLoad.LoaderData(google);
 
 
-        //Добавляем маркер с местоположением на Крещатике
-        // google.addMarker(new MarkerOptions().position(new LatLng(cats[0], cats[1])).title("Крещатик"));
+
     }
 
 
@@ -182,7 +183,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        List<Marker> markers2 = new ArrayList<Marker>();
+
 
 
         if (requestCode == 1) {

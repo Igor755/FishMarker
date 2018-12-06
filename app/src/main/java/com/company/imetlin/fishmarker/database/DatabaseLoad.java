@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.CardMarkerActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.myinterfaces.LinkMarkerLongClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
@@ -140,7 +143,7 @@ public class DatabaseLoad {
                 //DatabaseLoad load = DatabaseLoad.getInstance(null);
                 //System.out.println(load.alldatamarkers);
 
-                for (ModelClass modelClass : alldatamarkers) {
+                for (final ModelClass modelClass : alldatamarkers) {
                     if (modelClass.getId() == (int) marker.getZIndex()) {
                         // Bingo!
 
@@ -159,6 +162,40 @@ public class DatabaseLoad {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //finish();
+                            }
+                        });
+                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "UPDATE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(context, "UPDATE", Toast.LENGTH_LONG).show();
+                               //DatabaseLoad databaseLoad = new DatabaseLoad();
+                              //  this.databaseLoad = DatabaseLoad.getInstance(context);
+/*
+
+                                /////UPDATE MARKER IN BASE
+                                System.out.println(modelClass.getLongitude() + "\n" +
+                                        modelClass.getLatitude() + "\n" +
+                                        modelClass.getDate() + "\n" +
+                                        modelClass.getDepth() + "\n" +
+                                        modelClass.getAmount() + "\n" +
+                                        modelClass.getNote());
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("1", String.valueOf(modelClass.getLongitude()));
+                                bundle.putString("2", String.valueOf(modelClass.getLatitude()));
+                                bundle.putString("3", modelClass.getDate());
+                                bundle.putString("4", String.valueOf(modelClass.getDepth()));
+                                bundle.putString("5", String.valueOf(modelClass.getAmount()));
+                                bundle.putString("6", modelClass.getNote());
+
+
+                                Intent intent = new Intent(instance.context, CardMarkerActivity.class);
+                                intent.putExtras(bundle);
+*/
+
+
+                                //intent.putExtras(bundle);
+
                             }
                         });
 
