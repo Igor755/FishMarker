@@ -26,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
 
-      //DROP BASE
+
+     /* //DROP BASE
       dbHelper = new SQLiteHelper(this);
       SQLiteDatabase database = dbHelper.getWritableDatabase();
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
-*/
 
+*/
 
 
         List<ModelClass> image_details = getListData();

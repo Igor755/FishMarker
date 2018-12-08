@@ -107,7 +107,7 @@ public class DatabaseLoad {
                 Double lat = cursor.getDouble((int) latitudeIndex);
                 String title = cursor.getString(Integer.parseInt(dateIndex));
 
-                Double depth = Double.valueOf((cursor.getString(Integer.parseInt(depthIndex))));
+                Integer depth = Integer.valueOf(cursor.getString(Integer.parseInt(depthIndex)));
                 Integer amount = Integer.valueOf(cursor.getString(Integer.parseInt(amountIndex)));
                 String note = cursor.getString(Integer.parseInt(noteIndex));
 

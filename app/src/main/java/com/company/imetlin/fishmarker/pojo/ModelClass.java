@@ -13,7 +13,7 @@ public class ModelClass {
     private Double latitude;
     private Double longitude;
     private String date;
-    private Double depth;
+    private Integer depth;
     private Integer amount;
     private String note;
 
@@ -49,7 +49,7 @@ public class ModelClass {
         this.name = name;
     }
 
-    public ModelClass(Integer id, Double latitude, Double longitude, String date, Double depth, Integer amount, String note) {
+    public ModelClass(Integer id, Double latitude, Double longitude, String date, Integer depth, Integer amount, String note) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -82,11 +82,11 @@ public class ModelClass {
         this.longitude = longitude;
     }
 
-    public Double getDepth() {
+    public Integer getDepth() {
         return depth;
     }
 
-    public void setDepth(Double depth) {
+    public void setDepth(Integer depth) {
         this.depth = depth;
     }
 

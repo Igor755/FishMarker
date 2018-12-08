@@ -80,13 +80,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
 
         holder.mTextView.setText(listData.get(position).getName());
 
-        /*holder.mTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-            }
-        });*/
 
     }
 
