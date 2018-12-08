@@ -34,12 +34,13 @@ public class DatabaseLoad {
     private SQLiteHelper sqLiteHelper;
     public Context context;
 
-    public GoogleMap googlemap;
+    private GoogleMap googlemap;
     private List<Marker> markers;
     private Cursor cursor;
     public ArrayList<ModelClass> alldatamarkers;
     private AlertDialog alertDialog;
     public Integer last_id;
+    public CardMarkerActivity cardMarkerActivity;
 
 
     private static DatabaseLoad instance;
@@ -69,6 +70,9 @@ public class DatabaseLoad {
         sqLiteHelper = new SQLiteHelper(context);
 
         SQLiteDatabase database = sqLiteHelper.getWritableDatabase();
+
+
+        this.cardMarkerActivity = cardMarkerActivity;
 
 
         Cursor cursor = database.query(SQLiteHelper.DB_TABLE_NAME, null, null, null, null, null, null);
@@ -168,18 +172,13 @@ public class DatabaseLoad {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(context, "UPDATE", Toast.LENGTH_LONG).show();
-                               //DatabaseLoad databaseLoad = new DatabaseLoad();
-                              //  this.databaseLoad = DatabaseLoad.getInstance(context);
-/*
+                                //DatabaseLoad databaseLoad = new DatabaseLoad();
+                                //  this.databaseLoad = DatabaseLoad.getInstance(context);
+
 
                                 /////UPDATE MARKER IN BASE
-                                System.out.println(modelClass.getLongitude() + "\n" +
-                                        modelClass.getLatitude() + "\n" +
-                                        modelClass.getDate() + "\n" +
-                                        modelClass.getDepth() + "\n" +
-                                        modelClass.getAmount() + "\n" +
-                                        modelClass.getNote());
 
+                                cardMarkerActivity = new CardMarkerActivity();
                                 Bundle bundle = new Bundle();
                                 bundle.putString("1", String.valueOf(modelClass.getLongitude()));
                                 bundle.putString("2", String.valueOf(modelClass.getLatitude()));
@@ -188,13 +187,17 @@ public class DatabaseLoad {
                                 bundle.putString("5", String.valueOf(modelClass.getAmount()));
                                 bundle.putString("6", modelClass.getNote());
 
+                                Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
 
-                                Intent intent = new Intent(instance.context, CardMarkerActivity.class);
+                                System.out.println(bundle);
                                 intent.putExtras(bundle);
-*/
+                                context.startActivity(intent);
+                               // cardMarkerActivity.Update();
 
 
                                 //intent.putExtras(bundle);
+
+                                // cardMarkerActivity.Update(bundle);
 
                             }
                         });

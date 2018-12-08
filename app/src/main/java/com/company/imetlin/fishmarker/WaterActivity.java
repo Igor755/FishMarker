@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.adapters.AdapterRecycler;
+import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 
@@ -29,8 +30,6 @@ public class WaterActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Canvas canvas;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +51,6 @@ public class WaterActivity extends AppCompatActivity {
         final List<ModelClass> image_details = getListData();
         // создаем адаптер
         //mAdapter = new AdapterRecycler(image_details);
-
-
-
 
 
         DividerItemDecoration divider = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);

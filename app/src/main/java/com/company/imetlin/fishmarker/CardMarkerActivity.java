@@ -70,11 +70,42 @@ public class CardMarkerActivity extends AppCompatActivity {
         etlongitute.setEnabled(false);
         etlatitude.setEnabled(false);
 
-
-
         this.databaseLoad = DatabaseLoad.getInstance(context);
 
 
+        //Intent data = new Intent();
+
+        String result1;
+
+        //String result1 = getIntent().getStringExtra("1");
+//String result1 = data.getStringExtra("1");
+
+
+   //     System.out.println(result2 +result3 +result3+result5);
+
+
+
+
+
+        if((result1 = getIntent().getStringExtra("1")) != null){
+
+            String result2 = getIntent().getStringExtra("2");
+            String result3 = getIntent().getStringExtra("3");
+            String result4 = getIntent().getStringExtra("4");
+            String result5= getIntent().getStringExtra("5");
+            String result6 = getIntent().getStringExtra("6");
+
+            etlongitute.setText(result1);
+            etlatitude.setText(result2);
+            etmDisplayDate.setText(result3);
+            etdepth.setText(result4);
+            etamountoffish.setText(result5);
+            etnote.setText(result6);
+
+        }
+
+
+else{
 
 
 
@@ -212,8 +243,41 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
     }
-    public void Update(){
+/*    public void Update() {
 
+            Intent data = new Intent();
+
+            String result1;
+
+            if ((result1 = data.getStringExtra("1")) != null) {
+
+
+                //String result1 = data.getStringExtra("1");
+                String result2 = data.getStringExtra("2");
+                String result3 = data.getStringExtra("3");
+                String result4 = data.getStringExtra("4");
+                String result5 = data.getStringExtra("5");
+                String result6 = data.getStringExtra("6");
+
+                etlongitute.setText(result1);
+                etlatitude.setText(result2);
+                etmDisplayDate.setText(result3);
+                etdepth.setText(result4);
+                etamountoffish.setText(result5);
+                etnote.setText(result6);
+
+            }
+
+
+       *//* String result1 = data.getStringExtra("1");
+        String result2 = data.getStringExtra("2");
+        String result3 = data.getStringExtra("3");
+        String result4 = data.getStringExtra("4");
+        String result5= data.getStringExtra("5");
+        String result6 = data.getStringExtra("6");*//*
+
+
+        }*/
 
 
     }
