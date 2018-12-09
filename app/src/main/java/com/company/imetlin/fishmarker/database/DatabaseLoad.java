@@ -47,6 +47,8 @@ public class DatabaseLoad {
 
     private DatabaseLoad() {
 
+        this.markers = new ArrayList<Marker>();
+        this.alldatamarkers = new ArrayList<ModelClass>();
     }
 
     public static DatabaseLoad getInstance(Context context) {
@@ -63,9 +65,8 @@ public class DatabaseLoad {
     public void LoaderData(GoogleMap _googlemap) {
 
         this.googlemap = _googlemap;
-        this.markers = new ArrayList<Marker>();
-        alldatamarkers = new ArrayList<ModelClass>();
-        this.last_id = -1;
+
+        this.last_id = 0;
 
         sqLiteHelper = new SQLiteHelper(context);
 
@@ -114,7 +115,7 @@ public class DatabaseLoad {
                 ModelClass modelClass = new ModelClass(id, lat, lon, title, depth, amount, note);
 
 
-                alldatamarkers.add(modelClass);
+                this.alldatamarkers.add(modelClass);
 
 
                 CreateMarker(id, lat, lon, title);
@@ -127,6 +128,12 @@ public class DatabaseLoad {
 
         cursor.close();
         database.close();
+    }
+
+    public void AddDataMarker(ModelClass marker) {
+
+        this.alldatamarkers.add(marker);
+        this.last_id++;
     }
 
     public void CreateMarker(Integer ident, final double _lat, final double _lon, String c) {
@@ -160,7 +167,7 @@ public class DatabaseLoad {
                                 modelClass.getDepth() + "\n" +
                                 modelClass.getAmount() + "\n" +
                                 modelClass.getNote());
-                        last_id = modelClass.getId();
+                        //last_id = modelClass.getId();
 
                         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
                             @Override

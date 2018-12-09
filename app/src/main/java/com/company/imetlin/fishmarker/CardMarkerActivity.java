@@ -49,10 +49,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     private SQLiteHelper dbHelper;
 
-    private ArrayList<ModelClass> id_markers;
-    public DatabaseLoad databaseLoad;
-
-   // public String lon,lat,date,depth,amount,note;
+   //public String lon,lat,date,depth,amount,note;
 
     public Boolean isnull;
 
@@ -75,11 +72,8 @@ public class CardMarkerActivity extends AppCompatActivity {
         etlongitute.setEnabled(false);
         etlatitude.setEnabled(false);
 
-        this.databaseLoad = DatabaseLoad.getInstance(context);
         String result1;
         dbHelper = new SQLiteHelper(this);
-
-
 
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -212,7 +206,6 @@ public class CardMarkerActivity extends AppCompatActivity {
 */
     public void AddMarker() {
 
-
         String coordinate = getIntent().getStringExtra("coord");
         String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
         String[] parts = newcoord.split(",");
@@ -225,7 +218,6 @@ public class CardMarkerActivity extends AppCompatActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -256,7 +248,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                     Toast.makeText(context, "ADD to BASE, SELEBRATION", Toast.LENGTH_LONG).show();
 
 
-                    ModelClass modelClass = new ModelClass(databaseLoad.last_id + 1,
+                    ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
                             Double.valueOf(longitude),
                             Double.valueOf(latitude),
                             displayDate,
@@ -264,8 +256,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Integer.parseInt(amountoffish),
                             note);
 
-
-                    databaseLoad.alldatamarkers.add(modelClass);
+                    DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
 
 
                     Bundle bundle = new Bundle();
