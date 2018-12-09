@@ -13,7 +13,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public final static String DB_TABLE_NAME = "marker_information";
     public final static String DB_COL_ID_PRIMARY = "_id";
 
-
     public final static String DB_COL_ID = "markerId";
     public final static String DB_COL_LONGITUDE= "longitude";
     public final static String DB_COL_LATITUDE = "latitude";

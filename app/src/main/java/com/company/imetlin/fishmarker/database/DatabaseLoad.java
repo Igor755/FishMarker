@@ -186,6 +186,10 @@ public class DatabaseLoad {
                                 bundle.putString("4", String.valueOf(modelClass.getDepth()));
                                 bundle.putString("5", String.valueOf(modelClass.getAmount()));
                                 bundle.putString("6", modelClass.getNote());
+                                bundle.putString("7", String.valueOf(last_id));
+
+                                //bundle.putString("7", String.valueOf(modelClass.getId()));
+                                System.out.println(last_id);
 
                                 Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
 

@@ -28,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-     /* //DROP BASE
+ /*   //DROP BASE
       dbHelper = new SQLiteHelper(this);
       SQLiteDatabase database = dbHelper.getWritableDatabase();
-      database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
+      database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);*/
 
-*/
+     /*   this.deleteDatabase("marker_db.db");*/
+
+
 
 
         List<ModelClass> image_details = getListData();
