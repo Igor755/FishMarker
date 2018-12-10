@@ -194,6 +194,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 int res = Integer.parseInt(result2);
 
                databaseLoad.CreateMarker(res,modelClass.getCoordinates()[0],modelClass.getCoordinates()[1],result);
+               System.out.print("I AM SUPERMAN");
 
             }
             if (resultCode == MapActivity.RESULT_CANCELED) {

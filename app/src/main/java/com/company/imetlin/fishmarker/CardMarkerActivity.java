@@ -186,13 +186,34 @@ public class CardMarkerActivity extends AppCompatActivity {
                     contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
                     contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
 
-                    database.update(SQLiteHelper.DB_TABLE_NAME,contentValues,"_id = ?",new String[] {result7});
+                  //  int update_id = Integer.parseInt(result7);
+
+                   database.update(SQLiteHelper.DB_TABLE_NAME,contentValues,"_id = ?",new String[] {result7});
 
 
                     Toast.makeText(context, "UPDATE COMPLETE", Toast.LENGTH_LONG).show();
 
+                  /*  ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
+                            Double.valueOf(longitude),
+                            Double.valueOf(latitude),
+                            displayDate,
+                            Integer.parseInt(depth),
+                            Integer.parseInt(amountoffish),
+                            note);
 
-                    finish();
+                    DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
+
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("result", displayDate);
+                    bundle.putString("id", result7);
+
+
+                    Intent intent = new Intent(CardMarkerActivity.this,MapActivity.class);
+                    intent.putExtras(bundle);
+                    //returnIntent.putExtra("id",modelClass.getId());
+
+                    finish();*/
 
                 }
 

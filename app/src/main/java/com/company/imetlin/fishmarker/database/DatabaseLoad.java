@@ -136,7 +136,7 @@ public class DatabaseLoad {
         this.last_id++;
     }
 
-    public void CreateMarker(Integer ident, final double _lat, final double _lon, String c) {
+    public void CreateMarker(final Integer ident, final double _lat, final double _lon, String c) {
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
@@ -150,9 +150,6 @@ public class DatabaseLoad {
         googlemap.setOnMarkerDragListener(new LinkMarkerLongClickListener(markers) {
             @Override
             public void onLongClickListener(Marker marker) {
-
-                //DatabaseLoad load = DatabaseLoad.getInstance(null);
-                //System.out.println(load.alldatamarkers);
 
                 for (final ModelClass modelClass : alldatamarkers) {
                     if (modelClass.getId() == (int) marker.getZIndex()) {
@@ -179,11 +176,11 @@ public class DatabaseLoad {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(context, "UPDATE", Toast.LENGTH_LONG).show();
-                                //DatabaseLoad databaseLoad = new DatabaseLoad();
-                                //  this.databaseLoad = DatabaseLoad.getInstance(context);
 
 
                                 /////UPDATE MARKER IN BASE
+
+                                int id_marker = modelClass.getId();
 
                                 cardMarkerActivity = new CardMarkerActivity();
                                 Bundle bundle = new Bundle();
@@ -193,22 +190,19 @@ public class DatabaseLoad {
                                 bundle.putString("4", String.valueOf(modelClass.getDepth()));
                                 bundle.putString("5", String.valueOf(modelClass.getAmount()));
                                 bundle.putString("6", modelClass.getNote());
-                                bundle.putString("7", String.valueOf(last_id));
+                                bundle.putString("7", String.valueOf(id_marker));
 
-                                //bundle.putString("7", String.valueOf(modelClass.getId()));
-                                System.out.println(last_id);
+
+
+
 
                                 Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
+
 
                                 System.out.println(bundle);
                                 intent.putExtras(bundle);
                                 context.startActivity(intent);
-                               // cardMarkerActivity.Update();
 
-
-                                //intent.putExtras(bundle);
-
-                                // cardMarkerActivity.Update(bundle);
 
                             }
                         });
