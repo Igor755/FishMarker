@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID;
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
@@ -213,9 +214,24 @@ public class DatabaseLoad {
                 }
             }
         });
+    }
+    public void UpdateMarker(ModelClass modelclass){
 
+
+        ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
+
+        while (iterator.hasNext()) {
+            ModelClass next = iterator.next();
+            if (next.getId() == modelclass.getId())
+            {
+                //Replace element
+                iterator.set(modelclass);
+                break;
+            }
+        }
 
     }
+
 
 
 }

@@ -139,12 +139,12 @@ public class CardMarkerActivity extends AppCompatActivity {
     public void UpdateMarker() {
 
 
-        String result1 = getIntent().getStringExtra("1");
-        String result2 = getIntent().getStringExtra("2");
-        String result3 = getIntent().getStringExtra("3");
-        String result4 = getIntent().getStringExtra("4");
-        String result5 = getIntent().getStringExtra("5");
-        String result6 = getIntent().getStringExtra("6");
+        final String result1 = getIntent().getStringExtra("1");
+        final String result2 = getIntent().getStringExtra("2");
+        final String result3 = getIntent().getStringExtra("3");
+        final String result4 = getIntent().getStringExtra("4");
+        final String result5 = getIntent().getStringExtra("5");
+        final String result6 = getIntent().getStringExtra("6");
         final String result7 = getIntent().getStringExtra("7");
 
         etlongitute.setText(result1);
@@ -188,32 +188,22 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                   //  int update_id = Integer.parseInt(result7);
 
-                   database.update(SQLiteHelper.DB_TABLE_NAME,contentValues,"_id = ?",new String[] {result7});
+                    database.update(SQLiteHelper.DB_TABLE_NAME,contentValues,"_id = ?",new String[] {result7});
 
 
                     Toast.makeText(context, "UPDATE COMPLETE", Toast.LENGTH_LONG).show();
 
-                  /*  ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
-                            Double.valueOf(longitude),
-                            Double.valueOf(latitude),
+                    ModelClass modelClassupdate = new ModelClass(Integer.parseInt(result7),
+                            Double.parseDouble(latitude),
+                            Double.parseDouble(longitude),
                             displayDate,
                             Integer.parseInt(depth),
                             Integer.parseInt(amountoffish),
                             note);
 
-                    DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
 
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("result", displayDate);
-                    bundle.putString("id", result7);
-
-
-                    Intent intent = new Intent(CardMarkerActivity.this,MapActivity.class);
-                    intent.putExtras(bundle);
-                    //returnIntent.putExtra("id",modelClass.getId());
-
-                    finish();*/
+                    DatabaseLoad.getInstance(context).UpdateMarker(modelClassupdate);
+                    finish();
 
                 }
 
