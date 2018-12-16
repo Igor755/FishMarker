@@ -1,6 +1,8 @@
 package com.company.imetlin.fishmarker.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Shader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
+
 
 import java.util.List;
 
@@ -44,10 +47,17 @@ public class AdapterGrid extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
+
+
+
+
+
             convertView = layoutInflater.inflate(R.layout.one_item_grid, null);
             holder = new ViewHolder();
             holder.PhotoWater = (ImageView) convertView.findViewById(R.id.imageViewWater);
             holder.NameWater = (TextView) convertView.findViewById(R.id.textViewWaterName);
+
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

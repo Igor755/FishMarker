@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
-
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -11,18 +10,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp" />
-  <!--  <com.makeramen.roundedimageview.RoundedImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageView1"
-        android:scaleType="fitCenter"
-        app:riv_corner_radius="30dip"
-        app:riv_border_width="2dip"
-        app:riv_border_color="#333333"
-        app:riv_mutate_background="true"
-        app:riv_tile_mode="repeat"
-        app:riv_oval="true" />
--->
+        android:layout_marginTop="5dp"
+        android:background="@drawable/oval"/>
+
 
     <TextView
         android:id="@+id/textViewWaterName"
@@ -31,7 +21,6 @@
         android:layout_alignLeft="@id/imageViewWater"
         android:layout_alignTop="@id/imageViewWater"
         android:layout_alignRight="@id/imageViewWater"
-        android:layout_alignBottom="@id/imageViewWater"
         android:layout_margin="1dp"
         android:gravity="center"
         android:text="Hello"
@@ -39,6 +28,9 @@
         android:elevation="6dp"
         android:stateListAnimator="@null"
         android:translationZ="4dp"/>
+
+    <!-- android:layout_alignBottom="@id/imageViewWater"-->
+
 
 
 

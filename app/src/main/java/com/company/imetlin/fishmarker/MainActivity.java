@@ -2,16 +2,20 @@ package com.company.imetlin.fishmarker;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Shader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
+
 
 import java.util.ArrayList;
 import java.util.List;
