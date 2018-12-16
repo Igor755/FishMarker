@@ -9,11 +9,11 @@
 
 
 
-    <string name="latlng">Longitude/Latitude</string>
+    <string name="latlng">Latitude/Longitude</string>
     <string name="date">Date</string>
     <string name="depth">depth</string>
-    <string name="Depth">Depth</string>
-    <string name="Number">Amount of fish</string>
+    <string name="Depth">Depth(meter double)</string>
+    <string name="Number">Amount of fish(int)</string>
     <string name="number">amount of fish</string>
     <string name="Note">Note</string>
     <string name="note">note</string>

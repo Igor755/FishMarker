@@ -1,5 +1,6 @@
 package com.company.imetlin.fishmarker;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -71,6 +72,10 @@ public class CardMarkerActivity extends AppCompatActivity {
         cancel = (Button) findViewById(R.id.btnCancel);
         etlongitute.setEnabled(false);
         etlatitude.setEnabled(false);
+        ok.setTextColor(Color.parseColor("#FFFFFF"));
+        cancel.setTextColor(Color.parseColor("#FFFFFF"));
+
+
 
         String result1;
         dbHelper = new SQLiteHelper(this);
@@ -98,10 +103,10 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                 DatePickerDialog dialog = new DatePickerDialog(
                         CardMarkerActivity.this,
-                        android.R.style.Theme_Material_Dialog,
+                        R.style.AppCompatDialogStyle,  /*AlertDialog.THEME_HOLO_DARK*/
                         mDateSetListener,
                         year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+               // dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.green(2)));
                 dialog.show();
             }
         });

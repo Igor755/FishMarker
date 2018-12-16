@@ -25,4 +25,12 @@
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
+   <!-- DATEPICKER-->
+    <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#2196F3</item>
+    </style>
+
+   
+
+
 </resources>

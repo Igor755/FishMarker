@@ -25,16 +25,16 @@
             android:paddingLeft="4dp">
 
             <EditText
-                android:id="@+id/edit_longitude"
+                android:id="@+id/edit_latitude"
                 style="@style/EditorFieldStyle"
-                android:hint="@string/longitude"
+                android:hint="@string/latitude"
                 android:inputType="textCapWords"
                 android:autofillHints="" />
 
             <EditText
-                android:id="@+id/edit_latitude"
+                android:id="@+id/edit_longitude"
                 style="@style/EditorFieldStyle"
-                android:hint="@string/latitude"
+                android:hint="@string/longitude"
                 android:inputType="textCapWords"
                 android:autofillHints="" />
         </LinearLayout>
@@ -164,18 +164,20 @@
         android:paddingLeft="4dp">
 
         <Button
-            android:id="@+id/btnOk"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:text="@string/ok"></Button>
-
-        <Button
             android:id="@+id/btnCancel"
             android:layout_width="100dp"
+            android:background="@drawable/selector"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|left"
+            android:text="@string/cancel"></Button>
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="100dp"
+            android:background="@drawable/selector"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:text="@string/cancel"></Button>
+            android:text="@string/ok"></Button>
 
     </FrameLayout>
 

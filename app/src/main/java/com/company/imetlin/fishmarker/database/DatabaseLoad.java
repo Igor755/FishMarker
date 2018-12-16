@@ -225,6 +225,8 @@ public class DatabaseLoad {
             if (next.getId() == modelclass.getId())
             {
                 //Replace element
+                //CreateMarker(modelclass.getId(),modelclass.getLatitude(),modelclass.getLongitude(),modelclass.getDate());
+
                 iterator.set(modelclass);
                 break;
             }
