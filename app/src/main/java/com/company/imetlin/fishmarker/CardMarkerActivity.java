@@ -206,7 +206,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Integer.parseInt(amountoffish),
                             note);
 
-
+                    //DatabaseLoad.getInstance(context).AddDataMarker(modelClassupdate);
                     DatabaseLoad.getInstance(context).UpdateMarker(modelClassupdate);
                     finish();
 

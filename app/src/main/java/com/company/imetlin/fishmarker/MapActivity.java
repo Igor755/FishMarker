@@ -171,7 +171,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         google.animateCamera(cameraUpdate);
 
 
-        this.databaseLoad = DatabaseLoad.getInstance(context);
+        databaseLoad = DatabaseLoad.getInstance(context);
         databaseLoad.LoaderData(google);
 
 

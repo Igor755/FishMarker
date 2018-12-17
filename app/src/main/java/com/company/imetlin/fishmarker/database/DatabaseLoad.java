@@ -137,16 +137,64 @@ public class DatabaseLoad {
         this.last_id++;
     }
 
-    public void CreateMarker(final Integer ident, final double _lat, final double _lon, String c) {
+    public void CreateMarker(final Integer identificator, final double _lat, final double _lon, String title_marker) {
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
-                .title(c)
+                .title(title_marker)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico))
-                .zIndex(ident));
+                .zIndex(identificator));
         //marker.setDraggable(true);
 
         markers.add(marker);
+
+        LongClickOnMarker();
+
+
+    }
+    public void UpdateMarker(ModelClass modelclass){
+
+
+        ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
+        while (iterator.hasNext()) {
+            ModelClass next = iterator.next();
+            if (next.getId() == modelclass.getId())
+            {
+
+                iterator.set(modelclass);
+                break;
+            }
+        }
+
+        for (Marker marker : markers){
+           if (modelclass.getId() == marker.getZIndex()){
+               marker.setTitle(modelclass.getDate());
+               break;
+           }
+        }
+        System.out.println("GOOD");
+        // update marker in markers cycle
+        googlemap.clear();
+
+        ArrayList<Marker> markers_array = new ArrayList<Marker>();
+
+        for (Marker marker:markers){
+
+            Marker marker_update = googlemap.addMarker(new MarkerOptions()
+                    .position(marker.getPosition())
+                    .title(marker.getTitle())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico))
+                    .zIndex(marker.getZIndex()));
+
+            markers_array.add(marker_update);
+        }
+
+        markers = new ArrayList<Marker>(markers_array);
+
+        LongClickOnMarker();
+    }
+
+    public void LongClickOnMarker(){
 
         googlemap.setOnMarkerDragListener(new LinkMarkerLongClickListener(markers) {
             @Override
@@ -193,17 +241,11 @@ public class DatabaseLoad {
                                 bundle.putString("6", modelClass.getNote());
                                 bundle.putString("7", String.valueOf(id_marker));
 
-
-
-
-
                                 Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
-
 
                                 System.out.println(bundle);
                                 intent.putExtras(bundle);
                                 context.startActivity(intent);
-
 
                             }
                         });
@@ -214,23 +256,7 @@ public class DatabaseLoad {
                 }
             }
         });
-    }
-    public void UpdateMarker(ModelClass modelclass){
 
-
-        ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
-
-        while (iterator.hasNext()) {
-            ModelClass next = iterator.next();
-            if (next.getId() == modelclass.getId())
-            {
-                //Replace element
-                //CreateMarker(modelclass.getId(),modelclass.getLatitude(),modelclass.getLongitude(),modelclass.getDate());
-
-                iterator.set(modelclass);
-                break;
-            }
-        }
 
     }
 
