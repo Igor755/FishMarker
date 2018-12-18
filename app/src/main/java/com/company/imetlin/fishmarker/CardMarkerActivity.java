@@ -35,9 +35,8 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     private static final String TAG = "CardMarkerActivity";
 
-
-    private EditText etlongitute;
     private EditText etlatitude;
+    private EditText etlongitute;
     private TextView etmDisplayDate;
     private EditText etdepth;
     private EditText etamountoffish;
@@ -62,8 +61,8 @@ public class CardMarkerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_marker);
 
-        etlongitute = (EditText) findViewById(R.id.edit_longitude);
         etlatitude = (EditText) findViewById(R.id.edit_latitude);
+        etlongitute = (EditText) findViewById(R.id.edit_longitude);
         etmDisplayDate = (TextView) findViewById(R.id.tvDate);
         etdepth = (EditText) findViewById(R.id.edit_dept);
         etamountoffish = (EditText) findViewById(R.id.edit_number_of_fish);
@@ -152,8 +151,10 @@ public class CardMarkerActivity extends AppCompatActivity {
         final String result6 = getIntent().getStringExtra("6");
         final String result7 = getIntent().getStringExtra("7");
 
-        etlongitute.setText(result1);
-        etlatitude.setText(result2);
+
+
+        etlatitude.setText(result1);
+        etlongitute.setText(result2);
         etmDisplayDate.setText(result3);
         etdepth.setText(result4);
         etamountoffish.setText(result5);
@@ -175,17 +176,16 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                 } else {
 
-                    String longitude = etlongitute.getText().toString();
                     String latitude = etlatitude.getText().toString();
+                    String longitude = etlongitute.getText().toString();
                     String displayDate = etmDisplayDate.getText().toString();
                     String depth = etdepth.getText().toString();
                     String amountoffish = etamountoffish.getText().toString();
                     String note = etnote.getText().toString();
 
 
-
-                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
                     contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
+                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
                     contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
                     contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
                     contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
@@ -228,8 +228,10 @@ public class CardMarkerActivity extends AppCompatActivity {
         String lat = parts[0];
         String lon = parts[1];
 
-        etlongitute.setText(lon);
+
         etlatitude.setText(lat);
+        etlongitute.setText(lon);
+
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,16 +245,18 @@ public class CardMarkerActivity extends AppCompatActivity {
                     Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_LONG).show();
 
                 } else {
-                    String longitude = etlongitute.getText().toString();
+
                     String latitude = etlatitude.getText().toString();
+                    String longitude = etlongitute.getText().toString();
                     String displayDate = etmDisplayDate.getText().toString();
                     String depth = etdepth.getText().toString();
                     String amountoffish = etamountoffish.getText().toString();
                     String note = etnote.getText().toString();
 
 
-                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
+
                     contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
+                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
                     contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
                     contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
                     contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
@@ -265,8 +269,8 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
                     ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
-                            Double.valueOf(longitude),
                             Double.valueOf(latitude),
+                            Double.valueOf(longitude),
                             displayDate,
                             Integer.parseInt(depth),
                             Integer.parseInt(amountoffish),
@@ -301,17 +305,16 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     public boolean isEmpty(){
 
-
-        String lon = etlongitute.getText().toString();
         String lat = etlatitude.getText().toString();
+        String lon = etlongitute.getText().toString();
         String date = etmDisplayDate.getText().toString();
         String depth = etdepth.getText().toString();
         String amount = etamountoffish.getText().toString();
         String note = etnote.getText().toString();
 
 
-          if  (TextUtils.isEmpty(lon) ||
-                  TextUtils.isEmpty(lat) ||
+          if  (TextUtils.isEmpty(lat) ||
+                  TextUtils.isEmpty(lon) ||
                   TextUtils.isEmpty(date) ||
                   TextUtils.isEmpty(depth)||
                   TextUtils.isEmpty(amount) ||

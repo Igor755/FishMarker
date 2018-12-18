@@ -83,11 +83,10 @@ public class DatabaseLoad {
 
             int idindex = cursor.getColumnIndex(DB_COL_ID_PRIMARY);
 
-
-            double longitudeIndex = cursor.getColumnIndex(DB_COL_LONGITUDE);
             double latitudeIndex = cursor.getColumnIndex(DB_COL_LATITUDE);
-            String dateIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DATE));
+            double longitudeIndex = cursor.getColumnIndex(DB_COL_LONGITUDE);
 
+            String dateIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DATE));
 
             String depthIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DEPTH));
             String amountIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_AMOUNT));
@@ -96,17 +95,16 @@ public class DatabaseLoad {
             do {
 
 
-                Log.d("mlog", " long = " + cursor.getDouble((int) longitudeIndex) +
+           /*     Log.d("mlog", " long = " + cursor.getDouble((int) longitudeIndex) +
                         " lat = " + cursor.getDouble((int) latitudeIndex) +
-                        " date = " + cursor.getString(Integer.parseInt(dateIndex)));
+                        " date = " + cursor.getString(Integer.parseInt(dateIndex)));*/
 
 
                 Integer id = cursor.getInt(idindex);
                 this.last_id = id;
 
-
-                Double lon = cursor.getDouble((int) longitudeIndex);
                 Double lat = cursor.getDouble((int) latitudeIndex);
+                Double lon = cursor.getDouble((int) longitudeIndex);
                 String title = cursor.getString(Integer.parseInt(dateIndex));
 
                 Integer depth = Integer.valueOf(cursor.getString(Integer.parseInt(depthIndex)));
@@ -207,8 +205,8 @@ public class DatabaseLoad {
                         alertDialog = new AlertDialog.Builder(context).create();
 
                         alertDialog.setTitle("Сomplete marker information");
-                        alertDialog.setMessage(modelClass.getLongitude() + "\n" +
-                                modelClass.getLatitude() + "\n" +
+                        alertDialog.setMessage(modelClass.getLatitude() + "\n" +
+                                modelClass.getLongitude() + "\n" +
                                 modelClass.getDate() + "\n" +
                                 modelClass.getDepth() + "\n" +
                                 modelClass.getAmount() + "\n" +
@@ -233,8 +231,8 @@ public class DatabaseLoad {
 
                                 cardMarkerActivity = new CardMarkerActivity();
                                 Bundle bundle = new Bundle();
-                                bundle.putString("1", String.valueOf(modelClass.getLongitude()));
-                                bundle.putString("2", String.valueOf(modelClass.getLatitude()));
+                                bundle.putString("1", String.valueOf(modelClass.getLatitude()));
+                                bundle.putString("2", String.valueOf(modelClass.getLongitude()));
                                 bundle.putString("3", modelClass.getDate());
                                 bundle.putString("4", String.valueOf(modelClass.getDepth()));
                                 bundle.putString("5", String.valueOf(modelClass.getAmount()));

@@ -31,15 +31,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
 /*
+
+
  //DROP BASE
       dbHelper = new SQLiteHelper(this);
       SQLiteDatabase database = dbHelper.getWritableDatabase();
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
 
 
-*//*   this.deleteDatabase("marker_db.db");*/
+//*   this.deleteDatabase("marker_db.db");
+
+*/
 
 
 

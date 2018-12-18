@@ -14,8 +14,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public final static String DB_COL_ID_PRIMARY = "_id";
 
     public final static String DB_COL_ID = "markerId";
-    public final static String DB_COL_LONGITUDE= "longitude";
     public final static String DB_COL_LATITUDE = "latitude";
+    public final static String DB_COL_LONGITUDE= "longitude";
     public final static String DB_COL_DATE = "date";
     public final static String DB_COL_DEPTH = "depth";
     public final static String DB_COL_AMOUNT = "amountoffish";
@@ -28,8 +28,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             "create table " + DB_TABLE_NAME + "("
                     + DB_COL_ID_PRIMARY + " integer primary key autoincrement,"
                     + DB_COL_ID + " integer,"
-                    + DB_COL_LONGITUDE + " float,"
                     + DB_COL_LATITUDE + " float,"
+                    + DB_COL_LONGITUDE + " float,"
                     + DB_COL_DATE + " text,"
                     + DB_COL_DEPTH + " float,"
                     + DB_COL_AMOUNT + " integer,"
