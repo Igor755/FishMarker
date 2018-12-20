@@ -81,10 +81,18 @@ public class MainActivity extends AppCompatActivity {
         ModelClass river = new ModelClass("River", "river");
         ModelClass sea = new ModelClass("Sea", "sea");
 
+        ModelClass estuary = new ModelClass("Estuary", "liman");
+        ModelClass pond = new ModelClass("Pond", "prud");
+
+
+
         list.add(ocean);
         list.add(lake);
         list.add(river);
         list.add(sea);
+
+        list.add(estuary);
+        list.add(pond);
 
 
         return list;

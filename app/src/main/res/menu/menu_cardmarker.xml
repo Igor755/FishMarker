@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CardMarkerActivity">
+
+    <item
+        android:id="@+id/recycler"
+        android:icon="@drawable/recycler2"
+        app:showAsAction="always"
+        android:title="@string/recycler" />
+
+</menu>

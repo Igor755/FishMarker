@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -137,6 +138,12 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_cardmarker,menu);
+        return true;
+    }
+
 /*
     FUNCTION UPDATE DATA MARKER IN BASE
 */
@@ -160,7 +167,7 @@ public class CardMarkerActivity extends AppCompatActivity {
         etamountoffish.setText(result5);
         etnote.setText(result6);
 
-        ok.setText("UPDATE");
+        ok.setText("EDIT");
 
 
         ok.setOnClickListener(new View.OnClickListener() {
@@ -325,6 +332,10 @@ public class CardMarkerActivity extends AppCompatActivity {
           }
           else return false;
     }
+
+
+
+
 }
 
 

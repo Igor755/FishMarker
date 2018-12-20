@@ -219,7 +219,7 @@ public class DatabaseLoad {
                                 //finish();
                             }
                         });
-                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "UPDATE", new DialogInterface.OnClickListener() {
+                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "EDIT", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(context, "UPDATE", Toast.LENGTH_LONG).show();
