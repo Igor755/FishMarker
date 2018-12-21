@@ -23,8 +23,10 @@
     <string name="latitude">latitude</string>
     <string name="selectdate">SELECT DATE</string>
 
-    ////MENU
+   <!-- ////MENU
+    -->
     <string name="recycler">Recycler</string>
+    <string name="information">Information</string>
 
 
 

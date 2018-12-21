@@ -7,6 +7,11 @@
         android:id="@+id/recycler"
         android:icon="@drawable/recycler2"
         app:showAsAction="always"
-        android:title="@string/recycler" />
+        android:title="@string/recycler"/>
+    <item
+        android:id="@+id/information"
+        android:icon="@drawable/icons8"
+        app:showAsAction="always"
+        android:title="@string/information" />
 
 </menu>

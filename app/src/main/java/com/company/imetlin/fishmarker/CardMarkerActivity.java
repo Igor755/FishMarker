@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -50,11 +52,11 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     private SQLiteHelper dbHelper;
 
-   //public String lon,lat,date,depth,amount,note;
+    //public String lon,lat,date,depth,amount,note;
 
     public Boolean isnull;
 
-
+    public Menu menu;
 
 
     @Override
@@ -74,7 +76,6 @@ public class CardMarkerActivity extends AppCompatActivity {
         etlatitude.setEnabled(false);
         ok.setTextColor(Color.parseColor("#FFFFFF"));
         cancel.setTextColor(Color.parseColor("#FFFFFF"));
-
 
 
         String result1;
@@ -106,7 +107,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         R.style.AppCompatDialogStyle,  /*AlertDialog.THEME_HOLO_DARK*/
                         mDateSetListener,
                         year, month, day);
-               // dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.green(2)));
+                // dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.green(2)));
                 dialog.show();
             }
         });
@@ -138,15 +139,56 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
     }
+
+/*
+          MENU
+*/
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_cardmarker,menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_cardmarker, menu);
         return true;
     }
 
-/*
-    FUNCTION UPDATE DATA MARKER IN BASE
-*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.recycler:
+                //function delete marker
+                DeleteMarker();
+                return true;
+
+            case R.id.information:
+                //function information
+                InformationWindow();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+
+        String result1;
+
+        if ((result1 = getIntent().getStringExtra("1")) != null) {
+
+
+        } else {
+            MenuItem item = menu.findItem(R.id.recycler);
+            item.setVisible(false);
+
+        }
+        return true;
+    }
+
+
+    /*
+        FUNCTION UPDATE DATA MARKER IN BASE
+    */
     public void UpdateMarker() {
 
 
@@ -157,7 +199,6 @@ public class CardMarkerActivity extends AppCompatActivity {
         final String result5 = getIntent().getStringExtra("5");
         final String result6 = getIntent().getStringExtra("6");
         final String result7 = getIntent().getStringExtra("7");
-
 
 
         etlatitude.setText(result1);
@@ -178,7 +219,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                 ContentValues contentValues = new ContentValues();
 
-                if (isEmpty() == true){
+                if (isEmpty() == true) {
                     Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_LONG).show();
 
                 } else {
@@ -198,9 +239,9 @@ public class CardMarkerActivity extends AppCompatActivity {
                     contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
                     contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
 
-                  //  int update_id = Integer.parseInt(result7);
+                    //  int update_id = Integer.parseInt(result7);
 
-                    database.update(SQLiteHelper.DB_TABLE_NAME,contentValues,"_id = ?",new String[] {result7});
+                    database.update(SQLiteHelper.DB_TABLE_NAME, contentValues, "_id = ?", new String[]{result7});
 
 
                     Toast.makeText(context, "UPDATE COMPLETE", Toast.LENGTH_LONG).show();
@@ -224,10 +265,13 @@ public class CardMarkerActivity extends AppCompatActivity {
         });
 
     }
-/*
-    FUNCTION ADD MARKER ON MAP (IN BASE)
-*/
+
+    /*
+        FUNCTION ADD MARKER ON MAP (IN BASE)
+    */
     public void AddMarker() {
+
+
 
         String coordinate = getIntent().getStringExtra("coord");
         String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
@@ -259,7 +303,6 @@ public class CardMarkerActivity extends AppCompatActivity {
                     String depth = etdepth.getText().toString();
                     String amountoffish = etamountoffish.getText().toString();
                     String note = etnote.getText().toString();
-
 
 
                     contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
@@ -307,10 +350,33 @@ public class CardMarkerActivity extends AppCompatActivity {
         });
     }
 
-   /* FUNCTION OF CHECK EDIT TEXT ON EMPTY */
+    public void DeleteMarker() {
+
+    }
+    public void InformationWindow(){
 
 
-    public boolean isEmpty(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(CardMarkerActivity.this);
+            builder.setTitle("Developer information")
+                    .setMessage("Developer: i.metlin company" + "\n" +
+                            "Country: Ukraine" + "\n" +
+                             "City: Odessa")
+                    .setIcon(R.drawable.information)
+                    .setCancelable(false)
+                    .setNegativeButton("OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+
+    }
+    /* FUNCTION OF CHECK EDIT TEXT ON EMPTY */
+
+
+    public boolean isEmpty() {
 
         String lat = etlatitude.getText().toString();
         String lon = etlongitute.getText().toString();
@@ -320,19 +386,17 @@ public class CardMarkerActivity extends AppCompatActivity {
         String note = etnote.getText().toString();
 
 
-          if  (TextUtils.isEmpty(lat) ||
-                  TextUtils.isEmpty(lon) ||
-                  TextUtils.isEmpty(date) ||
-                  TextUtils.isEmpty(depth)||
-                  TextUtils.isEmpty(amount) ||
-                  TextUtils.isEmpty(note)) {
+        if (TextUtils.isEmpty(lat) ||
+                TextUtils.isEmpty(lon) ||
+                TextUtils.isEmpty(date) ||
+                TextUtils.isEmpty(depth) ||
+                TextUtils.isEmpty(amount) ||
+                TextUtils.isEmpty(note)) {
 
 
-              return true;
-          }
-          else return false;
+            return true;
+        } else return false;
     }
-
 
 
 
