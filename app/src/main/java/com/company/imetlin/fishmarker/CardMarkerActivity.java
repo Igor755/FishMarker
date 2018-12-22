@@ -352,6 +352,41 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     public void DeleteMarker() {
 
+        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+
+
+        final String result1 = getIntent().getStringExtra("1");
+        final String result2 = getIntent().getStringExtra("2");
+        final String result3 = getIntent().getStringExtra("3");
+        final String result4 = getIntent().getStringExtra("4");
+        final String result5 = getIntent().getStringExtra("5");
+        final String result6 = getIntent().getStringExtra("6");
+        final String result7 = getIntent().getStringExtra("7");
+
+
+
+
+        database.delete(SQLiteHelper.DB_TABLE_NAME,  SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result7,null);
+
+        ModelClass modelClassDelete = new ModelClass(Integer.parseInt(result7),
+                Double.parseDouble(result1),
+                Double.parseDouble(result2),
+                result3,
+                Integer.parseInt(result4),
+                Integer.parseInt(result5),
+                result6);
+
+        DatabaseLoad.getInstance(context).DeleteMarker(modelClassDelete);
+
+
+        finish();
+
+        dbHelper.close();
+
+
+
+
     }
     public void InformationWindow(){
 

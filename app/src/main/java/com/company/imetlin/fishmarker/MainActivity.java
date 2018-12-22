@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-/*
 
+/*
 
  //DROP BASE
       dbHelper = new SQLiteHelper(this);
@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
 //*   this.deleteDatabase("marker_db.db");
 
-*/
 
+*/
 
 
 

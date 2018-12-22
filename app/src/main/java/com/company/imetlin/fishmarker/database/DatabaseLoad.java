@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -150,6 +151,10 @@ public class DatabaseLoad {
 
 
     }
+    /*
+    FUNCTION UPDATE MARKER*/
+
+
     public void UpdateMarker(ModelClass modelclass){
 
 
@@ -185,6 +190,51 @@ public class DatabaseLoad {
                     .zIndex(marker.getZIndex()));
 
             markers_array.add(marker_update);
+        }
+
+        markers = new ArrayList<Marker>(markers_array);
+
+        LongClickOnMarker();
+    }
+
+
+/*FUNCTION DELETE MARKER*/
+
+
+    public void DeleteMarker(ModelClass modelclass){
+
+        ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
+
+        while (iterator.hasNext()) {
+            ModelClass next = iterator.next();
+            if (next.getId() == modelclass.getId())
+            {
+                iterator.remove();
+                break;
+            }
+        }
+
+        for (Marker marker : markers){
+            if (modelclass.getId() == marker.getZIndex()){
+               // marker.remove(markers);\
+
+                markers.remove(marker);
+                break;
+            }
+        }
+        googlemap.clear();
+
+        ArrayList<Marker> markers_array = new ArrayList<Marker>();
+
+        for (Marker marker:markers){
+
+            Marker marker_delete = googlemap.addMarker(new MarkerOptions()
+                    .position(marker.getPosition())
+                    .title(marker.getTitle())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico))
+                    .zIndex(marker.getZIndex()));
+
+            markers_array.add(marker_delete);
         }
 
         markers = new ArrayList<Marker>(markers_array);
