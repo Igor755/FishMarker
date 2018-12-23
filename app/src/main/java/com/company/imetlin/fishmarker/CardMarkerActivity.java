@@ -120,7 +120,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                 month = month + 1;
                 Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
-                String date = month + "/" + day + "/" + year;
+                String date = day + "." + month + "." + year;
                 etmDisplayDate.setText(date);
             }
         };

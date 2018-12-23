@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID;
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LATITUDE;
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LONGITUDE;

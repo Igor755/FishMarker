@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
 
 
+
+
 */
-
-
 
 
         List<ModelClass> image_details = getListData();
