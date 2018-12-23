@@ -2,6 +2,7 @@ package com.company.imetlin.fishmarker;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -57,6 +58,7 @@ public class CardMarkerActivity extends AppCompatActivity {
     public Boolean isnull;
 
     public Menu menu;
+    private AlertDialog alertDialog;
 
 
     @Override
@@ -158,11 +160,6 @@ public class CardMarkerActivity extends AppCompatActivity {
             case R.id.recycler:
                 //function delete marker
                 DeleteMarker();
-                return true;
-
-            case R.id.information:
-                //function information
-                InformationWindow();
                 return true;
 
             default:
@@ -352,62 +349,71 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     public void DeleteMarker() {
 
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+        alertDialog = new AlertDialog.Builder(context).create();
+
+        alertDialog.setTitle("You really want to delete the marker?");
+        alertDialog.setMessage("The marker will be removed " + "\n" +
+                "from the database and from the map");
+
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
 
 
 
-        final String result1 = getIntent().getStringExtra("1");
-        final String result2 = getIntent().getStringExtra("2");
-        final String result3 = getIntent().getStringExtra("3");
-        final String result4 = getIntent().getStringExtra("4");
-        final String result5 = getIntent().getStringExtra("5");
-        final String result6 = getIntent().getStringExtra("6");
-        final String result7 = getIntent().getStringExtra("7");
+                final String result1 = getIntent().getStringExtra("1");
+                final String result2 = getIntent().getStringExtra("2");
+                final String result3 = getIntent().getStringExtra("3");
+                final String result4 = getIntent().getStringExtra("4");
+                final String result5 = getIntent().getStringExtra("5");
+                final String result6 = getIntent().getStringExtra("6");
+                final String result7 = getIntent().getStringExtra("7");
 
 
 
 
-        database.delete(SQLiteHelper.DB_TABLE_NAME,  SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result7,null);
+                database.delete(SQLiteHelper.DB_TABLE_NAME,  SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result7,null);
 
-        ModelClass modelClassDelete = new ModelClass(Integer.parseInt(result7),
-                Double.parseDouble(result1),
-                Double.parseDouble(result2),
-                result3,
-                Integer.parseInt(result4),
-                Integer.parseInt(result5),
-                result6);
+                ModelClass modelClassDelete = new ModelClass(Integer.parseInt(result7),
+                        Double.parseDouble(result1),
+                        Double.parseDouble(result2),
+                        result3,
+                        Integer.parseInt(result4),
+                        Integer.parseInt(result5),
+                        result6);
 
-        DatabaseLoad.getInstance(context).DeleteMarker(modelClassDelete);
+                DatabaseLoad.getInstance(context).DeleteMarker(modelClassDelete);
 
 
-        finish();
+                finish();
 
-        dbHelper.close();
+                dbHelper.close();
+
+            }
+        });
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(context, "CANCEL", Toast.LENGTH_LONG).show();
+
+
+
+
+            }
+        });
+
+        alertDialog.show();
+
+
 
 
 
 
     }
-    public void InformationWindow(){
 
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(CardMarkerActivity.this);
-            builder.setTitle("Developer information")
-                    .setMessage("Developer: i.metlin company" + "\n" +
-                            "Country: Ukraine" + "\n" +
-                             "City: Odessa")
-                    .setIcon(R.drawable.information)
-                    .setCancelable(false)
-                    .setNegativeButton("OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
-            AlertDialog alert = builder.create();
-            alert.show();
-
-    }
     /* FUNCTION OF CHECK EDIT TEXT ON EMPTY */
 
 
