@@ -15,6 +15,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
@@ -54,10 +56,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Context context;
     public DatabaseLoad databaseLoad;
 
+    private ImageButton button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
+        button = (ImageButton) findViewById(R.id.imageButton);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -76,15 +81,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mUiSettings = google.getUiSettings();
         google.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mUiSettings.setZoomControlsEnabled(true);
-        mUiSettings.setMapToolbarEnabled(false);
-
+        //mUiSettings.setMapToolbarEnabled(false);
 
 
         mUiSettings.setMyLocationButtonEnabled(true);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            google.setMyLocationEnabled(true);
+            googlemap.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
         }
