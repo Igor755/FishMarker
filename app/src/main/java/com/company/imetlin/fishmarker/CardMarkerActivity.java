@@ -45,6 +45,7 @@ public class CardMarkerActivity extends AppCompatActivity {
     private EditText etdepth;
     private EditText etamountoffish;
     private EditText etnote;
+    private EditText ettitle;
     private Button ok, cancel;
 
     private Context context = CardMarkerActivity.this;
@@ -68,6 +69,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
         etlatitude = (EditText) findViewById(R.id.edit_latitude);
         etlongitute = (EditText) findViewById(R.id.edit_longitude);
+        ettitle = (EditText) findViewById(R.id.edit_title_marker);
         etmDisplayDate = (TextView) findViewById(R.id.tvDate);
         etdepth = (EditText) findViewById(R.id.edit_dept);
         etamountoffish = (EditText) findViewById(R.id.edit_number_of_fish);
@@ -197,13 +199,17 @@ public class CardMarkerActivity extends AppCompatActivity {
         final String result6 = getIntent().getStringExtra("6");
         final String result7 = getIntent().getStringExtra("7");
 
+        //id
+        final String result8 = getIntent().getStringExtra("8");
+
 
         etlatitude.setText(result1);
         etlongitute.setText(result2);
-        etmDisplayDate.setText(result3);
-        etdepth.setText(result4);
-        etamountoffish.setText(result5);
-        etnote.setText(result6);
+        ettitle.setText(result3);
+        etmDisplayDate.setText(result4);
+        etdepth.setText(result5);
+        etamountoffish.setText(result6);
+        etnote.setText(result7);
 
         ok.setText("EDIT");
 
@@ -223,6 +229,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     String latitude = etlatitude.getText().toString();
                     String longitude = etlongitute.getText().toString();
+                    String title = ettitle.getText().toString();
                     String displayDate = etmDisplayDate.getText().toString();
                     String depth = etdepth.getText().toString();
                     String amountoffish = etamountoffish.getText().toString();
@@ -231,6 +238,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
                     contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
+                    contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
                     contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
                     contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
                     contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
@@ -238,14 +246,15 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     //  int update_id = Integer.parseInt(result7);
 
-                    database.update(SQLiteHelper.DB_TABLE_NAME, contentValues, "_id = ?", new String[]{result7});
+                    database.update(SQLiteHelper.DB_TABLE_NAME, contentValues, "_id = ?", new String[]{result8});
 
 
                     Toast.makeText(context, "UPDATE COMPLETE", Toast.LENGTH_LONG).show();
 
-                    ModelClass modelClassupdate = new ModelClass(Integer.parseInt(result7),
+                    ModelClass modelClassupdate = new ModelClass(Integer.parseInt(result8),
                             Double.parseDouble(latitude),
                             Double.parseDouble(longitude),
+                            title,
                             displayDate,
                             Integer.parseInt(depth),
                             Integer.parseInt(amountoffish),
@@ -296,6 +305,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     String latitude = etlatitude.getText().toString();
                     String longitude = etlongitute.getText().toString();
+                    String title = ettitle.getText().toString();
                     String displayDate = etmDisplayDate.getText().toString();
                     String depth = etdepth.getText().toString();
                     String amountoffish = etamountoffish.getText().toString();
@@ -304,6 +314,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
                     contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
+                    contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
                     contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
                     contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
                     contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
@@ -318,6 +329,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                     ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
                             Double.valueOf(latitude),
                             Double.valueOf(longitude),
+                            title,
                             displayDate,
                             Integer.parseInt(depth),
                             Integer.parseInt(amountoffish),
@@ -327,7 +339,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("result", displayDate);
+                    bundle.putString("result", title);
                     bundle.putString("id", String.valueOf(modelClass.getId()));
 
 
@@ -371,19 +383,22 @@ public class CardMarkerActivity extends AppCompatActivity {
                 final String result5 = getIntent().getStringExtra("5");
                 final String result6 = getIntent().getStringExtra("6");
                 final String result7 = getIntent().getStringExtra("7");
+                //id
+                final String result8 = getIntent().getStringExtra("8");
 
 
 
 
-                database.delete(SQLiteHelper.DB_TABLE_NAME,  SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result7,null);
+                database.delete(SQLiteHelper.DB_TABLE_NAME,  SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result8,null);
 
-                ModelClass modelClassDelete = new ModelClass(Integer.parseInt(result7),
+                ModelClass modelClassDelete = new ModelClass(Integer.parseInt(result8),
                         Double.parseDouble(result1),
                         Double.parseDouble(result2),
                         result3,
-                        Integer.parseInt(result4),
+                        result4,
                         Integer.parseInt(result5),
-                        result6);
+                        Integer.parseInt(result6),
+                        result7);
 
                 DatabaseLoad.getInstance(context).DeleteMarker(modelClassDelete);
 
@@ -425,10 +440,12 @@ public class CardMarkerActivity extends AppCompatActivity {
         String depth = etdepth.getText().toString();
         String amount = etamountoffish.getText().toString();
         String note = etnote.getText().toString();
+        String title = ettitle.getText().toString();
 
 
         if (TextUtils.isEmpty(lat) ||
                 TextUtils.isEmpty(lon) ||
+                TextUtils.isEmpty(title) ||
                 TextUtils.isEmpty(date) ||
                 TextUtils.isEmpty(depth) ||
                 TextUtils.isEmpty(amount) ||

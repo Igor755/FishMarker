@@ -23,6 +23,9 @@
     <string name="latitude">latitude</string>
     <string name="selectdate">SELECT DATE</string>
 
+    <string name="titlemarker">Title marker</string>
+    <string name="titlemarker2">title marker</string>
+
    <!-- ////MENU
     -->
     <string name="recycler">Recycler</string>

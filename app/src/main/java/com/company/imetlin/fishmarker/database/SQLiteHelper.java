@@ -34,24 +34,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     + DB_COL_DEPTH + " float,"
                     + DB_COL_AMOUNT + " integer,"
                     + DB_COL_NOTE + " text," + " UNIQUE ("
-                    + DB_COL_TITLE + " ) ON CONFLICT IGNORE" + " );";
+                    + DB_COL_TITLE + " ) ON CONFLICT IGNORE" + ");";
 
     public static final String DB_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + DB_TABLE_NAME;
 
 
 
-    private SQLiteDatabase mDB;
-
-    public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
     public SQLiteHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
 
-    }
-    public SQLiteHelper(Context context, String name,  int version) {
-        super(context, name, null, version);
     }
 
     @Override

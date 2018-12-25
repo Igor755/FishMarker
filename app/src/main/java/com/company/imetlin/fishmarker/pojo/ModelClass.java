@@ -1,6 +1,8 @@
 package com.company.imetlin.fishmarker.pojo;
 
-public class ModelClass {
+import java.util.Comparator;
+
+public class ModelClass implements  Comparable<ModelClass> {
 
 
     private String name;
@@ -12,11 +14,22 @@ public class ModelClass {
     private Integer id;
     private Double latitude;
     private Double longitude;
+    private String title;
     private String date;
     private Integer depth;
     private Integer amount;
     private String note;
 
+    public ModelClass(Integer id, Double latitude, Double longitude, String title, String date, Integer depth, Integer amount, String note) {
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.title = title;
+        this.date = date;
+        this.depth = depth;
+        this.amount = amount;
+        this.note = note;
+    }
 
     public ModelClass(String name, Double latitude, Double longitude, Integer zoom) {
         this.name = name;
@@ -49,15 +62,6 @@ public class ModelClass {
         this.name = name;
     }
 
-    public ModelClass(Integer id, Double latitude, Double longitude, String date, Integer depth, Integer amount, String note) {
-        this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.date = date;
-        this.depth = depth;
-        this.amount = amount;
-        this.note = note;
-    }
     public Integer getId() {
         return id;
     }
@@ -80,6 +84,14 @@ public class ModelClass {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getDepth() {
@@ -154,6 +166,14 @@ public class ModelClass {
                 ", longitude=" + longitude +
                 ", zoom=" + zoom +
                 '}';
+    }
+
+
+
+
+    @Override
+    public int compareTo(ModelClass o) {
+        return this.name.compareTo(o.name);
     }
 }
 

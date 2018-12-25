@@ -41,7 +41,40 @@
     </LinearLayout>
 
 
+
     <!---BLOCK 2-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/CategoryStyle"
+            android:text="@string/titlemarker" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
+
+            <EditText
+                android:id="@+id/edit_title_marker"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/titlemarker2"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:maxLength="20"
+                android:inputType="textCapWords"
+                android:autofillHints="" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <!---BLOCK 3-->
     <LinearLayout
         android:id="@+id/container_date"
         android:layout_width="match_parent"
@@ -70,7 +103,7 @@
     </LinearLayout>
 
 
-    <!---BLOCK 3-->
+    <!---BLOCK 4-->
     <LinearLayout
         android:id="@+id/container_dept"
         android:layout_width="match_parent"
@@ -98,7 +131,7 @@
     </LinearLayout>
 
 
-    <!---BLOCK 4-->
+    <!---BLOCK 5-->
 
     <LinearLayout
         android:id="@+id/container_number_of_fish"
@@ -127,7 +160,7 @@
     </LinearLayout>
 
 
-    <!---BLOCK 5-->
+    <!---BLOCK 6-->
     <LinearLayout
         android:id="@+id/container_note"
         android:layout_width="match_parent"
@@ -155,7 +188,7 @@
     </LinearLayout>
 
 
-    <!---BLOCK 6-->
+    <!---BLOCK 7-->
 
     <FrameLayout
         android:layout_width="match_parent"

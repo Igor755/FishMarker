@@ -86,6 +86,8 @@ public class DatabaseLoad {
             double latitudeIndex = cursor.getColumnIndex(DB_COL_LATITUDE);
             double longitudeIndex = cursor.getColumnIndex(DB_COL_LONGITUDE);
 
+            String titleIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_TITLE));
+
             String dateIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DATE));
 
             String depthIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DEPTH));
@@ -95,23 +97,19 @@ public class DatabaseLoad {
             do {
 
 
-           /*     Log.d("mlog", " long = " + cursor.getDouble((int) longitudeIndex) +
-                        " lat = " + cursor.getDouble((int) latitudeIndex) +
-                        " date = " + cursor.getString(Integer.parseInt(dateIndex)));*/
-
-
                 Integer id = cursor.getInt(idindex);
                 this.last_id = id;
 
                 Double lat = cursor.getDouble((int) latitudeIndex);
                 Double lon = cursor.getDouble((int) longitudeIndex);
-                String title = cursor.getString(Integer.parseInt(dateIndex));
+                String title = cursor.getString(Integer.parseInt(titleIndex));
+                String date = cursor.getString(Integer.parseInt(dateIndex));
 
                 Integer depth = Integer.valueOf(cursor.getString(Integer.parseInt(depthIndex)));
                 Integer amount = Integer.valueOf(cursor.getString(Integer.parseInt(amountIndex)));
                 String note = cursor.getString(Integer.parseInt(noteIndex));
 
-                ModelClass modelClass = new ModelClass(id, lat, lon, title, depth, amount, note);
+                ModelClass modelClass = new ModelClass(id, lat, lon, title, date, depth, amount, note);
 
 
                 this.alldatamarkers.add(modelClass);
@@ -150,29 +148,28 @@ public class DatabaseLoad {
 
 
     }
-    /*
-    FUNCTION UPDATE MARKER*/
+
+    /*FUNCTION UPDATE MARKER*/
 
 
-    public void UpdateMarker(ModelClass modelclass){
+    public void UpdateMarker(ModelClass modelclass) {
 
 
         ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
         while (iterator.hasNext()) {
             ModelClass next = iterator.next();
-            if (next.getId() == modelclass.getId())
-            {
+            if (next.getId() == modelclass.getId()) {
 
                 iterator.set(modelclass);
                 break;
             }
         }
 
-        for (Marker marker : markers){
-           if (modelclass.getId() == marker.getZIndex()){
-               marker.setTitle(modelclass.getDate());
-               break;
-           }
+        for (Marker marker : markers) {
+            if (modelclass.getId() == marker.getZIndex()) {
+                marker.setTitle(modelclass.getTitle());
+                break;
+            }
         }
         System.out.println("GOOD");
         // update marker in markers cycle
@@ -180,7 +177,7 @@ public class DatabaseLoad {
 
         ArrayList<Marker> markers_array = new ArrayList<Marker>();
 
-        for (Marker marker:markers){
+        for (Marker marker : markers) {
 
             Marker marker_update = googlemap.addMarker(new MarkerOptions()
                     .position(marker.getPosition())
@@ -197,25 +194,24 @@ public class DatabaseLoad {
     }
 
 
-/*FUNCTION DELETE MARKER*/
+    /*FUNCTION DELETE MARKER*/
 
 
-    public void DeleteMarker(ModelClass modelclass){
+    public void DeleteMarker(ModelClass modelclass) {
 
         ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
 
         while (iterator.hasNext()) {
             ModelClass next = iterator.next();
-            if (next.getId() == modelclass.getId())
-            {
+            if (next.getId() == modelclass.getId()) {
                 iterator.remove();
                 break;
             }
         }
 
-        for (Marker marker : markers){
-            if (modelclass.getId() == marker.getZIndex()){
-               // marker.remove(markers);\
+        for (Marker marker : markers) {
+            if (modelclass.getId() == marker.getZIndex()) {
+                // marker.remove(markers);\
 
                 markers.remove(marker);
                 break;
@@ -225,7 +221,7 @@ public class DatabaseLoad {
 
         ArrayList<Marker> markers_array = new ArrayList<Marker>();
 
-        for (Marker marker:markers){
+        for (Marker marker : markers) {
 
             Marker marker_delete = googlemap.addMarker(new MarkerOptions()
                     .position(marker.getPosition())
@@ -241,7 +237,9 @@ public class DatabaseLoad {
         LongClickOnMarker();
     }
 
-    public void LongClickOnMarker(){
+    /*LONG CLICK ON MARKER*/
+
+    public void LongClickOnMarker() {
 
         googlemap.setOnMarkerDragListener(new LinkMarkerLongClickListener(markers) {
             @Override
@@ -254,12 +252,13 @@ public class DatabaseLoad {
                         alertDialog = new AlertDialog.Builder(context).create();
 
                         alertDialog.setTitle("Сomplete marker information");
-                        alertDialog.setMessage(modelClass.getLatitude() + "\n" +
-                                modelClass.getLongitude() + "\n" +
-                                modelClass.getDate() + "\n" +
-                                modelClass.getDepth() + "\n" +
-                                modelClass.getAmount() + "\n" +
-                                modelClass.getNote());
+                        alertDialog.setMessage("Latitude:" + modelClass.getLatitude() + "\n" +
+                                "Longitude: " + modelClass.getLongitude() + "\n" +
+                                "Title marker: " + modelClass.getTitle() + "\n" +
+                                "Date: " + modelClass.getDate() + "\n" +
+                                "Depth: " + modelClass.getDepth() + "\n" +
+                                "Amount: " + modelClass.getAmount() + "\n" +
+                                "Note: " + modelClass.getNote());
                         //last_id = modelClass.getId();
 
                         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
@@ -282,11 +281,12 @@ public class DatabaseLoad {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("1", String.valueOf(modelClass.getLatitude()));
                                 bundle.putString("2", String.valueOf(modelClass.getLongitude()));
-                                bundle.putString("3", modelClass.getDate());
-                                bundle.putString("4", String.valueOf(modelClass.getDepth()));
-                                bundle.putString("5", String.valueOf(modelClass.getAmount()));
-                                bundle.putString("6", modelClass.getNote());
-                                bundle.putString("7", String.valueOf(id_marker));
+                                bundle.putString("3", modelClass.getTitle());
+                                bundle.putString("4", modelClass.getDate());
+                                bundle.putString("5", String.valueOf(modelClass.getDepth()));
+                                bundle.putString("6", String.valueOf(modelClass.getAmount()));
+                                bundle.putString("7", modelClass.getNote());
+                                bundle.putString("8", String.valueOf(id_marker));
 
                                 Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
 
@@ -306,7 +306,6 @@ public class DatabaseLoad {
 
 
     }
-
 
 
 }

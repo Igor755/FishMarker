@@ -19,6 +19,9 @@ import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static java.security.AccessController.getContext;
@@ -29,7 +32,7 @@ public class WaterActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Canvas canvas;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,6 @@ public class WaterActivity extends AppCompatActivity {
         DividerItemDecoration divider = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.separator));
         mRecyclerView.addItemDecoration(divider);
-
-
 
         /*
         This is standart divider
@@ -91,7 +92,7 @@ public class WaterActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String txtName = getIntent().getStringExtra("name");
-        List<ModelClass> list = new ArrayList<ModelClass>();
+        ArrayList<ModelClass> list = new ArrayList<ModelClass>();
 
         switch (txtName){
             case "Ocean":
@@ -112,6 +113,8 @@ public class WaterActivity extends AppCompatActivity {
                 list.add(SouthAtlantic);
                 list.add(Indian);
                 list.add(Arctic);
+
+                Collections.sort(list);
 
                 break;
 
@@ -142,6 +145,8 @@ public class WaterActivity extends AppCompatActivity {
                 list.add(NorthSea);
                 list.add(CaribeanSea);
 
+                Collections.sort(list);
+
                 break;
 
             case "Lake":
@@ -164,6 +169,8 @@ public class WaterActivity extends AppCompatActivity {
                 list.add(Ladoga);
                 list.add(Onega);
                 list.add(White);
+
+                Collections.sort(list);
 
                 break;
 
@@ -192,6 +199,8 @@ public class WaterActivity extends AppCompatActivity {
                 list.add(Amur);
                 list.add(Amazonka);
 
+                Collections.sort(list);
+
                 break;
 
             case "Gulf":
@@ -208,6 +217,10 @@ public class WaterActivity extends AppCompatActivity {
                 list.add(GulfofThailand);
                 list.add(Bengal);
 
+                Collections.sort(list);
+
+
+
 
 
 
@@ -222,6 +235,8 @@ public class WaterActivity extends AppCompatActivity {
                 list.add(ReservoirHAES);
                 list.add(RibinskiyReservoir);
                 list.add(KuibishivskiyReservoir);
+
+                Collections.sort(list);
 
 
 
