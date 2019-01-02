@@ -6,6 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +18,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -43,7 +48,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
 
 
     //SupportMapFragment mapFragment;
@@ -55,20 +60,27 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private ModelClass modelClass;
     Context context;
     public DatabaseLoad databaseLoad;
+    public Menu menu;
 
     private ImageButton button;
+    public LocationManager locationManager;
+    public Location location;
+    public Criteria criteria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
-        button = (ImageButton) findViewById(R.id.imageButton);
+        // button = (ImageButton) findViewById(R.id.imageButton);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         context = MapActivity.this;
+
+
+
 
 
     }
@@ -81,10 +93,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mUiSettings = google.getUiSettings();
         google.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mUiSettings.setZoomControlsEnabled(true);
-        //mUiSettings.setMapToolbarEnabled(false);
+        mUiSettings.setMapToolbarEnabled(false);
 
 
-        mUiSettings.setMyLocationButtonEnabled(true);
+        //mUiSettings.setMyLocationButtonEnabled(true);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -93,7 +105,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             // Show rationale and request permission.
         }
         setUpMap(google);
-
 
 
         google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -160,8 +171,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private void setUpMap(GoogleMap google) {
 
 
-
-
         this.googlemap = google;
         double[] cats = getIntent().getDoubleArrayExtra("coordinates");
         Integer myZoom = getIntent().getExtras().getInt("zoom");
@@ -179,15 +188,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         databaseLoad.LoaderData(google);
 
 
-
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
 
 
         if (requestCode == 1) {
@@ -197,8 +203,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 String result2 = data.getStringExtra("id");
                 int res = Integer.parseInt(result2);
 
-               databaseLoad.CreateMarker(res,modelClass.getCoordinates()[0],modelClass.getCoordinates()[1],result);
-               System.out.print("I AM SUPERMAN");
+                databaseLoad.CreateMarker(res, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], result);
+                System.out.print("I AM SUPERMAN");
 
             }
             if (resultCode == MapActivity.RESULT_CANCELED) {
@@ -208,6 +214,54 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_map, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+
+            case R.id.back:
+                //function information
+                finish();
+                return true;
+
+            case R.id.plus:
+
+               /* locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); criteria = new Criteria();
+                location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));*/
+
+
+
+                Location location = this.googlemap.getMyLocation();
+
+                if (location != null) {
+
+                    LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraPosition position = this.googlemap.getCameraPosition();
+
+                    CameraPosition.Builder builder = new CameraPosition.Builder();
+                    builder.zoom(15);
+                    builder.target(target);
+
+                    this.googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 
 
 }

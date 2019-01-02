@@ -26,6 +26,8 @@
     <string name="titlemarker">Title marker</string>
     <string name="titlemarker2">title marker</string>
 
+    <string name="back">back</string>
+    <string name="add">add</string>
    <!-- ////MENU
     -->
     <string name="recycler">Recycler</string>
