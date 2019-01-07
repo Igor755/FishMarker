@@ -54,7 +54,6 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     private SQLiteHelper dbHelper;
 
-    //public String lon,lat,date,depth,amount,note;
 
     public Boolean isnull;
 
@@ -223,7 +222,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                 ContentValues contentValues = new ContentValues();
 
                 if (isEmpty() == true) {
-                    Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
 
                 } else {
 
@@ -249,7 +248,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                     database.update(SQLiteHelper.DB_TABLE_NAME, contentValues, "_id = ?", new String[]{result8});
 
 
-                    Toast.makeText(context, "UPDATE COMPLETE", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.update_complete, Toast.LENGTH_LONG).show();
 
                     ModelClass modelClassupdate = new ModelClass(Integer.parseInt(result8),
                             Double.parseDouble(latitude),
@@ -260,7 +259,6 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Integer.parseInt(amountoffish),
                             note);
 
-                    //DatabaseLoad.getInstance(context).AddDataMarker(modelClassupdate);
                     DatabaseLoad.getInstance(context).UpdateMarker(modelClassupdate);
                     finish();
 
@@ -279,9 +277,10 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
 
-        String coordinate = getIntent().getStringExtra("coord");
-        String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
-        String[] parts = newcoord.split(",");
+        String lat_lon = getIntent().getStringExtra("coordinate");
+        //String coordinate2 = getIntent().getStringExtra("lon");
+        //String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
+        String[] parts = lat_lon.split("/");
         String lat = parts[0];
         String lon = parts[1];
 
@@ -299,7 +298,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                 ContentValues contentValues = new ContentValues();
 
                 if (isEmpty() == true) {
-                    Toast.makeText(context, "Fill in all the fields", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
 
                 } else {
 
@@ -323,7 +322,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                     database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
 
 
-                    Toast.makeText(context, "ADD to BASE, SELEBRATION", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
 
 
                     ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
@@ -364,9 +363,9 @@ public class CardMarkerActivity extends AppCompatActivity {
 
         alertDialog = new AlertDialog.Builder(context).create();
 
-        alertDialog.setTitle("You really want to delete the marker?");
-        alertDialog.setMessage("The marker will be removed " + "\n" +
-                "from the database and from the map");
+        alertDialog.setTitle(R.string.you);
+        alertDialog.setMessage(context.getResources().getString(R.string.the) + "\n" +
+                context.getResources().getString(R.string.from));
 
         alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
             @Override

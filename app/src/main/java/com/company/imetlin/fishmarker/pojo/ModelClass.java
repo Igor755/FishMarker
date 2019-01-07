@@ -20,6 +20,8 @@ public class ModelClass implements  Comparable<ModelClass> {
     private Integer amount;
     private String note;
 
+
+
     public ModelClass(Integer id, Double latitude, Double longitude, String title, String date, Integer depth, Integer amount, String note) {
         this.id = id;
         this.latitude = latitude;
@@ -61,6 +63,7 @@ public class ModelClass implements  Comparable<ModelClass> {
     public ModelClass(String name) {
         this.name = name;
     }
+
 
     public Integer getId() {
         return id;

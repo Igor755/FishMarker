@@ -4,11 +4,6 @@
     <string name="_75757575757">75757575757</string>
     <string name="addmarker">Add marker on map?</string>
     <string name="coordinate">Coordinate will be add on base</string>
-
-
-
-
-
     <string name="latlng">Latitude/Longitude</string>
     <string name="date">Date</string>
     <string name="depth">depth</string>
@@ -22,16 +17,128 @@
     <string name="longitude">longitude</string>
     <string name="latitude">latitude</string>
     <string name="selectdate">SELECT DATE</string>
-
     <string name="titlemarker">Title marker</string>
     <string name="titlemarker2">title marker</string>
 
+
+    <!-- ////MENU -->
+
     <string name="back">back</string>
     <string name="add">add</string>
-   <!-- ////MENU
-    -->
     <string name="recycler">Recycler</string>
     <string name="information">Information</string>
+    <string name="settings">settings</string>
+
+    //////////////////////////////////////
+
+
+    <string name="base">Base empty</string>
+
+    //////////////////////////////////////Сomplete marker information
+
+
+    <string name="complete_c">Сomplete marker information</string>
+    <string name="lat_c">Latitude: </string>
+    <string name="lon_c">Longitude: </string>
+    <string name="tit_c">Title marker: </string>
+    <string name="date_c">Date: </string>
+    <string name="depth_c">Depth: </string>
+    <string name="amount_c">Amount: </string>
+    <string name="note_c">Note: </string>
+
+    //////////////////////////////////////
+
+    <string name="edit">EDIT</string>
+    <string name="update">Update</string>
+
+    //////////////////////////////////////
+
+    <string name="fill">Fill in all the fields</string>
+    <string name="update_complete">UPDATE COMPLETE</string>
+    <string name="add_base">Add to base, SELEBRATION</string>
+
+    //////////////////////////////////////
+
+    <string name="you">You really want to delete the marker?</string>
+    <string name="the">The marker will be removed </string>
+    <string name="from">"from the database and from the map"</string>
+
+    ///////////////////////////////////////
+
+
+    <string name="ocean">Ocean</string>
+    <string name="sea">Sea</string>
+    <string name="river">River</string>
+    <string name="lake">Lake</string>
+    <string name="gulf">Gulf</string>
+    <string name="another">Another</string>
+
+    <string name="coordinate_add">Coordinate will be add on base</string>
+
+    <string name="ups">Upsss....</string>
+    ///////////////////////////////////////////////////////
+
+
+    <string name="NorthPacific">NorthPacific</string>
+    <string name="SouthPacific">SouthPacific</string>
+    <string name="Southern">Southern</string>
+    <string name="NorthAtlantic">NorthAtlantic</string>
+    <string name="SouthAtlantic">SouthAtlantic</string>
+    <string name="Indian">Indian</string>
+    <string name="Arctic">Arctic</string>
+
+
+
+
+    <string name="Black">Black</string>
+    <string name="SeaOfAzov">SeaOfAzov</string>
+    <string name="Baltic">Baltic</string>
+    <string name="Red">Red</string>
+    <string name="Caspian">Caspian</string>
+    <string name="Mediterranean">Mediterranean</string>
+    <string name="Arabian">Arabian</string>
+    <string name="SeaofOkhotsk">SeaofOkhotsk</string>
+    <string name="SeaofJapan">SeaofJapan</string>
+    <string name="BeringSea">BeringSea</string>
+    <string name="NorthSea">NorthSea</string>
+
+
+
+    <string name="Baikal">Baikal</string>
+    <string name="Victoria">Victoria</string>
+    <string name="Titicaca">Titicaca</string>
+    <string name="Superior">Superior</string>
+    <string name="Michigan">Michigan</string>
+    <string name="Huron">Huron</string>
+    <string name="Onega">Onega</string>
+    <string name="White">White</string>
+    <string name="Ladoga">Ladoga</string>
+
+
+
+    <string name="Dnieper">Dnieper</string>
+    <string name="Dniester">Dniester</string>
+    <string name="Southern_Bug">Southern_Bug</string>
+    <string name="Turunchuk">Turunchuk</string>
+    <string name="Volga">Volga</string>
+    <string name="Yenisei">Yenisei</string>
+    <string name="Lena">Lena</string>
+    <string name="Ob">Ob</string>
+    <string name="Angara">Angara</string>
+    <string name="Amur">Amur</string>
+    <string name="Amazonka">Amazonka</string>
+
+
+    <string name="Persian">Persian</string>
+    <string name="Taharonzka">Taharonzka</string>
+    <string name="Finland">Finland</string>
+    <string name="GulfofThailand">GulfofThailand</string>
+    <string name="Bengal">Bengal</string>
+    <string name="ReservoirHAES">ReservoirHAES</string>
+    <string name="RibinskiyReservoir">RibinskiyReservoir</string>
+    <string name="KuibishivskiyReservoir">KuibishivskiyReservoir</string>
+
+
 
 
 

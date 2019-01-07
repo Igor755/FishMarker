@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.company.imetlin.fishmarker">
+<!--
+//  1)работа с интернет
+    2)доступ к информации в сети
+    3)Позволяет приложению писать на внешнее хранилище.
+    5)Приложение сможет получать доступ к приблизительному местоположению.
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    6)Приложение сможет получать доступ к точному местоположению.
+-->
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="com.google.android.provides.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature

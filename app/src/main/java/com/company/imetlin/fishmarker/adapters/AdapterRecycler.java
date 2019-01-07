@@ -5,11 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.company.imetlin.fishmarker.MapActivity;
 import com.company.imetlin.fishmarker.R;
-import com.company.imetlin.fishmarker.WaterActivity;
 import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 
@@ -35,10 +32,8 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
                 @Override
                 public void onClick(View v) {
                     int pos = ViewHolder.super.getAdapterPosition();
-                    //ModelClass cliced = listData.get(pos);
 
                     itemClickListener.onItemClick(v,pos);
-                    //Toast.makeText(v.getContext(),"click" + mTextView.getText(),Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -51,7 +46,6 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
 
     // Конструктор
     public AdapterRecycler(List<ModelClass> listData,OnItemClickListener itemClickListener) {
-        //mDataset = dataset;
         this.itemClickListener =itemClickListener;
         this.listData = listData;
     }

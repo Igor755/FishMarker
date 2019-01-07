@@ -28,6 +28,8 @@ import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.myinterfaces.LinkMarkerLongClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -64,8 +66,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private ImageButton button;
     public LocationManager locationManager;
-    public Location location;
+    public Location mlocation;
     public Criteria criteria;
+
+    private Marker marker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +83,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         context = MapActivity.this;
-
-
-
 
 
     }
@@ -100,65 +102,32 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
+
             googlemap.setMyLocationEnabled(true);
+            setUpMap(google);
+
+
+            google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                @Override
+                public void onMapLongClick(final LatLng latLng) {
+
+                    MapClick(latLng.latitude, latLng.longitude);
+
+
+                }
+
+
+            });
+
+
         } else {
             // Show rationale and request permission.
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    101);
+
+
         }
-        setUpMap(google);
-
-
-        google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(final LatLng latLng) {
-
-
-                StringBuilder stringBuilder = new StringBuilder();
-
-                ((MapActivity) context).modelClass = new ModelClass(latLng.latitude, latLng.longitude);
-                add_marker = new AlertDialog.Builder(context);
-                add_marker.setTitle(R.string.addmarker);  // заголовок
-
-                stringBuilder.append("Coordinate will be add on base");
-                stringBuilder.append("\n");
-                stringBuilder.append(latLng.toString());
-                add_marker.setMessage(stringBuilder); // сообщение
-                add_marker.setIcon(R.drawable.fish2);
-
-
-                add_marker.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int arg1) {
-
-
-                        Toast.makeText(context, "Вы сделали правильный выбор",
-                                Toast.LENGTH_LONG).show();
-
-
-                        Intent intent = new Intent(MapActivity.this, CardMarkerActivity.class);
-                        intent.putExtra("coord", latLng.toString());
-                        startActivityForResult(intent, 1);
-
-
-                    }
-                });
-                add_marker.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int arg1) {
-                        Toast.makeText(context, "Возможно вы правы", Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-                add_marker.setCancelable(true);
-                add_marker.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        Toast.makeText(context, "Вы ничего не выбрали",
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                add_marker.show();
-            }
-
-
-        });
 
 
     }
@@ -228,16 +197,50 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         switch (item.getItemId()) {
 
 
+            case R.id.settings:
+                startActivity(new Intent(
+                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+
+
             case R.id.back:
-                //function information
                 finish();
                 return true;
 
             case R.id.plus:
 
-               /* locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE); criteria = new Criteria();
-                location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));*/
 
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                    LocationManager locationManager = (LocationManager)
+                            getSystemService(Context.LOCATION_SERVICE);
+                    Criteria criteria = new Criteria();
+
+                    Location location = locationManager.getLastKnownLocation(locationManager
+                            .getBestProvider(criteria, false));
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(latitude, longitude))
+                            .zoom(15)
+                            .build();
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+                    googlemap.animateCamera(cameraUpdate);
+                    MapClick(latitude, longitude);
+
+                } else {
+
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            101);
+
+
+                }
+
+
+
+
+      /*
+                /////////////////////////////////////DEPRECATED method.getMylocation()
 
 
                 Location location = this.googlemap.getMyLocation();
@@ -253,7 +256,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     this.googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
 
-                }
+                }*/
                 return true;
 
             default:
@@ -261,7 +264,55 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    public void MapClick(final double lat, final double lon) {
 
+        StringBuilder stringBuilder = new StringBuilder();
+
+        ((MapActivity) context).modelClass = new ModelClass(lat, lon);
+        add_marker = new AlertDialog.Builder(context);
+        add_marker.setTitle(R.string.addmarker);  // заголовок
+
+        stringBuilder.append(context.getResources().getString(R.string.coordinate_add));
+        stringBuilder.append("\n");
+        stringBuilder.append(context.getResources().getString(R.string.lat_c) + " " + lat);
+        stringBuilder.append("\n");
+        stringBuilder.append(context.getResources().getString(R.string.lon_c) + " " + lon);
+        add_marker.setMessage(stringBuilder); // сообщение
+        add_marker.setIcon(R.drawable.fish2);
+
+
+        add_marker.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+
+
+                String a = String.valueOf(lat) + "/" + String.valueOf(lon);
+
+                Intent intent = new Intent(MapActivity.this, CardMarkerActivity.class);
+                intent.putExtra("coordinate", a);
+                startActivityForResult(intent, 1);
+
+
+            }
+        });
+        add_marker.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Toast.makeText(context, R.string.cancel, Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
+        add_marker.setCancelable(true);
+        add_marker.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(context, R.string.ups,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        add_marker.show();
+
+
+    }
 
 
 }

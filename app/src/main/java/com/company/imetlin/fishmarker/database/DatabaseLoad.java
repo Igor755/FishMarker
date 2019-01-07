@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LATITUDE;
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LONGITUDE;
@@ -37,14 +39,17 @@ public class DatabaseLoad {
 
     private GoogleMap googlemap;
     private List<Marker> markers;
-    private Cursor cursor;
     public ArrayList<ModelClass> alldatamarkers;
     private AlertDialog alertDialog;
     public Integer last_id;
     public CardMarkerActivity cardMarkerActivity;
 
 
+
+
     private static DatabaseLoad instance;
+
+
 
     private DatabaseLoad() {
 
@@ -75,6 +80,9 @@ public class DatabaseLoad {
 
 
         this.cardMarkerActivity = cardMarkerActivity;
+
+        //String text1 = getInstance(context).getResources().getString(R.string.lat_c);
+
 
 
         Cursor cursor = database.query(SQLiteHelper.DB_TABLE_NAME, null, null, null, null, null, null);
@@ -120,7 +128,7 @@ public class DatabaseLoad {
 
             } while (cursor.moveToNext());
         } else {
-            Toast.makeText(context, "Base EMPTY", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.base, Toast.LENGTH_LONG).show();
         }
 
         cursor.close();
@@ -138,7 +146,7 @@ public class DatabaseLoad {
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
                 .title(title_marker)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
                 .zIndex(identificator));
         //marker.setDraggable(true);
 
@@ -182,7 +190,7 @@ public class DatabaseLoad {
             Marker marker_update = googlemap.addMarker(new MarkerOptions()
                     .position(marker.getPosition())
                     .title(marker.getTitle())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
                     .zIndex(marker.getZIndex()));
 
             markers_array.add(marker_update);
@@ -226,7 +234,7 @@ public class DatabaseLoad {
             Marker marker_delete = googlemap.addMarker(new MarkerOptions()
                     .position(marker.getPosition())
                     .title(marker.getTitle())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ico))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
                     .zIndex(marker.getZIndex()));
 
             markers_array.add(marker_delete);
@@ -248,29 +256,30 @@ public class DatabaseLoad {
                 for (final ModelClass modelClass : alldatamarkers) {
                     if (modelClass.getId() == (int) marker.getZIndex()) {
                         // Bingo!
-
                         alertDialog = new AlertDialog.Builder(context).create();
 
-                        alertDialog.setTitle("Сomplete marker information");
-                        alertDialog.setMessage("Latitude:" + modelClass.getLatitude() + "\n" +
-                                "Longitude: " + modelClass.getLongitude() + "\n" +
-                                "Title marker: " + modelClass.getTitle() + "\n" +
-                                "Date: " + modelClass.getDate() + "\n" +
-                                "Depth: " + modelClass.getDepth() + "\n" +
-                                "Amount: " + modelClass.getAmount() + "\n" +
-                                "Note: " + modelClass.getNote());
+
+
+                        alertDialog.setTitle(R.string.complete_c);
+                        alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
+                                context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
+                                context.getResources().getString(R.string.tit_c) + " " + modelClass.getTitle() + "\n" +
+                                context.getResources().getString(R.string.date_c) + " " + modelClass.getDate() + "\n" +
+                                context.getResources().getString(R.string.depth_c) + " " + modelClass.getDepth() + "\n" +
+                                context.getResources().getString(R.string.amount_c) + " " + modelClass.getAmount() + "\n" +
+                                context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());
                         //last_id = modelClass.getId();
 
-                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //finish();
                             }
                         });
-                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "EDIT", new DialogInterface.OnClickListener() {
+                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, context.getResources().getString(R.string.edit), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(context, "UPDATE", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, R.string.update, Toast.LENGTH_LONG).show();
 
 
                                 /////UPDATE MARKER IN BASE

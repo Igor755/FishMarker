@@ -25,9 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
-
 public class MainActivity extends AppCompatActivity {
 
     public Menu menu;
@@ -47,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
       SQLiteDatabase database = dbHelper.getWritableDatabase();
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
 
-
-
-
 */
 
 
@@ -68,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 Object o = gridView.getItemAtPosition(position);
                 ModelClass _modelClass = (ModelClass) o;
                 //Toast.makeText(MainActivity.this, "Selected :"
-                    //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
+                //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getBaseContext(), WaterActivity.class);
                 intent.putExtra("name", _modelClass.getName());
@@ -78,22 +72,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private  List<ModelClass> getListData() {
+    private List<ModelClass> getListData() {
 
         List<ModelClass> list = new ArrayList<ModelClass>();
-        ModelClass ocean = new ModelClass("Ocean", "ocean");
-        ModelClass sea = new ModelClass("Sea", "sea");
-        ModelClass river = new ModelClass("River", "river");
-        ModelClass lake = new ModelClass("Lake", "ozero");
+        ModelClass ocean = new ModelClass(getApplicationContext().getResources().getString(R.string.ocean), "ocean");
+        ModelClass sea = new ModelClass(getApplicationContext().getResources().getString(R.string.sea), "sea");
+        ModelClass river = new ModelClass(getApplicationContext().getResources().getString(R.string.river), "river");
+        ModelClass lake = new ModelClass(getApplicationContext().getResources().getString(R.string.lake), "ozero");
 
         ////zaliv
-        ModelClass Gulf = new ModelClass("Gulf", "zaliv");
-
-
-        ModelClass Another = new ModelClass("Another", "reservior");
-
-
-
+        ModelClass Gulf = new ModelClass(getApplicationContext().getResources().getString(R.string.gulf), "zaliv");
+        ModelClass Another = new ModelClass(getApplicationContext().getResources().getString(R.string.another), "reservior");
 
 
         list.add(ocean);
@@ -105,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
         list.add(Another);
 
 
-
         return list;
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -131,14 +120,15 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void InformationWindow(){
+
+    public void InformationWindow() {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Developer information")
                 .setMessage("Developer: i.metlin" + "\n" +
                         "                    Ukraine" + "\n" +
-                        "                    Odessa"+ "\n" +
+                        "                    Odessa" + "\n" +
                         "                    metlin.igor@gmail.com" + "\n" +
                         "                    Metlin Igor")
                 .setIcon(R.drawable.information)
