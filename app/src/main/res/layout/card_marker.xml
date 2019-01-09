@@ -63,7 +63,7 @@
                 android:id="@+id/edit_title_marker"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/titlemarker2"
-                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZАаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя"
                 android:maxLength="20"
                 android:inputType="textCapWords"
                 android:autofillHints="" />

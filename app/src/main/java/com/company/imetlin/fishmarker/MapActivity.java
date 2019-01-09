@@ -178,6 +178,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
             if (resultCode == MapActivity.RESULT_CANCELED) {
                 //Write your code if there's no result
+
+                Toast.makeText(context, R.string.unique, Toast.LENGTH_LONG)
+                        .show();
             }
 
 

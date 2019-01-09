@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -277,6 +278,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
 
+
         String lat_lon = getIntent().getStringExtra("coordinate");
         //String coordinate2 = getIntent().getStringExtra("lon");
         //String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
@@ -293,62 +295,92 @@ public class CardMarkerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-                ContentValues contentValues = new ContentValues();
+                try {
 
-                if (isEmpty() == true) {
-                    Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
+                    SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-                } else {
+                    ContentValues contentValues = new ContentValues();
 
-                    String latitude = etlatitude.getText().toString();
-                    String longitude = etlongitute.getText().toString();
-                    String title = ettitle.getText().toString();
-                    String displayDate = etmDisplayDate.getText().toString();
-                    String depth = etdepth.getText().toString();
-                    String amountoffish = etamountoffish.getText().toString();
-                    String note = etnote.getText().toString();
+               /* Cursor cursor_lat = database.rawQuery("select * from " + dbHelper.DB_TABLE_NAME + " where " +
+                        dbHelper.DB_COL_LATITUDE + " like " + etlatitude.toString(), null);
+                Cursor cursor_lon = database.rawQuery("select * from " + dbHelper.DB_TABLE_NAME + " where " +
+                        dbHelper.DB_COL_LONGITUDE + " like " + etlongitute.toString(), null);
 
+                if ((cursor_lat.getString(cursor_lat.getColumnIndex("latitude")).equals(etlatitude.toString())) &&
+                        (cursor_lon.getString(cursor_lat.getColumnIndex("longitude")).equals(etlongitute.toString()))){
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Значение уже есть в БД!", Toast.LENGTH_SHORT);
+                    toast.show();
 
-                    contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
-                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
-                    contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
-                    contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
-                    contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
-                    contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
-                    contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
+                    Intent intent = new Intent();
+                    setResult(MapActivity.RESULT_CANCELED, intent);
+                    finish();
 
-                    database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
+                }*/
 
 
-                    Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
+                    if (isEmpty() == true) {
+                        Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
+
+                    } else {
+
+                        String latitude = etlatitude.getText().toString();
+                        String longitude = etlongitute.getText().toString();
+                        String title = ettitle.getText().toString();
+                        String displayDate = etmDisplayDate.getText().toString();
+                        String depth = etdepth.getText().toString();
+                        String amountoffish = etamountoffish.getText().toString();
+                        String note = etnote.getText().toString();
 
 
-                    ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
-                            Double.valueOf(latitude),
-                            Double.valueOf(longitude),
-                            title,
-                            displayDate,
-                            Integer.parseInt(depth),
-                            Integer.parseInt(amountoffish),
-                            note);
+                        contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
+                        contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
+                        contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
+                        contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
+                        contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
+                        contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
+                        contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
 
-                    DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
+                        database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
 
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("result", title);
-                    bundle.putString("id", String.valueOf(modelClass.getId()));
+                        Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
+
+
+                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
+                                Double.valueOf(latitude),
+                                Double.valueOf(longitude),
+                                title,
+                                displayDate,
+                                Integer.parseInt(depth),
+                                Integer.parseInt(amountoffish),
+                                note);
+
+                        DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
+
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("result", title);
+                        bundle.putString("id", String.valueOf(modelClass.getId()));
+
+
+                        Intent intent = new Intent();
+                        intent.putExtras(bundle);
+                        //returnIntent.putExtra("id",modelClass.getId());
+
+                        setResult(MapActivity.RESULT_OK, intent);
+                        finish();
+
+
+                    }
+
+                } catch (SQLiteConstraintException e){
 
 
                     Intent intent = new Intent();
-                    intent.putExtras(bundle);
-                    //returnIntent.putExtra("id",modelClass.getId());
-
-                    setResult(MapActivity.RESULT_OK, intent);
+                    setResult(MapActivity.RESULT_CANCELED, intent);
                     finish();
-
 
                 }
                 dbHelper.close();
@@ -367,7 +399,7 @@ public class CardMarkerActivity extends AppCompatActivity {
         alertDialog.setMessage(context.getResources().getString(R.string.the) + "\n" +
                 context.getResources().getString(R.string.from));
 
-        alertDialog.setButton(Dialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -408,10 +440,10 @@ public class CardMarkerActivity extends AppCompatActivity {
 
             }
         });
-        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context, "CANCEL", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getResources().getString(R.string.cancel), Toast.LENGTH_LONG).show();
 
 
 

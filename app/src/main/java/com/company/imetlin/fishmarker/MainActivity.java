@@ -36,15 +36,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
 /*
+
 
  //DROP BASE
       dbHelper = new SQLiteHelper(this);
       SQLiteDatabase database = dbHelper.getWritableDatabase();
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
-
 */
+
 
 
         List<ModelClass> image_details = getListData();
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                         "                    Metlin Igor")
                 .setIcon(R.drawable.information)
                 .setCancelable(false)
-                .setNegativeButton("OK",
+                .setNegativeButton(getApplicationContext().getResources().getString(R.string.ok),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

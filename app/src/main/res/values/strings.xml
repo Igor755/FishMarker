@@ -21,7 +21,7 @@
     <string name="titlemarker2">title marker</string>
 
 
-    <!-- ////MENU -->
+    ///////////////////////////////////////////////////////MENU
 
     <string name="back">back</string>
     <string name="add">add</string>
@@ -29,12 +29,12 @@
     <string name="information">Information</string>
     <string name="settings">settings</string>
 
-    //////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
 
     <string name="base">Base empty</string>
 
-    //////////////////////////////////////Сomplete marker information
+    ///////////////////////////////////////////////////////Сomplete marker information
 
 
     <string name="complete_c">Сomplete marker information</string>
@@ -46,24 +46,25 @@
     <string name="amount_c">Amount: </string>
     <string name="note_c">Note: </string>
 
-    //////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     <string name="edit">EDIT</string>
     <string name="update">Update</string>
+    <string name="unique">Marker exist</string>
 
-    //////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     <string name="fill">Fill in all the fields</string>
     <string name="update_complete">UPDATE COMPLETE</string>
     <string name="add_base">Add to base, SELEBRATION</string>
 
-    //////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     <string name="you">You really want to delete the marker?</string>
     <string name="the">The marker will be removed </string>
     <string name="from">"from the database and from the map"</string>
 
-    ///////////////////////////////////////
+    ///////////////////////////////////////////////////////OBJECT MAIN
 
 
     <string name="ocean">Ocean</string>
@@ -76,33 +77,31 @@
     <string name="coordinate_add">Coordinate will be add on base</string>
 
     <string name="ups">Upsss....</string>
-    ///////////////////////////////////////////////////////
 
 
-    <string name="NorthPacific">NorthPacific</string>
-    <string name="SouthPacific">SouthPacific</string>
+    ///////////////////////////////////////////////////////OBJECTS WATER
+
+
+    <string name="NorthPacific">North Pacific</string>
+    <string name="SouthPacific">South Pacific</string>
     <string name="Southern">Southern</string>
-    <string name="NorthAtlantic">NorthAtlantic</string>
-    <string name="SouthAtlantic">SouthAtlantic</string>
+    <string name="NorthAtlantic">North Atlantic</string>
+    <string name="SouthAtlantic">South Atlantic</string>
     <string name="Indian">Indian</string>
     <string name="Arctic">Arctic</string>
 
-
-
-
     <string name="Black">Black</string>
-    <string name="SeaOfAzov">SeaOfAzov</string>
+    <string name="SeaOfAzov">Sea Of Azov</string>
     <string name="Baltic">Baltic</string>
     <string name="Red">Red</string>
     <string name="Caspian">Caspian</string>
     <string name="Mediterranean">Mediterranean</string>
     <string name="Arabian">Arabian</string>
-    <string name="SeaofOkhotsk">SeaofOkhotsk</string>
-    <string name="SeaofJapan">SeaofJapan</string>
-    <string name="BeringSea">BeringSea</string>
-    <string name="NorthSea">NorthSea</string>
-
-
+    <string name="SeaofOkhotsk">Sea of Okhotsk</string>
+    <string name="SeaofJapan">Sea of Japan</string>
+    <string name="BeringSea">Bering Sea</string>
+    <string name="NorthSea">North Sea</string>
+    <string name="CaribeanSea">Caribean Sea</string>
 
     <string name="Baikal">Baikal</string>
     <string name="Victoria">Victoria</string>
@@ -113,8 +112,6 @@
     <string name="Onega">Onega</string>
     <string name="White">White</string>
     <string name="Ladoga">Ladoga</string>
-
-
 
     <string name="Dnieper">Dnieper</string>
     <string name="Dniester">Dniester</string>
@@ -128,19 +125,14 @@
     <string name="Amur">Amur</string>
     <string name="Amazonka">Amazonka</string>
 
-
     <string name="Persian">Persian</string>
     <string name="Taharonzka">Taharonzka</string>
     <string name="Finland">Finland</string>
-    <string name="GulfofThailand">GulfofThailand</string>
+    <string name="GulfofThailand">Gulf of Thailand</string>
     <string name="Bengal">Bengal</string>
-    <string name="ReservoirHAES">ReservoirHAES</string>
-    <string name="RibinskiyReservoir">RibinskiyReservoir</string>
-    <string name="KuibishivskiyReservoir">KuibishivskiyReservoir</string>
-
-
-
-
+    <string name="ReservoirHAES">Reservoir HAES</string>
+    <string name="RibinskiyReservoir">Ribinskiy Reservoir</string>
+    <string name="KuibishivskiyReservoir">Kuibishivskiy Reservoir</string>
 
 
 
