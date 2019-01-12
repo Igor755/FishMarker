@@ -1,0 +1,140 @@
+<resources>
+    <string name="app_name">FishMarker</string>
+    <string name="name_water">Name_Water</string>
+    <string name="_75757575757">75757575757</string>
+    <string name="addmarker">Добавить маркер на карту?</string>
+    <string name="coordinate">Координаты будут добавлены в базу</string>
+    <string name="latlng">Широта/Долгота</string>
+    <string name="date">Дата</string>
+    <string name="depth">глубина</string>
+    <string name="Depth">Глубина(в метрах)</string>
+    <string name="Number">Количество рыбы(целое число)</string>
+    <string name="number">количество рыбы</string>
+    <string name="Note">Заметки</string>
+    <string name="note">заметки</string>
+    <string name="ok">Да</string>
+    <string name="cancel">Нет</string>
+    <string name="longitude">Долгота</string>
+    <string name="latitude">Широта</string>
+    <string name="selectdate">Выбрать Дату</string>
+    <string name="titlemarker">Заголовок маркера</string>
+    <string name="titlemarker2">заголовок маркера</string>
+
+
+    ///////////////////////////////////////////////////////MENU
+
+    <string name="back">назад</string>
+    <string name="add">добавить</string>
+    <string name="recycler">Корзина</string>
+    <string name="information">Информация</string>
+    <string name="settings">Настройки</string>
+
+    ///////////////////////////////////////////////////////
+
+
+    <string name="base">База пуста</string>
+
+    ///////////////////////////////////////////////////////Сomplete marker information
+
+
+    <string name="complete_c">Полная информация о маркере</string>
+    <string name="lat_c">Широта: </string>
+    <string name="lon_c">Долгота: </string>
+    <string name="tit_c">Заголовок маркера: </string>
+    <string name="date_c">Дата: </string>
+    <string name="depth_c">Глубина: </string>
+    <string name="amount_c">Количество: </string>
+    <string name="note_c">Заметки: </string>
+
+    ///////////////////////////////////////////////////////
+
+    <string name="edit">Изменить</string>
+    <string name="update">Изменение маркера</string>
+    <string name="unique">Маркер существут</string>
+
+    ///////////////////////////////////////////////////////
+
+    <string name="fill">Заполните все поля</string>
+    <string name="update_complete">Обновление завершено</string>
+    <string name="add_base">Добавлено в базу, поздравляем</string>
+
+    ///////////////////////////////////////////////////////
+
+    <string name="you">Вы действительно хотите удалить маркер?</string>
+    <string name="the">Маркер будет удален </string>
+    <string name="from">"из базы, а также с карты"</string>
+
+    ///////////////////////////////////////////////////////OBJECT MAIN
+
+
+    <string name="ocean">Океан</string>
+    <string name="sea">Море</string>
+    <string name="river">Река</string>
+    <string name="lake">Озеро</string>
+    <string name="gulf">Залив</string>
+    <string name="another">Другое</string>
+
+    <string name="coordinate_add">Координаты будут добавлены в базу</string>
+
+    <string name="ups">Upsss....</string>
+
+
+    ///////////////////////////////////////////////////////OBJECTS WATER
+
+
+    <string name="NorthPacific">Северная часть Тихого Океана</string>
+    <string name="SouthPacific">Южная часть Тихого Океана</string>
+    <string name="Southern">Южный</string>
+    <string name="NorthAtlantic">Северно Атлантический</string>
+    <string name="SouthAtlantic">Южно Атлантический</string>
+    <string name="Indian">Индийский</string>
+    <string name="Arctic">Северно Ледовитый</string>
+
+    <string name="Black">Черное</string>
+    <string name="SeaOfAzov">Азовское море</string>
+    <string name="Baltic">Балтийское</string>
+    <string name="Red">Красное</string>
+    <string name="Caspian">Каспийское</string>
+    <string name="Mediterranean">Средиземное</string>
+    <string name="Arabian">Арабское</string>
+    <string name="SeaofOkhotsk">Охотское</string>
+    <string name="SeaofJapan">Японское</string>
+    <string name="BeringSea">Берингово</string>
+    <string name="NorthSea">Северное</string>
+    <string name="CaribeanSea">Карибское</string>
+
+    <string name="Baikal">Байкал</string>
+    <string name="Victoria">Виктория</string>
+    <string name="Titicaca">Титикака</string>
+    <string name="Superior">Верхнее</string>
+    <string name="Michigan">Мичиган</string>
+    <string name="Huron">Гурон</string>
+    <string name="Onega">Онежское</string>
+    <string name="White">Белое</string>
+    <string name="Ladoga">Ладожское</string>
+
+    <string name="Dnieper">Днепр</string>
+    <string name="Dniester">Днестр</string>
+    <string name="Southern_Bug">Южный буг</string>
+    <string name="Turunchuk">Турунчук</string>
+    <string name="Volga">Волга</string>
+    <string name="Yenisei">Енисей</string>
+    <string name="Lena">Лена</string>
+    <string name="Ob">Обь</string>
+    <string name="Angara">Ангара</string>
+    <string name="Amur">Амур</string>
+    <string name="Amazonka">Амазонка</string>
+
+    <string name="Persian">Персидский</string>
+    <string name="Taharonzka">Тахаронзкий</string>
+    <string name="Finland">Финский</string>
+    <string name="GulfofThailand">Тайландский</string>
+    <string name="Bengal">Бенгальский</string>
+
+    <string name="ReservoirHAES">Водохранилище ХАЕС</string>
+    <string name="RibinskiyReservoir">Рыбинское водохранилище</string>
+    <string name="KuibishivskiyReservoir">Куйбышевское водохранилище</string>
+
+
+
+</resources>

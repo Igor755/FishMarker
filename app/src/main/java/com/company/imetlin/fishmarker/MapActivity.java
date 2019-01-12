@@ -289,6 +289,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
+
+
                 String a = String.valueOf(lat) + "/" + String.valueOf(lon);
 
                 Intent intent = new Intent(MapActivity.this, CardMarkerActivity.class);

@@ -296,7 +296,7 @@ public class CardMarkerActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                try {
+
 
                     SQLiteDatabase database = dbHelper.getWritableDatabase();
 
@@ -375,14 +375,14 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     }
 
-                } catch (SQLiteConstraintException e){
+                /*} catch (SQLiteConstraintException e){
 
 
                     Intent intent = new Intent();
                     setResult(MapActivity.RESULT_CANCELED, intent);
                     finish();
 
-                }
+                }*/
                 dbHelper.close();
 
             }
