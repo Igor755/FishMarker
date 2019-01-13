@@ -45,10 +45,7 @@ public class DatabaseLoad {
     public CardMarkerActivity cardMarkerActivity;
 
 
-
-
     private static DatabaseLoad instance;
-
 
 
     private DatabaseLoad() {
@@ -82,7 +79,6 @@ public class DatabaseLoad {
         this.cardMarkerActivity = cardMarkerActivity;
 
         //String text1 = getInstance(context).getResources().getString(R.string.lat_c);
-
 
 
         Cursor cursor = database.query(SQLiteHelper.DB_TABLE_NAME, null, null, null, null, null, null);
@@ -259,7 +255,6 @@ public class DatabaseLoad {
                         alertDialog = new AlertDialog.Builder(context).create();
 
 
-
                         alertDialog.setTitle(R.string.complete_c);
                         alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
                                 context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
@@ -313,6 +308,18 @@ public class DatabaseLoad {
             }
         });
 
+
+    }
+
+    public boolean SearchMarker(Double lat, Double lon) {
+
+        for (Marker marker : markers) {
+            if ((marker.getPosition().latitude == lat) &&
+                    (marker.getPosition().longitude == lon)) {
+                return true;
+            }
+        }
+        return false;
 
     }
 

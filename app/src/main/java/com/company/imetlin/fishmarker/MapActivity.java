@@ -1,10 +1,12 @@
 package com.company.imetlin.fishmarker;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Criteria;
 import android.location.Location;
@@ -45,9 +47,15 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_TABLE_NAME;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LATITUDE;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LONGITUDE;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_DATE;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_DEPTH;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_AMOUNT;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_NOTE;
+import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_TITLE;
 
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
@@ -70,6 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public Criteria criteria;
 
     private Marker marker;
+    private SQLiteHelper dbHelper;
 
 
     @Override
@@ -229,9 +238,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             .build();
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                     googlemap.animateCamera(cameraUpdate);
-                    MapClick(latitude, longitude);
 
-                } else {
+                    //boolean k = false;
+
+                     boolean ismarkerExist = DatabaseLoad.getInstance(context).SearchMarker(latitude, longitude);
+
+                    if (!ismarkerExist) {
+
+                        MapClick(latitude, longitude);
+                    }else
+                    {
+                        Toast.makeText(context, R.string.unique, Toast.LENGTH_LONG)
+                                .show();
+                    }
+
+
+                    } else {
 
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                             101);
@@ -288,9 +310,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onClick(DialogInterface dialog, int arg1) {
 
 
-
-
-
                 String a = String.valueOf(lat) + "/" + String.valueOf(lon);
 
                 Intent intent = new Intent(MapActivity.this, CardMarkerActivity.class);
@@ -318,6 +337,47 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     }
+
+ /*   public ModelClass SearchRepeat(double lat) {
+
+        dbHelper = new SQLiteHelper(this);
+
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+*//*
+        try {*//*
+
+            Cursor cursor = database.query(DB_TABLE_NAME, new String[]{DB_COL_ID_PRIMARY,
+                            DB_COL_LATITUDE,
+                            DB_COL_LONGITUDE,
+                            DB_COL_TITLE,
+                            DB_COL_DATE,
+                            DB_COL_DEPTH,
+                            DB_COL_AMOUNT,
+                            DB_COL_NOTE}, DB_COL_LATITUDE + "=" + lat,
+                    new String[]{String.valueOf(lat)}, null, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+            }
+
+            ModelClass modelClass = new ModelClass(Integer.parseInt(cursor.getString(0)),
+                    Double.parseDouble(cursor.getString(1)),
+                    Double.parseDouble(cursor.getString(2)),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    Integer.parseInt(cursor.getString(5)),
+                    Integer.parseInt(cursor.getString(6)),
+                    cursor.getString(7));
+
+
+            return modelClass;
+
+       *//* } catch (IllegalArgumentException e) {
+
+            return null;
+        }
+    }*/
 
 
 }

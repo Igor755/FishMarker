@@ -52,6 +52,7 @@
     <string name="update">Update</string>
     <string name="unique">Marker exist</string>
 
+
     ///////////////////////////////////////////////////////
 
     <string name="fill">Fill in all the fields</string>
@@ -133,6 +134,7 @@
     <string name="ReservoirHAES">Reservoir HAES</string>
     <string name="RibinskiyReservoir">Ribinskiy Reservoir</string>
     <string name="KuibishivskiyReservoir">Kuibishivskiy Reservoir</string>
+
 
 
 
