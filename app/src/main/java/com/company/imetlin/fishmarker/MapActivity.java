@@ -61,9 +61,7 @@ import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_TITLE;
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
 
 
-    //SupportMapFragment mapFragment;
-    //GoogleMap map;
-    final String TAG = "myLogs";
+
     public GoogleMap googlemap;
     private UiSettings mUiSettings;
     AlertDialog.Builder add_marker;
@@ -72,13 +70,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public DatabaseLoad databaseLoad;
     public Menu menu;
 
-    private ImageButton button;
-    public LocationManager locationManager;
-    public Location mlocation;
-    public Criteria criteria;
-
-    private Marker marker;
-    private SQLiteHelper dbHelper;
 
 
     @Override
@@ -239,7 +230,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                     googlemap.animateCamera(cameraUpdate);
 
-                    //boolean k = false;
 
                      boolean ismarkerExist = DatabaseLoad.getInstance(context).SearchMarker(latitude, longitude);
 
@@ -260,9 +250,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
                 }
-
-
-
 
       /*
                 /////////////////////////////////////DEPRECATED method.getMylocation()
@@ -337,47 +324,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     }
-
- /*   public ModelClass SearchRepeat(double lat) {
-
-        dbHelper = new SQLiteHelper(this);
-
-
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-*//*
-        try {*//*
-
-            Cursor cursor = database.query(DB_TABLE_NAME, new String[]{DB_COL_ID_PRIMARY,
-                            DB_COL_LATITUDE,
-                            DB_COL_LONGITUDE,
-                            DB_COL_TITLE,
-                            DB_COL_DATE,
-                            DB_COL_DEPTH,
-                            DB_COL_AMOUNT,
-                            DB_COL_NOTE}, DB_COL_LATITUDE + "=" + lat,
-                    new String[]{String.valueOf(lat)}, null, null, null, null);
-
-            if (cursor != null) {
-                cursor.moveToFirst();
-            }
-
-            ModelClass modelClass = new ModelClass(Integer.parseInt(cursor.getString(0)),
-                    Double.parseDouble(cursor.getString(1)),
-                    Double.parseDouble(cursor.getString(2)),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    Integer.parseInt(cursor.getString(5)),
-                    Integer.parseInt(cursor.getString(6)),
-                    cursor.getString(7));
-
-
-            return modelClass;
-
-       *//* } catch (IllegalArgumentException e) {
-
-            return null;
-        }
-    }*/
 
 
 }

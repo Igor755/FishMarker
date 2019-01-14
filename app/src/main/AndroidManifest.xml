@@ -6,7 +6,7 @@
     2)доступ к информации в сети
     3)Позволяет приложению писать на внешнее хранилище.
     5)Приложение сможет получать доступ к приблизительному местоположению.
-        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     6)Приложение сможет получать доступ к точному местоположению.
 -->
 
@@ -26,26 +26,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".WaterActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".MapActivity"
-            android:label="@string/app_name"/>
-        <activity android:name=".CardMarkerActivity"
-            android:label="@string/app_name">
-        </activity>
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".CardMarkerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBZPXHUCqXQFVOSsnBUVcNvl8ABg25L13I" />
+            android:value="AIzaSyBZPXHUCqXQFVOSsnBUVcNvl8ABg25L13I"/>
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
