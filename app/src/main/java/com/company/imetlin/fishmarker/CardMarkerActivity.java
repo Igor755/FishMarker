@@ -295,30 +295,9 @@ public class CardMarkerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
-
                     SQLiteDatabase database = dbHelper.getWritableDatabase();
 
                     ContentValues contentValues = new ContentValues();
-
-               /* Cursor cursor_lat = database.rawQuery("select * from " + dbHelper.DB_TABLE_NAME + " where " +
-                        dbHelper.DB_COL_LATITUDE + " like " + etlatitude.toString(), null);
-                Cursor cursor_lon = database.rawQuery("select * from " + dbHelper.DB_TABLE_NAME + " where " +
-                        dbHelper.DB_COL_LONGITUDE + " like " + etlongitute.toString(), null);
-
-                if ((cursor_lat.getString(cursor_lat.getColumnIndex("latitude")).equals(etlatitude.toString())) &&
-                        (cursor_lon.getString(cursor_lat.getColumnIndex("longitude")).equals(etlongitute.toString()))){
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            "Значение уже есть в БД!", Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    Intent intent = new Intent();
-                    setResult(MapActivity.RESULT_CANCELED, intent);
-                    finish();
-
-                }*/
-
 
                     if (isEmpty() == true) {
                         Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
@@ -348,7 +327,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
 
 
-                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id + 1,
+                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id,
                                 Double.valueOf(latitude),
                                 Double.valueOf(longitude),
                                 title,
@@ -356,8 +335,6 @@ public class CardMarkerActivity extends AppCompatActivity {
                                 Integer.parseInt(depth),
                                 Integer.parseInt(amountoffish),
                                 note);
-
-                        DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
 
 
                         Bundle bundle = new Bundle();
@@ -370,6 +347,10 @@ public class CardMarkerActivity extends AppCompatActivity {
                         //returnIntent.putExtra("id",modelClass.getId());
 
                         setResult(MapActivity.RESULT_OK, intent);
+
+                        DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
+
+
                         finish();
 
 

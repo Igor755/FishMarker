@@ -66,7 +66,7 @@ public class DatabaseLoad {
 
         this.googlemap = _googlemap;
 
-        this.last_id = 0;
+        this.last_id = 1;
 
         sqLiteHelper = new SQLiteHelper(context);
 
