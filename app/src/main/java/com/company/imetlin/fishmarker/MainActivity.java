@@ -38,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/*
 
+
+/*
 
  //DROP BASE
       dbHelper = new SQLiteHelper(this);
       SQLiteDatabase database = dbHelper.getWritableDatabase();
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
+
 
 
 

@@ -47,22 +47,28 @@ public class DatabaseLoad {
 
     private DatabaseLoad() {
 
-        this.markers = new ArrayList<Marker>();
-        this.alldatamarkers = new ArrayList<ModelClass>();
     }
 
-    public static DatabaseLoad getInstance(Context context) {
+    public static DatabaseLoad getInstance() {
 
         if (instance == null) {        //если объект еще не создан
             instance = new DatabaseLoad();    //создать новый объект
-            instance.context = context;
         }
 
         return instance;
     }
+    public void  setContext(Context context) {
+
+        this.context = context;
+
+
+    }
 
 
     public void LoaderData(GoogleMap _googlemap) {
+
+        this.markers = new ArrayList<Marker>();
+        this.alldatamarkers = new ArrayList<ModelClass>();
 
         this.googlemap = _googlemap;
 

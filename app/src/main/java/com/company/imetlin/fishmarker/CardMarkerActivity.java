@@ -260,7 +260,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Integer.parseInt(amountoffish),
                             note);
 
-                    DatabaseLoad.getInstance(context).UpdateMarker(modelClassupdate);
+                    DatabaseLoad.getInstance().UpdateMarker(modelClassupdate);
                     finish();
 
                 }
@@ -327,7 +327,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
 
 
-                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance(context).last_id,
+                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance().last_id,
                                 Double.valueOf(latitude),
                                 Double.valueOf(longitude),
                                 title,
@@ -348,7 +348,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                         setResult(MapActivity.RESULT_OK, intent);
 
-                        DatabaseLoad.getInstance(context).AddDataMarker(modelClass);
+                        DatabaseLoad.getInstance().AddDataMarker(modelClass);
 
 
                         finish();
@@ -386,8 +386,6 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                 SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-
-
                 final String result1 = getIntent().getStringExtra("1");
                 final String result2 = getIntent().getStringExtra("2");
                 final String result3 = getIntent().getStringExtra("3");
@@ -397,9 +395,6 @@ public class CardMarkerActivity extends AppCompatActivity {
                 final String result7 = getIntent().getStringExtra("7");
                 //id
                 final String result8 = getIntent().getStringExtra("8");
-
-
-
 
                 database.delete(SQLiteHelper.DB_TABLE_NAME,  SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result8,null);
 
@@ -412,7 +407,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         Integer.parseInt(result6),
                         result7);
 
-                DatabaseLoad.getInstance(context).DeleteMarker(modelClassDelete);
+                DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);
 
 
                 finish();

@@ -84,6 +84,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         context = MapActivity.this;
 
+        DatabaseLoad.getInstance().setContext(context);
 
     }
 
@@ -153,9 +154,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         google.animateCamera(cameraUpdate);
 
 
-        databaseLoad = DatabaseLoad.getInstance(context);
-        databaseLoad.LoaderData(google);
-
+        DatabaseLoad.getInstance().LoaderData(google);
 
     }
 
@@ -172,7 +171,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String result2 = data.getStringExtra("id");
                 int res = Integer.parseInt(result2);
 
-                databaseLoad.CreateMarker(res, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], result);
+                DatabaseLoad.getInstance().CreateMarker(res, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], result);
                 System.out.print("I AM SUPERMAN");
 
             }
@@ -231,7 +230,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     googlemap.animateCamera(cameraUpdate);
 
 
-                     boolean ismarkerExist = DatabaseLoad.getInstance(context).SearchMarker(latitude, longitude);
+                     boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
 
                     if (!ismarkerExist) {
 
