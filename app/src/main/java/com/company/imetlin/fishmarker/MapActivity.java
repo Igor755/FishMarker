@@ -12,6 +12,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -22,44 +23,42 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
-import com.company.imetlin.fishmarker.database.SQLiteHelper;
-import com.company.imetlin.fishmarker.myinterfaces.LinkMarkerLongClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
 
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_TABLE_NAME;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LATITUDE;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LONGITUDE;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_DATE;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_DEPTH;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_AMOUNT;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_NOTE;
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_TITLE;
+/*
+                /////////////////////////////////////DEPRECATED method.getMylocation()
+
+
+                Location location = this.googlemap.getMyLocation();
+
+                if (location != null) {
+
+                    LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
+                    CameraPosition position = this.googlemap.getCameraPosition();
+
+                    CameraPosition.Builder builder = new CameraPosition.Builder();
+                    builder.zoom(15);
+                    builder.target(target);
+
+                    this.googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
+
+                }*/
+
 
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
-
 
 
     public GoogleMap googlemap;
@@ -70,6 +69,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public DatabaseLoad databaseLoad;
     public Menu menu;
 
+
+    private static final int LOCATION_PERMISSION_REQEST_CODE = 1;
+    private static final int LOCATION_PERMISSION_REQEST_CODE_TWO= 2;
 
 
     @Override
@@ -86,6 +88,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         DatabaseLoad.getInstance().setContext(context);
 
+
     }
 
     @Override
@@ -99,39 +102,84 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mUiSettings.setMapToolbarEnabled(false);
 
 
+
         //mUiSettings.setMyLocationButtonEnabled(true);
+        setUpMap(google);
+
+
+        google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(final LatLng latLng) {
+
+                MapClick(latLng.latitude, latLng.longitude);
+
+
+            }
+
+
+        });
+
+
+        onCheckPermission(google);
+
+
+    }
+    public void onCheckPermission (GoogleMap googl){
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
-            googlemap.setMyLocationEnabled(true);
-            setUpMap(google);
+            googl.setMyLocationEnabled(true);
 
 
-            google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                @Override
-                public void onMapLongClick(final LatLng latLng) {
-
-                    MapClick(latLng.latitude, latLng.longitude);
-
-
-                }
-
-
-            });
 
 
         } else {
             // Show rationale and request permission.
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    101);
-
+                    1);
 
         }
 
 
+
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQEST_CODE:
+
+                // Check Location permission is granted or not
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MapActivity.this, "Location  permission granted", Toast.LENGTH_SHORT).show();
+
+                    onCheckPermission(googlemap);
+
+
+                } else {
+                    Toast.makeText(MapActivity.this, "Location  permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case LOCATION_PERMISSION_REQEST_CODE_TWO:
+                // Check Location permission is granted or not
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MapActivity.this, "Location  permission granted", Toast.LENGTH_SHORT).show();
+
+                    onMyLocation();
+
+
+                } else {
+                    Toast.makeText(MapActivity.this, "Location  permission denied", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+
+    }
+
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -199,9 +247,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         switch (item.getItemId()) {
 
 
-            case R.id.settings:
+          /*  case R.id.settings:
                 startActivity(new Intent(
-                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));*/
 
 
             case R.id.back:
@@ -210,68 +258,53 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
             case R.id.plus:
 
-
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                    LocationManager locationManager = (LocationManager)
-                            getSystemService(Context.LOCATION_SERVICE);
-                    Criteria criteria = new Criteria();
-
-                    Location location = locationManager.getLastKnownLocation(locationManager
-                            .getBestProvider(criteria, false));
-                    double latitude = location.getLatitude();
-                    double longitude = location.getLongitude();
-
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(new LatLng(latitude, longitude))
-                            .zoom(15)
-                            .build();
-                    CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-                    googlemap.animateCamera(cameraUpdate);
+                onMyLocation();
 
 
-                     boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
-
-                    if (!ismarkerExist) {
-
-                        MapClick(latitude, longitude);
-                    }else
-                    {
-                        Toast.makeText(context, R.string.unique, Toast.LENGTH_LONG)
-                                .show();
-                    }
-
-
-                    } else {
-
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                            101);
-
-
-                }
-
-      /*
-                /////////////////////////////////////DEPRECATED method.getMylocation()
-
-
-                Location location = this.googlemap.getMyLocation();
-
-                if (location != null) {
-
-                    LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
-                    CameraPosition position = this.googlemap.getCameraPosition();
-
-                    CameraPosition.Builder builder = new CameraPosition.Builder();
-                    builder.zoom(15);
-                    builder.target(target);
-
-                    this.googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-
-                }*/
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    public void onMyLocation(){
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            LocationManager locationManager = (LocationManager)
+                    getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+
+            Location location = locationManager.getLastKnownLocation(locationManager
+                    .getBestProvider(criteria, false));
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(latitude, longitude))
+                    .zoom(15)
+                    .build();
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+            googlemap.animateCamera(cameraUpdate);
+
+
+            boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
+
+            if (!ismarkerExist) {
+
+                MapClick(latitude, longitude);
+            } else {
+                Toast.makeText(context, R.string.unique, Toast.LENGTH_LONG)
+                        .show();
+            }
+
+
+        } else {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    2);
+
+
         }
     }
 
