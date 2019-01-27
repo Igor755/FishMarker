@@ -256,7 +256,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Double.parseDouble(longitude),
                             title,
                             displayDate,
-                            Integer.parseInt(depth),
+                            Double.parseDouble(depth),
                             Integer.parseInt(amountoffish),
                             note);
 
@@ -332,7 +332,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                                 Double.valueOf(longitude),
                                 title,
                                 displayDate,
-                                Integer.parseInt(depth),
+                                Double.valueOf(depth),
                                 Integer.parseInt(amountoffish),
                                 note);
 
@@ -403,7 +403,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         Double.parseDouble(result2),
                         result3,
                         result4,
-                        Integer.parseInt(result5),
+                        Double.parseDouble(result5),
                         Integer.parseInt(result6),
                         result7);
 

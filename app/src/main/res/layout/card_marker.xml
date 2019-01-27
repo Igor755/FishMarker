@@ -124,7 +124,7 @@
                 android:id="@+id/edit_dept"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/depth"
-                android:inputType="number"
+                android:digits="0123456789."
                 android:autofillHints="" />
 
         </RelativeLayout>

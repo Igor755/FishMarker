@@ -8,8 +8,8 @@
     <string name="date">Дата</string>
     <string name="depth">глубина</string>
     <string name="Depth">Глубина(в метрах)</string>
-    <string name="Number">Количество рыбы(целое число)</string>
-    <string name="number">количество рыбы</string>
+    <string name="Number">Количество рыб(целое число)</string>
+    <string name="number">количество рыб</string>
     <string name="Note">Заметки</string>
     <string name="note">заметки</string>
     <string name="ok">OK</string>
@@ -134,6 +134,9 @@
     <string name="ReservoirHAES">Водохранилище ХАЕС</string>
     <string name="RibinskiyReservoir">Рыбинское водохранилище</string>
     <string name="KuibishivskiyReservoir">Куйбышевское водохранилище</string>
+
+
+    <string name="gps_enable">Включите в настройках GPS</string>
 
 
 

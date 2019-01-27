@@ -15,6 +15,7 @@
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp"
         android:padding="10dp"
+        android:clipToPadding="false"
         />
 
 

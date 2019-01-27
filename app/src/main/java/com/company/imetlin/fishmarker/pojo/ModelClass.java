@@ -16,13 +16,13 @@ public class ModelClass implements  Comparable<ModelClass> {
     private Double longitude;
     private String title;
     private String date;
-    private Integer depth;
+    private Double depth;
     private Integer amount;
     private String note;
 
 
 
-    public ModelClass(Integer id, Double latitude, Double longitude, String title, String date, Integer depth, Integer amount, String note) {
+    public ModelClass(Integer id, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -97,11 +97,11 @@ public class ModelClass implements  Comparable<ModelClass> {
         this.title = title;
     }
 
-    public Integer getDepth() {
+    public Double getDepth() {
         return depth;
     }
 
-    public void setDepth(Integer depth) {
+    public void setDepth(Double depth) {
         this.depth = depth;
     }
 

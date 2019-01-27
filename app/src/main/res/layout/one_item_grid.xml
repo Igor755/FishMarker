@@ -3,8 +3,9 @@
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_margin="0dp"
-    android:background="#DCDCDC"
+    android:background="#cce6ff"
     android:padding="10dp"
+    android:elevation="10dp"
     >
 
     <ImageView

@@ -97,7 +97,7 @@ public class DatabaseLoad {
 
             String dateIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DATE));
 
-            String depthIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_DEPTH));
+            double depthIndex = cursor.getColumnIndex(SQLiteHelper.DB_COL_DEPTH);
             String amountIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_AMOUNT));
             String noteIndex = String.valueOf(cursor.getColumnIndex(SQLiteHelper.DB_COL_NOTE));
 
@@ -112,7 +112,7 @@ public class DatabaseLoad {
                 String title = cursor.getString(Integer.parseInt(titleIndex));
                 String date = cursor.getString(Integer.parseInt(dateIndex));
 
-                Integer depth = Integer.valueOf(cursor.getString(Integer.parseInt(depthIndex)));
+                Double depth = cursor.getDouble((int) depthIndex);
                 Integer amount = Integer.valueOf(cursor.getString(Integer.parseInt(amountIndex)));
                 String note = cursor.getString(Integer.parseInt(noteIndex));
 
