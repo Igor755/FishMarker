@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
 /*
 
  //DROP BASE
@@ -44,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
 
 
-
-
 */
+
+
+
         List<ModelClass> image_details = getListData();
 
         final GridView gridView = (GridView) findViewById(R.id.gridView);

@@ -59,6 +59,7 @@
     <string name="update_complete">UPDATE COMPLETE</string>
     <string name="add_base">Add to base, SELEBRATION</string>
 
+
     ///////////////////////////////////////////////////////
 
     <string name="you">You really want to delete the marker?</string>
@@ -136,6 +137,6 @@
     <string name="KuibishivskiyReservoir">Kuibishivskiy Reservoir</string>
 
 
-
+    <string name="gps_enable">Please enable GPS</string>
 
 </resources>

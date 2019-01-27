@@ -1,6 +1,7 @@
 package com.company.imetlin.fishmarker;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -70,8 +71,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public Menu menu;
 
 
-    private static final int LOCATION_PERMISSION_REQEST_CODE = 1;
-    private static final int LOCATION_PERMISSION_REQEST_CODE_TWO= 2;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE_TWO= 2;
 
 
     @Override
@@ -102,9 +103,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mUiSettings.setMapToolbarEnabled(false);
 
 
+        onCheckPermission(google);
 
         //mUiSettings.setMyLocationButtonEnabled(true);
         setUpMap(google);
+
 
 
         google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -120,7 +123,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
 
-        onCheckPermission(google);
+
 
 
     }
@@ -130,6 +133,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 == PackageManager.PERMISSION_GRANTED) {
 
             googl.setMyLocationEnabled(true);
+           // System.out.print(2);
 
 
 
@@ -146,12 +150,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         switch (requestCode) {
-            case LOCATION_PERMISSION_REQEST_CODE:
+            case LOCATION_PERMISSION_REQUEST_CODE:
 
                 // Check Location permission is granted or not
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -164,12 +169,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     Toast.makeText(MapActivity.this, "Location  permission denied", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case LOCATION_PERMISSION_REQEST_CODE_TWO:
+            case LOCATION_PERMISSION_REQUEST_CODE_TWO:
                 // Check Location permission is granted or not
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(MapActivity.this, "Location  permission granted", Toast.LENGTH_SHORT).show();
 
                     onMyLocation();
+                    googlemap.setMyLocationEnabled(true);
 
 
                 } else {
@@ -226,7 +232,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if (resultCode == MapActivity.RESULT_CANCELED) {
                 //Write your code if there's no result
 
-                Toast.makeText(context, R.string.unique, Toast.LENGTH_LONG)
+                Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT)
                         .show();
             }
 
@@ -275,34 +281,40 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
 
+
             Location location = locationManager.getLastKnownLocation(locationManager
                     .getBestProvider(criteria, false));
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
-
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(latitude, longitude))
-                    .zoom(15)
-                    .build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-            googlemap.animateCamera(cameraUpdate);
-
-
-            boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
-
-            if (!ismarkerExist) {
-
-                MapClick(latitude, longitude);
-            } else {
-                Toast.makeText(context, R.string.unique, Toast.LENGTH_LONG)
+            if ((latitude == 0.0) && (longitude == 0.0)) {
+                Toast.makeText(context, R.string.gps_enable, Toast.LENGTH_SHORT)
                         .show();
+            } else {
+
+                CameraPosition cameraPosition = new CameraPosition.Builder()
+                        .target(new LatLng(latitude, longitude))
+                        .zoom(15)
+                        .build();
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+                googlemap.animateCamera(cameraUpdate);
+
+
+                boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
+
+                if (!ismarkerExist) {
+
+                    MapClick(latitude, longitude);
+                } else {
+                    Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
 
+            } else{
 
-        } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        2);
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    2);
 
 
         }
@@ -340,7 +352,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
         add_marker.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
-                Toast.makeText(context, R.string.cancel, Toast.LENGTH_LONG)
+                Toast.makeText(context, R.string.cancel, Toast.LENGTH_SHORT)
                         .show();
             }
         });
@@ -348,7 +360,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         add_marker.setOnCancelListener(new DialogInterface.OnCancelListener() {
             public void onCancel(DialogInterface dialog) {
                 Toast.makeText(context, R.string.ups,
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
