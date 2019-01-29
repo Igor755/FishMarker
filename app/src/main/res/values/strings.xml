@@ -6,10 +6,10 @@
     <string name="coordinate">Coordinate will be add on base</string>
     <string name="latlng">Latitude/Longitude</string>
     <string name="date">Date</string>
-    <string name="depth">depth</string>
-    <string name="Depth">Depth(meter double)</string>
-    <string name="Number">Amount of fish(int)</string>
-    <string name="number">amount of fish</string>
+    <string name="depth">through point</string>
+    <string name="Depth">Depth(meter)</string>
+    <string name="Number">Amount of fish</string>
+    <string name="number">integer</string>
     <string name="Note">Note</string>
     <string name="note">note</string>
     <string name="ok">OK</string>
@@ -18,7 +18,7 @@
     <string name="latitude">latitude</string>
     <string name="selectdate">SELECT DATE</string>
     <string name="titlemarker">Title marker</string>
-    <string name="titlemarker2">title marker</string>
+    <string name="titlemarker2">20 symbols</string>
 
 
     ///////////////////////////////////////////////////////MENU

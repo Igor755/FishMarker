@@ -6,10 +6,10 @@
     <string name="coordinate">Координаты будут добавлены в базу</string>
     <string name="latlng">Широта/Долгота</string>
     <string name="date">Дата</string>
-    <string name="depth">глубина</string>
+    <string name="depth">через точку</string>
     <string name="Depth">Глубина(в метрах)</string>
-    <string name="Number">Количество рыб(целое число)</string>
-    <string name="number">количество рыб</string>
+    <string name="Number">Количество рыб</string>
+    <string name="number">целое число</string>
     <string name="Note">Заметки</string>
     <string name="note">заметки</string>
     <string name="ok">OK</string>
@@ -18,7 +18,7 @@
     <string name="latitude">Широта</string>
     <string name="selectdate">Выбрать Дату</string>
     <string name="titlemarker">Заголовок маркера</string>
-    <string name="titlemarker2">заголовок маркера</string>
+    <string name="titlemarker2">20 символов</string>
 
 
     ///////////////////////////////////////////////////////MENU
