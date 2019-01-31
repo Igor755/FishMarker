@@ -1,7 +1,5 @@
 package com.company.imetlin.fishmarker.pojo;
 
-import java.util.Comparator;
-
 public class ModelClass implements  Comparable<ModelClass> {
 
 
@@ -11,7 +9,7 @@ public class ModelClass implements  Comparable<ModelClass> {
 
 
 
-    private Integer id;
+    private Integer model_id;
     private Double latitude;
     private Double longitude;
     private String title;
@@ -23,7 +21,7 @@ public class ModelClass implements  Comparable<ModelClass> {
 
 
     public ModelClass(Integer id, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
-        this.id = id;
+        this.model_id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.title = title;
@@ -65,12 +63,12 @@ public class ModelClass implements  Comparable<ModelClass> {
     }
 
 
-    public Integer getId() {
-        return id;
+    public Integer getModel_id() {
+        return model_id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setModel_id(Integer id) {
+        this.model_id = id;
     }
 
     public Double getLatitude() {

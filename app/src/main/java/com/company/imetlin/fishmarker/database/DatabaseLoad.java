@@ -165,7 +165,7 @@ public class DatabaseLoad {
         ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
         while (iterator.hasNext()) {
             ModelClass next = iterator.next();
-            if (next.getId() == modelclass.getId()) {
+            if (next.getModel_id() == modelclass.getModel_id()) {
 
                 iterator.set(modelclass);
                 break;
@@ -173,7 +173,7 @@ public class DatabaseLoad {
         }
 
         for (Marker marker : markers) {
-            if (modelclass.getId() == marker.getZIndex()) {
+            if (modelclass.getModel_id() == marker.getZIndex()) {
                 marker.setTitle(modelclass.getTitle());
                 break;
             }
@@ -210,14 +210,14 @@ public class DatabaseLoad {
 
         while (iterator.hasNext()) {
             ModelClass next = iterator.next();
-            if (next.getId() == modelclass.getId()) {
+            if (next.getModel_id() == modelclass.getModel_id()) {
                 iterator.remove();
                 break;
             }
         }
 
         for (Marker marker : markers) {
-            if (modelclass.getId() == marker.getZIndex()) {
+            if (modelclass.getModel_id() == marker.getZIndex()) {
                 // marker.remove(markers);\
 
                 markers.remove(marker);
@@ -253,7 +253,7 @@ public class DatabaseLoad {
             public void onLongClickListener(Marker marker) {
 
                 for (final ModelClass modelClass : alldatamarkers) {
-                    if (modelClass.getId() == (int) marker.getZIndex()) {
+                    if (modelClass.getModel_id() == (int) marker.getZIndex()) {
                         // Bingo!
                         alertDialog = new AlertDialog.Builder(context).create();
 
@@ -282,7 +282,7 @@ public class DatabaseLoad {
 
                                 /////UPDATE MARKER IN BASE
 
-                                int id_marker = modelClass.getId();
+                                int id_marker = modelClass.getModel_id();
 
                                 cardMarkerActivity = new CardMarkerActivity();
                                 Bundle bundle = new Bundle();

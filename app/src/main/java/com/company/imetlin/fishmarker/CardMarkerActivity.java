@@ -1,6 +1,5 @@
 package com.company.imetlin.fishmarker;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,12 +7,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,7 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -32,10 +26,7 @@ import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-
-import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
 
 public class CardMarkerActivity extends AppCompatActivity {
 
@@ -314,7 +305,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         String amountoffish = etamountoffish.getText().toString();
                         String note = etnote.getText().toString();
 
-
+                        contentValues.put(SQLiteHelper.DB_COL_ID_PRIMARY, DatabaseLoad.getInstance().last_id+1);
                         contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
                         contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
                         contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
@@ -329,7 +320,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
 
 
-                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance().last_id,
+                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance().last_id+1,
                                 Double.valueOf(latitude),
                                 Double.valueOf(longitude),
                                 title,
@@ -341,7 +332,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                         Bundle bundle = new Bundle();
                         bundle.putString("result", title);
-                        bundle.putString("id", String.valueOf(modelClass.getId()));
+                        bundle.putString("id", String.valueOf(modelClass.getModel_id()));
 
 
                         Intent intent = new Intent();
