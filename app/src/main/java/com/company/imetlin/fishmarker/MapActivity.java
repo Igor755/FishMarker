@@ -2,21 +2,14 @@ package com.company.imetlin.fishmarker;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Parcelable;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,8 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.GPS.GPSTracker;
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -37,6 +36,9 @@ import com.google.android.gms.maps.*;
 
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.List;
+
 
 /*
                 /////////////////////////////////////DEPRECATED method.getMylocation()
@@ -58,7 +60,6 @@ import com.google.android.gms.maps.model.LatLng;
                 }*/
 
 
-
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
 
 
@@ -69,10 +70,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Context context;
     public DatabaseLoad databaseLoad;
     public Menu menu;
+    private GoogleApiClient googleApiClient;
 
-
+    public double latitude, longitude;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE_TWO= 2;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE_TWO = 2;
+
 
 
     @Override
@@ -109,7 +112,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setUpMap(google);
 
 
-
         google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng latLng) {
@@ -123,19 +125,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
 
 
-
-
-
     }
-    public void onCheckPermission (GoogleMap googl){
+
+    public void onCheckPermission(GoogleMap googl) {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
             googl.setMyLocationEnabled(true);
-           // System.out.print(2);
-
-
+            // System.out.print(2);
 
 
         } else {
@@ -145,7 +143,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     1);
 
         }
-
 
 
     }
@@ -273,19 +270,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void onMyLocation(){
+
+    public void onMyLocation() {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            LocationManager locationManager = (LocationManager)
-                    getSystemService(Context.LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
+            GPSTracker gps = new GPSTracker(MapActivity.this);
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
 
 
-            Location location = locationManager.getLastKnownLocation(locationManager
-                    .getBestProvider(criteria, false));
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
             if ((latitude == 0.0) && (longitude == 0.0)) {
                 Toast.makeText(context, R.string.gps_enable, Toast.LENGTH_SHORT)
                         .show();
@@ -305,20 +299,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     MapClick(latitude, longitude);
                 } else {
-                    Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT)
-                            .show();
+                    gps.showSettingsAlert();
                 }
+
             }
 
-            } else{
+        } else {
 
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        2);
-
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    2);
 
 
         }
+
     }
+
 
     public void MapClick(final double lat, final double lon) {
 
