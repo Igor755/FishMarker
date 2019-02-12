@@ -281,8 +281,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
             if ((latitude == 0.0) && (longitude == 0.0)) {
-                Toast.makeText(context, R.string.gps_enable, Toast.LENGTH_SHORT)
-                        .show();
+                gps.showSettingsAlert();
+
             } else {
 
                 CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -299,7 +299,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                     MapClick(latitude, longitude);
                 } else {
-                    gps.showSettingsAlert();
+                    Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT)
+                            .show();
                 }
 
             }

@@ -2,6 +2,7 @@ package com.company.imetlin.fishmarker.GPS;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,11 +15,17 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.company.imetlin.fishmarker.R;
 
 
 public class GPSTracker extends Service implements LocationListener {
 
     private final Context mContext;
+
+    private AlertDialog alertDialog;
+
 
     // flag for GPS status
     public boolean isGPSEnabled = false;
@@ -132,7 +139,8 @@ public class GPSTracker extends Service implements LocationListener {
                     }
 
                 }
-                if (String.valueOf(latitude).equalsIgnoreCase("0.0") || String.valueOf(longitude).equalsIgnoreCase("0.0")) {
+                if (String.valueOf(latitude).equalsIgnoreCase("0.0") ||
+                        String.valueOf(longitude).equalsIgnoreCase("0.0")) {
 //                  showSettingsAlert();
                     canGetLocation = false;
 
@@ -153,7 +161,8 @@ public class GPSTracker extends Service implements LocationListener {
     @SuppressLint("NewApi")
     public void stopUsingGPS() {
         if (locationManager != null) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
                 // here to request the missing permissions, and then overriding
@@ -204,19 +213,29 @@ public class GPSTracker extends Service implements LocationListener {
      * On pressing Settings button will lauch Settings Options
      * */
     public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext,AlertDialog.THEME_HOLO_LIGHT);
+
+        alertDialog = new AlertDialog.Builder(mContext).create();
+
+        //AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext,AlertDialog.THEME_HOLO_LIGHT);
 
         // Setting Dialog Title
-        alertDialog.setTitle("GPS settings");
+        alertDialog.setTitle(R.string.gps_settings);
 
         // Setting Dialog Message
-        alertDialog.setMessage("GPS is not enabled. Please turn ON GPS.");
+        alertDialog.setMessage(mContext.getResources().getString(R.string.gps_enable));
 
         // On pressing Settings button
-        alertDialog.setNeutralButton("Settings", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(Dialog.BUTTON_POSITIVE, mContext.getResources().getString(R.string.settings), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 mContext.startActivity(intent);
+            }
+        });
+        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.cancel), Toast.LENGTH_LONG).show();
+
             }
         });
 

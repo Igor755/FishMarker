@@ -27,7 +27,6 @@
     <string name="add">добавить</string>
     <string name="recycler">Корзина</string>
     <string name="information">Информация</string>
-    <string name="settings">Настройки</string>
 
     ///////////////////////////////////////////////////////
 
@@ -135,8 +134,10 @@
     <string name="RibinskiyReservoir">Рыбинское водохранилище</string>
     <string name="KuibishivskiyReservoir">Куйбышевское водохранилище</string>
 
-
-    <string name="gps_enable">Включите в настройках GPS</string>
+////////////////////////////////////GPS
+    <string name="gps_enable">GPS не включен. Пожайлуста включите GPS.</string>
+    <string name="gps_settings">GPS настройки</string>
+    <string name="settings">Настройки</string>
 
 
 

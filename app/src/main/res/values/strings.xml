@@ -27,7 +27,6 @@
     <string name="add">add</string>
     <string name="recycler">Recycler</string>
     <string name="information">Information</string>
-    <string name="settings">settings</string>
 
     ///////////////////////////////////////////////////////
 
@@ -136,7 +135,12 @@
     <string name="RibinskiyReservoir">Ribinskiy Reservoir</string>
     <string name="KuibishivskiyReservoir">Kuibishivskiy Reservoir</string>
 
+    ////////////////////////////////////GPS
 
-    <string name="gps_enable">Please enable GPS</string>
+    <string name="gps_enable">GPS is not enabled. Please turn ON GPS.</string>
+    <string name="gps_settings">GPS settings</string>
+    <string name="settings">Settings</string>
+
+
 
 </resources>

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1060885258489",
+    "firebase_url": "https://fishmarker-1539369351263.firebaseio.com",
+    "project_id": "fishmarker-1539369351263",
+    "storage_bucket": "fishmarker-1539369351263.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060885258489:android:81ae451b71e75ce2",
+        "android_client_info": {
+          "package_name": "com.company.imetlin.fishmarker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060885258489-aq0pcvaf9lb5bgn78ttlcltuq0dhcrbr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.imetlin.fishmarker",
+            "certificate_hash": "f23eb7c5a0234d11283e75d13417f2f932b00e82"
+          }
+        },
+        {
+          "client_id": "1060885258489-dlrjn8vu6uhbbo5asurrtaruf9bu2ema.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.imetlin.fishmarker",
+            "certificate_hash": "6ab75c8921240d687dad43e833068e151efe4713"
+          }
+        },
+        {
+          "client_id": "1060885258489-vlji332omb9u1dd45l5au94g9qc52ccn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhC-HDwy3rJ2U1-X5Urhdohy_OKHyVbW0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060885258489-vlji332omb9u1dd45l5au94g9qc52ccn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
