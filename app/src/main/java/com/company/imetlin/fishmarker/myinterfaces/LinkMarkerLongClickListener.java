@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.Marker;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class LinkMarkerLongClickListener implements GoogleMap.OnMarkerDragListener {
+public abstract class                                                                   LinkMarkerLongClickListener implements GoogleMap.OnMarkerDragListener {
 
     private int previousIndex = -1;
 

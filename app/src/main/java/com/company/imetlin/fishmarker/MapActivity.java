@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.company.imetlin.fishmarker.Firebase.RegisterActivity;
 import com.company.imetlin.fishmarker.GPS.GPSTracker;
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
@@ -91,6 +92,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         context = MapActivity.this;
 
         DatabaseLoad.getInstance().setContext(context);
+
 
 
     }
@@ -229,7 +231,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if (resultCode == MapActivity.RESULT_CANCELED) {
                 //Write your code if there's no result
 
-                Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT)
+                Toast.makeText(context, R.string.cancel, Toast.LENGTH_SHORT)
                         .show();
             }
 
