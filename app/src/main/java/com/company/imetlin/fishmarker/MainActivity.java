@@ -3,9 +3,6 @@ package com.company.imetlin.fishmarker;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.graphics.Shader;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,16 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.company.imetlin.fishmarker.Firebase.RegisterActivity;
+import com.company.imetlin.fishmarker.Firebase.SignInActivity;
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
-import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 import java.util.ArrayList;
@@ -48,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
       database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
 */
 
-        Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
         startActivityForResult(intent, 1);
 
 

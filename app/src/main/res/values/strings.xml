@@ -141,5 +141,26 @@
     <string name="gps_settings">GPS settings</string>
     <string name="settings">Settings</string>
 
+    //////////////////////////////////COUNTRY
+
+    <string-array name="country_array">
+        <item>Russia</item>
+        <item>Ukraine</item>
+        <item>USA</item>
+        <item>Germany</item>
+        <item>Spain</item>
+        <item>Belarus</item>
+        <item>France</item>
+        <item>Japan</item>
+        <item>Latvia</item>
+        <item>Sweden</item>
+        <item>Turkey</item>
+        <item>Brazil</item>
+        <item>Canada</item>
+        <item>China</item>
+        <item>Italy</item>
+        <item>Another</item>
+    </string-array>
+
 
 </resources>

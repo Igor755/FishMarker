@@ -6,7 +6,7 @@
     android:id="@+id/activity_authentication"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="Firebase.RegisterActivity">
+    tools:context=".Firebase.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +19,7 @@
             android:layout_height="120dp"
             android:src="@drawable/web_fish"
             android:id="@+id/imageView"
-            android:layout_marginTop="40dp"
-            android:onClick="RulesClick"/>
+            android:layout_marginTop="40dp"/>
     </LinearLayout>
 
 
