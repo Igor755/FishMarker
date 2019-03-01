@@ -97,22 +97,22 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
         if (name.isEmpty()) {
-            editTextName.setError("empty name");
+            editTextName.setError(getText(R.string.empty_name));
             editTextName.requestFocus();
             return;
         }
         if (email.isEmpty()) {
-            editTextEmail.setError(("empty email"));
+            editTextEmail.setError(getText(R.string.empty_email));
             editTextEmail.requestFocus();
             return;
         }
         if (!isEmailValid(editTextEmail.getText().toString())) {
-            editTextEmail.setError(("not valid"));
+            editTextEmail.setError(getText(R.string.not_valid_email));
             editTextEmail.requestFocus();
             return;
         }
         if (password.isEmpty()) {
-            editTextPassword.setError(("empty password"));
+            editTextPassword.setError(getText(R.string.not_valid_password));
             editTextPassword.requestFocus();
             return;
         }
@@ -144,8 +144,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                 public void onComplete(@NonNull Task<Void> task) {
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RegistrationActivity.this, "success registration", Toast.LENGTH_LONG).show();
                                         backToBack();
+                                        Toast.makeText(RegistrationActivity.this, "success registration", Toast.LENGTH_LONG).show();
+
                                     } else {
 
                                         Toast.makeText(RegistrationActivity.this, "not valid data", Toast.LENGTH_SHORT).show();
@@ -198,7 +199,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
        backToBack();
     }
     public void backToBack(){
-        startActivity(new Intent(RegistrationActivity.this, SignInActivity.class));
+        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
         finish();
     }
     public void RulesClick(View v) {

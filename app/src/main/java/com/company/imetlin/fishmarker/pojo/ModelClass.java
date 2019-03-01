@@ -18,6 +18,10 @@ public class ModelClass implements  Comparable<ModelClass> {
     private Integer amount;
     private String note;
 
+    public ModelClass(){
+
+    }
+
 
 
     public ModelClass(Integer id, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {

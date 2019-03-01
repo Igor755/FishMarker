@@ -141,26 +141,24 @@
     <string name="gps_settings">GPS settings</string>
     <string name="settings">Settings</string>
 
-    //////////////////////////////////COUNTRY
+    //////////////////////////////////REGISRATION
+    <string name="name">name</string>
+    <string name="Name">Name</string>
+    <string name="email">email</string>
+    <string name="Email">Email</string>
+    <string name="password">password</string>
+    <string name="Password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="Location">Country</string>
+    <string name="location">country</string>
+    <string name="Dont_have">Dont have account, create</string>
+    <string name="Register">Registration</string>
+    <string name="empty_name">empty name</string>
+    <string name="empty_email">empty email</string>
+    <string name="not_valid_email">not valid email</string>
+    <string name="not_valid_password">not valid password</string>
 
-    <string-array name="country_array">
-        <item>Russia</item>
-        <item>Ukraine</item>
-        <item>USA</item>
-        <item>Germany</item>
-        <item>Spain</item>
-        <item>Belarus</item>
-        <item>France</item>
-        <item>Japan</item>
-        <item>Latvia</item>
-        <item>Sweden</item>
-        <item>Turkey</item>
-        <item>Brazil</item>
-        <item>Canada</item>
-        <item>China</item>
-        <item>Italy</item>
-        <item>Another</item>
-    </string-array>
+
 
 
 </resources>

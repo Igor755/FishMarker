@@ -139,6 +139,23 @@
     <string name="gps_settings">GPS настройки</string>
     <string name="settings">Настройки</string>
 
+///////////////////////////////////////////////REGISRATION
+    <string name="name">name</string>
+    <string name="Name">Name</string>
+    <string name="email">почта</string>
+    <string name="Email">Почта</string>
+    <string name="password">пароль</string>
+    <string name="Password">Пароль</string>
+    <string name="sign_in">Войти</string>
+    <string name="Location">Страна</string>
+    <string name="location">страна</string>
+    <string name="Dont_have">Не имею аккаунта, создать</string>
+    <string name="Register">Регистрация</string>
+    <string name="empty_name">пустое имя</string>
+    <string name="empty_email">пустая почта</string>
+    <string name="not_valid_email">не валидная почта</string>
+    <string name="not_valid_password">не валидный пароль</string>
+
 
 
 </resources>

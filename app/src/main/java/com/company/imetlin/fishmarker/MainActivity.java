@@ -1,6 +1,7 @@
 package com.company.imetlin.fishmarker;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public Menu menu;
+    //private Context context = MainActivity.this;
 
     SQLiteHelper dbHelper;
     private FirebaseAuth mAuth;
