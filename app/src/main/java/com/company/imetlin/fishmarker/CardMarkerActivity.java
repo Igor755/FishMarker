@@ -25,6 +25,13 @@ import android.widget.Toast;
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
+import com.company.imetlin.fishmarker.pojo.Users;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -340,6 +347,48 @@ public class CardMarkerActivity extends AppCompatActivity {
                         //returnIntent.putExtra("id",modelClass.getId());
 
                         setResult(MapActivity.RESULT_OK, intent);
+
+
+
+/////////////////////////////////////////////////////////////
+
+
+
+                    /*    FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("model_id").setValue(DatabaseLoad.getInstance().last_id+1);
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("latitude").setValue(Double.valueOf(latitude));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("longitude").setValue(Double.valueOf(longitude));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("title").setValue(title);
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("date").setValue(displayDate);
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("depth").setValue(Double.valueOf(depth));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("amount_of_fish").setValue(Integer.parseInt(amountoffish));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").child("note").setValue(note);
+
+
+*/
+
+/*
+
+
+                        ModelClass modelClass2 = new ModelClass(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                                DatabaseLoad.getInstance().last_id+1,
+                                Double.valueOf(latitude),
+                                Double.valueOf(longitude),
+                                title,
+                                displayDate,
+                                Double.valueOf(depth),
+                                Integer.parseInt(amountoffish),
+                                note);
+
+                        FirebaseDatabase.getInstance().getReference("ModelClass").child(String.valueOf(DatabaseLoad.getInstance().last_id+1)).setValue(modelClass2);
+*/
+
+
+
+
+
+
+
 
                         DatabaseLoad.getInstance().AddDataMarker(modelClass);
 

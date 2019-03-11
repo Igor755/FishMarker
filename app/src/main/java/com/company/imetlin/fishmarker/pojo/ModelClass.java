@@ -17,12 +17,32 @@ public class ModelClass implements  Comparable<ModelClass> {
     private Double depth;
     private Integer amount;
     private String note;
+    private String uid;
 
     public ModelClass(){
 
     }
 
+    public ModelClass(String uid, Integer model_id, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
+        this.uid = uid;
+        this.model_id = model_id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.title = title;
+        this.date = date;
+        this.depth = depth;
+        this.amount = amount;
+        this.note = note;
 
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public ModelClass(Integer id, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
         this.model_id = id;
