@@ -54,7 +54,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.button_register).setOnClickListener(this);
-        ///////
+        ///////24
 
 
         ArrayList<String> AllCountry = new ArrayList<String>();
