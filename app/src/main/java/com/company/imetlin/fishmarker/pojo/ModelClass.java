@@ -1,5 +1,8 @@
 package com.company.imetlin.fishmarker.pojo;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class ModelClass implements  Comparable<ModelClass> {
 
 
@@ -23,9 +26,8 @@ public class ModelClass implements  Comparable<ModelClass> {
 
     }
 
-    public ModelClass(String uid, Integer model_id, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
+    public ModelClass(String uid, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
         this.uid = uid;
-        this.model_id = model_id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.title = title;
