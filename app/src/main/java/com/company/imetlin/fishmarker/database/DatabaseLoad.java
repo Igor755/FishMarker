@@ -8,17 +8,24 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.CardMarkerActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.myinterfaces.LinkMarkerLongClickListener;
+import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +74,32 @@ public class DatabaseLoad {
 
     public void LoaderData(GoogleMap _googlemap) {
 
-        this.markers = new ArrayList<Marker>();
+
+
+        this.googlemap = _googlemap;
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Markers");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+
+                    MarkerInformation markerInformation = dataSnapshot1.getValue(MarkerInformation.class);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+       /* this.markers = new ArrayList<Marker>();
         this.alldatamarkers = new ArrayList<ModelClass>();
 
         this.googlemap = _googlemap;
@@ -131,7 +163,7 @@ public class DatabaseLoad {
         }
 
         cursor.close();
-        database.close();
+        database.close();*/
     }
 
     public void AddDataMarker(ModelClass marker) {
