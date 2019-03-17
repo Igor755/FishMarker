@@ -216,7 +216,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String result2 = data.getStringExtra("id");
                 int res = Integer.parseInt(result2);
 
-                DatabaseLoad.getInstance().CreateMarker(res, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], result);
+              //  DatabaseLoad.getInstance().CreateMarker(res, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], result);
                 System.out.print("I AM SUPERMAN");
 
             }
@@ -286,8 +286,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                 googlemap.animateCamera(cameraUpdate);
 
-
-                boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
+/*
+               boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
 
                 if (!ismarkerExist) {
 
@@ -295,7 +295,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 } else {
                     Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT)
                             .show();
-                }
+                }*/
 
             }
 

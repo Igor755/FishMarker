@@ -260,7 +260,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Integer.parseInt(amountoffish),
                             note);
 
-                    DatabaseLoad.getInstance().UpdateMarker(modelClassupdate);
+                    //DatabaseLoad.getInstance().UpdateMarker(modelClassupdate);
                     finish();
 
                 }
@@ -402,7 +402,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
 
-                        DatabaseLoad.getInstance().AddDataMarker(modelClass);
+                       // DatabaseLoad.getInstance().AddDataMarker(modelClass);
 
 
                         finish();
@@ -461,7 +461,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         Integer.parseInt(result6),
                         result7);
 
-                DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);
+               // DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);
 
 
                 finish();

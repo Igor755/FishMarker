@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +44,8 @@ public class DatabaseLoad {
 
     private GoogleMap googlemap;
     private List<Marker> markers;
-    public ArrayList<ModelClass> alldatamarkers;
+    //public ArrayList<ModelClass> alldatamarkers;
+    public ArrayList<MarkerInformation> alldatamarkers;
     private AlertDialog alertDialog;
     public Integer last_id;
     public CardMarkerActivity cardMarkerActivity;
@@ -64,7 +66,8 @@ public class DatabaseLoad {
 
         return instance;
     }
-    public void  setContext(Context context) {
+
+    public void setContext(Context context) {
 
         this.context = context;
 
@@ -74,8 +77,8 @@ public class DatabaseLoad {
 
     public void LoaderData(GoogleMap _googlemap) {
 
-
-
+       this.alldatamarkers = new ArrayList<MarkerInformation>();
+        this.markers = new ArrayList<Marker>();
         this.googlemap = _googlemap;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -84,22 +87,46 @@ public class DatabaseLoad {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                     MarkerInformation markerInformation = dataSnapshot1.getValue(MarkerInformation.class);
-
+                    alldatamarkers.add(markerInformation);
                 }
 
+                for(int i=0;i<alldatamarkers.size();i++) {
+
+                    //if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(alldatamarkers.get(i).getUid())) {
+                        double latitude = alldatamarkers.get(i).getLatitude();
+                        double longitude = alldatamarkers.get(i).getLongitude();
+                        String tittle = alldatamarkers.get(i).getTitle();
+                        CreateMarker(latitude, longitude, tittle);
+
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
+    }
+    public void CreateMarker(final double _lat, final double _lon, String title_marker) {
+
+        Marker marker = googlemap.addMarker(new MarkerOptions()
+                .position(new LatLng(_lat, _lon))
+                .title(title_marker)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker)));
 
 
-       /* this.markers = new ArrayList<Marker>();
+        markers.add(marker);
+
+
+    }
+}
+
+/*
+
+        this.markers = new ArrayList<Marker>();
         this.alldatamarkers = new ArrayList<ModelClass>();
 
         this.googlemap = _googlemap;
@@ -163,32 +190,38 @@ public class DatabaseLoad {
         }
 
         cursor.close();
-        database.close();*/
-    }
-
-    public void AddDataMarker(ModelClass marker) {
-
-        this.alldatamarkers.add(marker);
-        this.last_id++;
-    }
-
-    public void CreateMarker(final Integer identificator, final double _lat, final double _lon, String title_marker) {
-
-        Marker marker = googlemap.addMarker(new MarkerOptions()
-                .position(new LatLng(_lat, _lon))
-                .title(title_marker)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
-                .zIndex(identificator));
-        //marker.setDraggable(true);
-
-        markers.add(marker);
-
-        LongClickOnMarker();
-
+        database.close();
 
     }
+        public void AddDataMarker (ModelClass marker){
 
-    /*FUNCTION UPDATE MARKER*/
+            this.alldatamarkers.add(marker);
+            this.last_id++;
+        }
+
+
+        public void CreateMarker ( final Integer identificator, final double _lat,
+        final double _lon, String title_marker){
+
+            Marker marker = googlemap.addMarker(new MarkerOptions()
+                    .position(new LatLng(_lat, _lon))
+                    .title(title_marker)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
+                    .zIndex(identificator));
+            //marker.setDraggable(true);
+
+            markers.add(marker);
+
+            LongClickOnMarker();
+
+
+        }
+
+
+        */
+/*FUNCTION UPDATE MARKER*//*
+
+
 
 
     public void UpdateMarker(ModelClass modelclass) {
@@ -233,132 +266,141 @@ public class DatabaseLoad {
     }
 
 
-    /*FUNCTION DELETE MARKER*/
+
+*/
+/*FUNCTION DELETE MARKER*//*
 
 
-    public void DeleteMarker(ModelClass modelclass) {
 
-        ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
+        public void DeleteMarker(ModelClass modelclass){
 
-        while (iterator.hasNext()) {
-            ModelClass next = iterator.next();
-            if (next.getModel_id() == modelclass.getModel_id()) {
-                iterator.remove();
-                break;
-            }
-        }
+            ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
 
-        for (Marker marker : markers) {
-            if (modelclass.getModel_id() == marker.getZIndex()) {
-                // marker.remove(markers);\
-
-                markers.remove(marker);
-                break;
-            }
-        }
-        googlemap.clear();
-
-        ArrayList<Marker> markers_array = new ArrayList<Marker>();
-
-        for (Marker marker : markers) {
-
-            Marker marker_delete = googlemap.addMarker(new MarkerOptions()
-                    .position(marker.getPosition())
-                    .title(marker.getTitle())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
-                    .zIndex(marker.getZIndex()));
-
-            markers_array.add(marker_delete);
-        }
-
-        markers = new ArrayList<Marker>(markers_array);
-
-        LongClickOnMarker();
-    }
-
-    /*LONG CLICK ON MARKER*/
-
-    public void LongClickOnMarker() {
-
-        googlemap.setOnMarkerDragListener(new LinkMarkerLongClickListener(markers) {
-            @Override
-            public void onLongClickListener(Marker marker) {
-
-                for (final ModelClass modelClass : alldatamarkers) {
-                    if (modelClass.getModel_id() == (int) marker.getZIndex()) {
-                        // Bingo!
-                        alertDialog = new AlertDialog.Builder(context).create();
-
-
-                        alertDialog.setTitle(R.string.complete_c);
-                        alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
-                                context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
-                                context.getResources().getString(R.string.tit_c) + " " + modelClass.getTitle() + "\n" +
-                                context.getResources().getString(R.string.date_c) + " " + modelClass.getDate() + "\n" +
-                                context.getResources().getString(R.string.depth_c) + " " + modelClass.getDepth() + "\n" +
-                                context.getResources().getString(R.string.amount_c) + " " + modelClass.getAmount() + "\n" +
-                                context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());
-                        //last_id = modelClass.getId();
-
-                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //finish();
-                            }
-                        });
-                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, context.getResources().getString(R.string.edit), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(context, R.string.update, Toast.LENGTH_LONG).show();
-
-
-                                /////UPDATE MARKER IN BASE
-
-                                int id_marker = modelClass.getModel_id();
-
-                                cardMarkerActivity = new CardMarkerActivity();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("1", String.valueOf(modelClass.getLatitude()));
-                                bundle.putString("2", String.valueOf(modelClass.getLongitude()));
-                                bundle.putString("3", modelClass.getTitle());
-                                bundle.putString("4", modelClass.getDate());
-                                bundle.putString("5", String.valueOf(modelClass.getDepth()));
-                                bundle.putString("6", String.valueOf(modelClass.getAmount()));
-                                bundle.putString("7", modelClass.getNote());
-                                bundle.putString("8", String.valueOf(id_marker));
-
-                                Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
-
-                                System.out.println(bundle);
-                                intent.putExtras(bundle);
-                                context.startActivity(intent);
-
-                            }
-                        });
-
-                        alertDialog.show();
-                        break;
-                    }
+            while (iterator.hasNext()) {
+                ModelClass next = iterator.next();
+                if (next.getModel_id() == modelclass.getModel_id()) {
+                    iterator.remove();
+                    break;
                 }
             }
-        });
 
+            for (Marker marker : markers) {
+                if (modelclass.getModel_id() == marker.getZIndex()) {
+                    // marker.remove(markers);\
 
-    }
-
-    public boolean SearchMarker(Double lat, Double lon) {
-
-        for (Marker marker : markers) {
-            if ((marker.getPosition().latitude == lat) &&
-                    (marker.getPosition().longitude == lon)) {
-                return true;
+                    markers.remove(marker);
+                    break;
+                }
             }
-        }
-        return false;
+            googlemap.clear();
 
+            ArrayList<Marker> markers_array = new ArrayList<Marker>();
+
+            for (Marker marker : markers) {
+
+                Marker marker_delete = googlemap.addMarker(new MarkerOptions()
+                        .position(marker.getPosition())
+                        .title(marker.getTitle())
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
+                        .zIndex(marker.getZIndex()));
+
+                markers_array.add(marker_delete);
+            }
+
+            markers = new ArrayList<Marker>(markers_array);
+
+            LongClickOnMarker();
+        }
+
+
+        */
+/*LONG CLICK ON MARKER*//*
+
+
+
+        public void LongClickOnMarker () {
+
+            googlemap.setOnMarkerDragListener(new LinkMarkerLongClickListener(markers) {
+                @Override
+                public void onLongClickListener(Marker marker) {
+
+                    for (final ModelClass modelClass : alldatamarkers) {
+                        if (modelClass.getModel_id() == (int) marker.getZIndex()) {
+                            // Bingo!
+                            alertDialog = new AlertDialog.Builder(context).create();
+
+
+                            alertDialog.setTitle(R.string.complete_c);
+                            alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
+                                    context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
+                                    context.getResources().getString(R.string.tit_c) + " " + modelClass.getTitle() + "\n" +
+                                    context.getResources().getString(R.string.date_c) + " " + modelClass.getDate() + "\n" +
+                                    context.getResources().getString(R.string.depth_c) + " " + modelClass.getDepth() + "\n" +
+                                    context.getResources().getString(R.string.amount_c) + " " + modelClass.getAmount() + "\n" +
+                                    context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());
+                            //last_id = modelClass.getId();
+
+                            alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //finish();
+                                }
+                            });
+                            alertDialog.setButton(Dialog.BUTTON_NEGATIVE, context.getResources().getString(R.string.edit), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Toast.makeText(context, R.string.update, Toast.LENGTH_LONG).show();
+
+
+                                    /////UPDATE MARKER IN BASE
+
+                                    int id_marker = modelClass.getModel_id();
+
+                                    cardMarkerActivity = new CardMarkerActivity();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("1", String.valueOf(modelClass.getLatitude()));
+                                    bundle.putString("2", String.valueOf(modelClass.getLongitude()));
+                                    bundle.putString("3", modelClass.getTitle());
+                                    bundle.putString("4", modelClass.getDate());
+                                    bundle.putString("5", String.valueOf(modelClass.getDepth()));
+                                    bundle.putString("6", String.valueOf(modelClass.getAmount()));
+                                    bundle.putString("7", modelClass.getNote());
+                                    bundle.putString("8", String.valueOf(id_marker));
+
+                                    Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
+
+                                    System.out.println(bundle);
+                                    intent.putExtras(bundle);
+                                    context.startActivity(intent);
+
+                                }
+                            });
+
+                            alertDialog.show();
+                            break;
+                        }
+                    }
+                }
+            });
+
+
+        }
+
+        public boolean SearchMarker (Double lat, Double lon){
+
+            for (Marker marker : markers) {
+                if ((marker.getPosition().latitude == lat) &&
+                        (marker.getPosition().longitude == lon)) {
+                    return true;
+                }
+            }
+            return false;
+
+        }
     }
 
 
-}
 
+
+*/
 
