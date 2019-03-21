@@ -211,13 +211,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (requestCode == 1) {
             if (resultCode == MapActivity.RESULT_OK) {
-                String result = data.getStringExtra("result");
 
-                String result2 = data.getStringExtra("id");
-                int res = Integer.parseInt(result2);
 
-              //  DatabaseLoad.getInstance().CreateMarker(res, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], result);
-                System.out.print("I AM SUPERMAN");
+                String title_marker = data.getStringExtra("title");
+                String id_marker = data.getStringExtra("id");
+                int id_mark = Integer.parseInt(id_marker);
+
+
+
+               DatabaseLoad.getInstance().CreateMarker(id_mark, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], title_marker);
+               System.out.print("I AM SUPERMAN");
 
             }
             if (resultCode == MapActivity.RESULT_CANCELED) {

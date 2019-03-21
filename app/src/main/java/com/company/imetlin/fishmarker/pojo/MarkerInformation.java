@@ -5,7 +5,7 @@ public class MarkerInformation {
 
 
     private String uid;
-    private Integer model_id;
+    private String marker_id;
     private Double latitude;
     private Double longitude;
     private String title;
@@ -18,7 +18,7 @@ public class MarkerInformation {
     public MarkerInformation(){
 
     }
-    public MarkerInformation(String uid, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
+    public MarkerInformation(String uid,String marker_id, Double latitude, Double longitude, String title, String date, Double depth, Integer amount, String note) {
         this.uid = uid;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -27,6 +27,7 @@ public class MarkerInformation {
         this.depth = depth;
         this.amount = amount;
         this.note = note;
+        this.marker_id = marker_id;
 
     }
 
@@ -38,12 +39,12 @@ public class MarkerInformation {
         this.uid = uid;
     }
 
-    public Integer getModel_id() {
-        return model_id;
+    public String getMarker_id() {
+        return marker_id;
     }
 
-    public void setModel_id(Integer model_id) {
-        this.model_id = model_id;
+    public void setMarker_id(String marker_id) {
+        this.marker_id = marker_id;
     }
 
     public Double getLatitude() {
@@ -101,4 +102,9 @@ public class MarkerInformation {
     public void setNote(String note) {
         this.note = note;
     }
+
+
+
+
+
 }

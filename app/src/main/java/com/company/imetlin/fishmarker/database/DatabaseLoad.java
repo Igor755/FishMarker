@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_ID_PRIMARY;
@@ -39,16 +41,14 @@ import static com.company.imetlin.fishmarker.database.SQLiteHelper.DB_COL_LONGIT
 
 public class DatabaseLoad {
 
-    private SQLiteHelper sqLiteHelper;
     public Context context;
 
     private GoogleMap googlemap;
     private List<Marker> markers;
-    //public ArrayList<ModelClass> alldatamarkers;
     public ArrayList<MarkerInformation> alldatamarkers;
     private AlertDialog alertDialog;
-    public Integer last_id;
-    public CardMarkerActivity cardMarkerActivity;
+    private CardMarkerActivity cardMarkerActivity;
+
 
 
     private static DatabaseLoad instance;
@@ -75,15 +75,18 @@ public class DatabaseLoad {
     }
 
 
+
     public void LoaderData(GoogleMap _googlemap) {
 
        this.alldatamarkers = new ArrayList<MarkerInformation>();
         this.markers = new ArrayList<Marker>();
         this.googlemap = _googlemap;
+        this.cardMarkerActivity = cardMarkerActivity;
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Markers");
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -91,7 +94,10 @@ public class DatabaseLoad {
 
                     MarkerInformation markerInformation = dataSnapshot1.getValue(MarkerInformation.class);
                     alldatamarkers.add(markerInformation);
+                    System.out.println(markerInformation);
+
                 }
+
 
                 for(int i=0;i<alldatamarkers.size();i++) {
 
@@ -99,9 +105,13 @@ public class DatabaseLoad {
                         double latitude = alldatamarkers.get(i).getLatitude();
                         double longitude = alldatamarkers.get(i).getLongitude();
                         String tittle = alldatamarkers.get(i).getTitle();
-                        CreateMarker(latitude, longitude, tittle);
+                        Integer id_marker = Integer.valueOf(alldatamarkers.get(i).getMarker_id());
+                        CreateMarker(id_marker,latitude, longitude, tittle);
 
                 }
+                System.out.println(alldatamarkers);
+
+
             }
 
             @Override
@@ -110,19 +120,102 @@ public class DatabaseLoad {
             }
         });
     }
-    public void CreateMarker(final double _lat, final double _lon, String title_marker) {
+    public void CreateMarker(final Integer id_m, final double _lat, final double _lon, String title_marker) {
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
                 .title(title_marker)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker)));
-
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
+                .zIndex(id_m));
 
         markers.add(marker);
 
+        LongClickOnMarker();
 
     }
-}
+
+    public void AddDataMarker (MarkerInformation marker){
+
+        this.alldatamarkers.add(marker);
+
+    }
+    private void LongClickOnMarker() {
+
+        googlemap.setOnMarkerDragListener(new LinkMarkerLongClickListener(markers) {
+            @Override
+            public void onLongClickListener(Marker marker) {
+
+
+                System.out.println(2);
+                System.out.println(2);
+
+                for (final MarkerInformation modelClass : alldatamarkers) {
+                    System.out.println(32);
+                    if (modelClass.getMarker_id() == String.valueOf(marker.getZIndex())) {
+
+                        // Bingo!
+                        alertDialog = new AlertDialog.Builder(context).create();
+
+
+                        alertDialog.setTitle(R.string.complete_c);
+                        alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
+                                context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
+                                context.getResources().getString(R.string.tit_c) + " " + modelClass.getTitle() + "\n" +
+                                context.getResources().getString(R.string.date_c) + " " + modelClass.getDate() + "\n" +
+                                context.getResources().getString(R.string.depth_c) + " " + modelClass.getDepth() + "\n" +
+                                context.getResources().getString(R.string.amount_c) + " " + modelClass.getAmount() + "\n" +
+                                context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());
+
+                        alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //finish();
+                            }
+                        });
+                        alertDialog.setButton(Dialog.BUTTON_NEGATIVE, context.getResources().getString(R.string.edit), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(context, R.string.update, Toast.LENGTH_LONG).show();
+
+
+                                /////UPDATE MARKER IN BASE
+
+                                String id_marker = modelClass.getMarker_id();
+
+                                cardMarkerActivity = new CardMarkerActivity();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("1", String.valueOf(modelClass.getLatitude()));
+                                bundle.putString("2", String.valueOf(modelClass.getLongitude()));
+                                bundle.putString("3", modelClass.getTitle());
+                                bundle.putString("4", modelClass.getDate());
+                                bundle.putString("5", String.valueOf(modelClass.getDepth()));
+                                bundle.putString("6", String.valueOf(modelClass.getAmount()));
+                                bundle.putString("7", modelClass.getNote());
+                                bundle.putString("8", String.valueOf(id_marker));
+
+                                Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
+
+                                System.out.println(bundle);
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
+
+                            }
+                        });
+
+                        alertDialog.show();
+                        break;
+                    }
+                }
+                }
+
+        });
+
+
+    }
+
+
+    }
+
 
 /*
 

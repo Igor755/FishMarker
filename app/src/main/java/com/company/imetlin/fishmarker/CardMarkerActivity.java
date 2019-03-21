@@ -33,13 +33,15 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 public class CardMarkerActivity extends AppCompatActivity {
 
 
     private static final String TAG = "CardMarkerActivity";
-
+    private static final AtomicLong counter = new AtomicLong(0);
     private EditText etlatitude;
     private EditText etlongitute;
     private TextView etmDisplayDate;
@@ -50,22 +52,25 @@ public class CardMarkerActivity extends AppCompatActivity {
     private Button ok, cancel;
 
     private Context context = CardMarkerActivity.this;
-
+    static AtomicInteger atom = new AtomicInteger(0);
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     private SQLiteHelper dbHelper;
-
+    private String id_markers_keys;
 
     public Boolean isnull;
 
     public Menu menu;
     private AlertDialog alertDialog;
-    private String id;
+    private Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card_marker);
+
+        this.id = id;
+        this.id_markers_keys = id_markers_keys;
 
         etlatitude = (EditText) findViewById(R.id.edit_latitude);
         etlongitute = (EditText) findViewById(R.id.edit_longitude);
@@ -144,9 +149,9 @@ public class CardMarkerActivity extends AppCompatActivity {
 
     }
 
-/*
-          MENU
-*/
+    /*
+              MENU
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -168,8 +173,9 @@ public class CardMarkerActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
+    public boolean onPrepareOptionsMenu(Menu menu) {
 
         String result1;
 
@@ -274,14 +280,12 @@ public class CardMarkerActivity extends AppCompatActivity {
     /*
         FUNCTION ADD MARKER ON MAP (IN BASE)
     */
+
+
     public void AddMarker() {
 
 
-
-
         String lat_lon = getIntent().getStringExtra("coordinate");
-        //String coordinate2 = getIntent().getStringExtra("lon");
-        //String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
         String[] parts = lat_lon.split("/");
         String lat = parts[0];
         String lon = parts[1];
@@ -295,134 +299,65 @@ public class CardMarkerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-                    ContentValues contentValues = new ContentValues();
+                if (isEmpty()) {
+                    Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
 
-                    if (isEmpty() == true) {
-                        Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
+                } else {
 
-                    } else {
-
-                        String latitude = etlatitude.getText().toString();
-                        String longitude = etlongitute.getText().toString();
-                        String title = ettitle.getText().toString();
-                        String displayDate = etmDisplayDate.getText().toString();
-                        String depth = etdepth.getText().toString();
-                        String amountoffish = etamountoffish.getText().toString();
-                        String note = etnote.getText().toString();
-
-                        contentValues.put(SQLiteHelper.DB_COL_ID_PRIMARY, DatabaseLoad.getInstance().last_id+1);
-                        contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
-                        contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
-                        contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
-                        contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
-                        contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
-                        contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
-                        contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
-
-                        database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
+                    String latitude = etlatitude.getText().toString();
+                    String longitude = etlongitute.getText().toString();
+                    String title = ettitle.getText().toString();
+                    String displayDate = etmDisplayDate.getText().toString();
+                    String depth = etdepth.getText().toString();
+                    String amountoffish = etamountoffish.getText().toString();
+                    String note = etnote.getText().toString();
 
 
-                        Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
+
+                    id_markers_keys = UUID.randomUUID().toString();
 
 
-                        ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance().last_id+1,
-                                Double.valueOf(latitude),
-                                Double.valueOf(longitude),
-                                title,
-                                displayDate,
-                                Double.valueOf(depth),
-                                Integer.parseInt(amountoffish),
-                                note);
+                    MarkerInformation markerInformation = new MarkerInformation(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                            String.valueOf(getID()),
+                            Double.valueOf(latitude),
+                            Double.valueOf(longitude),
+                            title,
+                            displayDate,
+                            Double.valueOf(depth),
+                            Integer.parseInt(amountoffish),
+                            note);
 
+                    FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(id_markers_keys)).setValue(markerInformation);
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("result", title);
-                        bundle.putString("id", String.valueOf(modelClass.getModel_id()));
-
-
-                        Intent intent = new Intent();
-                        intent.putExtras(bundle);
-                        //returnIntent.putExtra("id",modelClass.getId());
-
-                        setResult(MapActivity.RESULT_OK, intent);
-
-
-
-/////////////////////////////////////////////////////////////in hands
-
-
-/*
-
-                        FirebaseDatabase.getInstance().getReference().child("Markers").setValue(DatabaseLoad.getInstance().last_id+1);
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("latitude").setValue(Double.valueOf(latitude));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("longitude").setValue(Double.valueOf(longitude));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("title").setValue(title);
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("date").setValue(displayDate);
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("depth").setValue(Double.valueOf(depth));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("amount_of_fish").setValue(Integer.parseInt(amountoffish));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("note").setValue(note);
-*/
-
-
-
-
-
-
-
-                        MarkerInformation markerInformation = new MarkerInformation(FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                                Double.valueOf(latitude),
-                                Double.valueOf(longitude),
-                                title,
-                                displayDate,
-                                Double.valueOf(depth),
-                                Integer.parseInt(amountoffish),
-                                note);
-
-                        //////////////////////////////Serializing Arrays is not supported, please use Lists instead
-                        ////////////////////////////// attend.put("depth", Arrays.asList(depth)) - keys under every point (+)
-                        /*Map<String, Object> attend = new HashMap<>();
-                        attend.put("uid",  FirebaseAuth.getInstance().getCurrentUser().getUid()) ;
-                        attend.put("latitude", latitude) ;
-                        attend.put("longitude",  longitude) ;
-                        attend.put("title", title) ;
-                        attend.put("displayDate", displayDate) ;
-                        attend.put("depth",  depth) ;
-                        attend.put("amountoffish", amountoffish) ;
-                        attend.put("note", note) ;*/
-
-                        id = UUID.randomUUID().toString();
-                        FirebaseDatabase.getInstance().getReference("Markers").child(id).setValue(markerInformation);
-
-
-
-
-
-
-
-                       // DatabaseLoad.getInstance().AddDataMarker(modelClass);
-
-
-                        finish();
-
-
-                    }
-
-                /*} catch (SQLiteConstraintException e){
-
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString("title", title);
+                    bundle.putString("id", String.valueOf(markerInformation.getMarker_id()));
                     Intent intent = new Intent();
-                    setResult(MapActivity.RESULT_CANCELED, intent);
+                    intent.putExtras(bundle);
+
+
+                    setResult(MapActivity.RESULT_OK, intent);
+
+
+                    DatabaseLoad.getInstance().AddDataMarker(markerInformation);
                     finish();
-
-                }*/
-                dbHelper.close();
-
+                }
             }
 
         });
+    }
+    public static long getID() {
+
+          final long LIMIT = 10000000000L;
+          long last = 0;
+        // 10 digits.
+        long id = System.currentTimeMillis() % LIMIT;
+        if ( id <= last ) {
+            id = (last + 1) % LIMIT;
+        }
+        return last = id;
     }
 
     public void DeleteMarker() {
@@ -450,7 +385,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                 //id
                 final String result8 = getIntent().getStringExtra("8");
 
-                database.delete(SQLiteHelper.DB_TABLE_NAME,  SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result8,null);
+                database.delete(SQLiteHelper.DB_TABLE_NAME, SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result8, null);
 
                 ModelClass modelClassDelete = new ModelClass(Integer.parseInt(result8),
                         Double.parseDouble(result1),
@@ -461,7 +396,7 @@ public class CardMarkerActivity extends AppCompatActivity {
                         Integer.parseInt(result6),
                         result7);
 
-               // DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);
+                // DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);
 
 
                 finish();
@@ -476,16 +411,10 @@ public class CardMarkerActivity extends AppCompatActivity {
                 Toast.makeText(context, context.getResources().getString(R.string.cancel), Toast.LENGTH_LONG).show();
 
 
-
-
             }
         });
 
         alertDialog.show();
-
-
-
-
 
 
     }
@@ -518,10 +447,159 @@ public class CardMarkerActivity extends AppCompatActivity {
     }
 
 
-
-
-
 }
+/*
+    public void AddMarker() {
+
+
+
+
+        String lat_lon = getIntent().getStringExtra("coordinate");
+        //String coordinate2 = getIntent().getStringExtra("lon");
+        //String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
+        String[] parts = lat_lon.split("/");
+        String lat = parts[0];
+        String lon = parts[1];
+
+
+        etlatitude.setText(lat);
+        etlongitute.setText(lon);
+
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+
+                ContentValues contentValues = new ContentValues();
+
+                if (isEmpty() == true) {
+                    Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    String latitude = etlatitude.getText().toString();
+                    String longitude = etlongitute.getText().toString();
+                    String title = ettitle.getText().toString();
+                    String displayDate = etmDisplayDate.getText().toString();
+                    String depth = etdepth.getText().toString();
+                    String amountoffish = etamountoffish.getText().toString();
+                    String note = etnote.getText().toString();
+
+                    contentValues.put(SQLiteHelper.DB_COL_ID_PRIMARY, DatabaseLoad.getInstance().last_id+1);
+                    contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
+                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
+                    contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
+                    contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
+                    contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
+                    contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
+                    contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
+
+                    database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
+
+
+                    Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
+
+
+                    ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance().last_id+1,
+                            Double.valueOf(latitude),
+                            Double.valueOf(longitude),
+                            title,
+                            displayDate,
+                            Double.valueOf(depth),
+                            Integer.parseInt(amountoffish),
+                            note);
+
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("result", title);
+                    bundle.putString("id", String.valueOf(modelClass.getModel_id()));
+
+
+                    Intent intent = new Intent();
+                    intent.putExtras(bundle);
+                    //returnIntent.putExtra("id",modelClass.getId());
+
+                    setResult(MapActivity.RESULT_OK, intent);
+
+
+
+/////////////////////////////////////////////////////////////in hands
+
+
+*//*
+
+                        FirebaseDatabase.getInstance().getReference().child("Markers").setValue(DatabaseLoad.getInstance().last_id+1);
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("latitude").setValue(Double.valueOf(latitude));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("longitude").setValue(Double.valueOf(longitude));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("title").setValue(title);
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("date").setValue(displayDate);
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("depth").setValue(Double.valueOf(depth));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("amount_of_fish").setValue(Integer.parseInt(amountoffish));
+                        FirebaseDatabase.getInstance().getReference().child("Markers").child("note").setValue(note);
+*//*
+
+                    id = UUID.randomUUID().toString();
+
+
+
+
+
+                    MarkerInformation markerInformation = new MarkerInformation(FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                            id,
+                            Double.valueOf(latitude),
+                            Double.valueOf(longitude),
+                            title,
+                            displayDate,
+                            Double.valueOf(depth),
+                            Integer.parseInt(amountoffish),
+                            note);
+
+                    //////////////////////////////Serializing Arrays is not supported, please use Lists instead
+                    ////////////////////////////// attend.put("depth", Arrays.asList(depth)) - keys under every point (+)
+                        *//*Map<String, Object> attend = new HashMap<>();
+                        attend.put("uid",  FirebaseAuth.getInstance().getCurrentUser().getUid()) ;
+                        attend.put("latitude", latitude) ;
+                        attend.put("longitude",  longitude) ;
+                        attend.put("title", title) ;
+                        attend.put("displayDate", displayDate) ;
+                        attend.put("depth",  depth) ;
+                        attend.put("amountoffish", amountoffish) ;
+                        attend.put("note", note) ;*//*
+
+
+                    FirebaseDatabase.getInstance().getReference("Markers").child(id).setValue(markerInformation);
+
+
+
+
+
+
+
+                    // DatabaseLoad.getInstance().AddDataMarker(modelClass);
+
+
+                    finish();
+
+
+                }
+
+                *//*} catch (SQLiteConstraintException e){
+
+
+                    Intent intent = new Intent();
+                    setResult(MapActivity.RESULT_CANCELED, intent);
+                    finish();
+
+                }*//*
+                dbHelper.close();
+
+            }
+
+        });
+    }*/
 
 
 
