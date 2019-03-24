@@ -7,8 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -16,9 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.GPS.GPSTracker;
+import com.company.imetlin.fishmarker.Navigation.NavigationBar;
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,6 +36,7 @@ import com.google.android.gms.maps.*;
 
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 
 /*
@@ -53,7 +59,7 @@ import com.google.android.gms.maps.model.LatLng;
                 }*/
 
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, NavigationBar.BottomSheetListener{
 
 
     public GoogleMap googlemap;
@@ -69,6 +75,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE_TWO = 2;
 
+    LinearLayout linearLayout;
+    BottomSheetBehavior bottomSheetBehavior;
+    Marker currentMarker;
 
 
     @Override
@@ -113,10 +122,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 MapClick(latLng.latitude, latLng.longitude);
 
 
+
             }
 
 
         });
+
+        google.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+
+                marker.showInfoWindow();;
+                NavigationBar navigationBar = new NavigationBar();
+                navigationBar.show(getSupportFragmentManager(),"exampleBottomSheet");
+
+
+                return true;
+            }
+        });
+
 
 
     }
@@ -215,11 +240,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                 String title_marker = data.getStringExtra("title");
                 String id_marker = data.getStringExtra("id");
-                int id_mark = Integer.parseInt(id_marker);
 
 
 
-               DatabaseLoad.getInstance().CreateMarker(id_mark, modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], title_marker);
+
+               DatabaseLoad.getInstance().CreateMarker(modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], title_marker);
                System.out.print("I AM SUPERMAN");
 
             }
@@ -363,4 +388,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
+    @Override
+    public void onButtonClicked(String text) {
+
+    }
 }

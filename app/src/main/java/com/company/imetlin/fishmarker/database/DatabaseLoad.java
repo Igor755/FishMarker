@@ -12,6 +12,8 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.CardMarkerActivity;
+import com.company.imetlin.fishmarker.MapActivity;
+import com.company.imetlin.fishmarker.Navigation.NavigationBar;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.myinterfaces.LinkMarkerLongClickListener;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
@@ -50,7 +52,6 @@ public class DatabaseLoad {
     private CardMarkerActivity cardMarkerActivity;
 
 
-
     private static DatabaseLoad instance;
 
 
@@ -75,10 +76,9 @@ public class DatabaseLoad {
     }
 
 
-
     public void LoaderData(GoogleMap _googlemap) {
 
-       this.alldatamarkers = new ArrayList<MarkerInformation>();
+        this.alldatamarkers = new ArrayList<MarkerInformation>();
         this.markers = new ArrayList<Marker>();
         this.googlemap = _googlemap;
         this.cardMarkerActivity = cardMarkerActivity;
@@ -99,14 +99,14 @@ public class DatabaseLoad {
                 }
 
 
-                for(int i=0;i<alldatamarkers.size();i++) {
+                for (int i = 0; i < alldatamarkers.size(); i++) {
 
                     //if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(alldatamarkers.get(i).getUid())) {
-                        double latitude = alldatamarkers.get(i).getLatitude();
-                        double longitude = alldatamarkers.get(i).getLongitude();
-                        String tittle = alldatamarkers.get(i).getTitle();
-                        Integer id_marker = Integer.valueOf(alldatamarkers.get(i).getMarker_id());
-                        CreateMarker(id_marker,latitude, longitude, tittle);
+                    double latitude = alldatamarkers.get(i).getLatitude();
+                    double longitude = alldatamarkers.get(i).getLongitude();
+                    String tittle = alldatamarkers.get(i).getTitle();
+//                    Integer id_marker = Integer.valueOf(alldatamarkers.get(i).getMarker_id());
+                    CreateMarker( latitude, longitude, tittle);
 
                 }
                 System.out.println(alldatamarkers);
@@ -119,27 +119,33 @@ public class DatabaseLoad {
                 throw databaseError.toException();
             }
         });
+
+
+
     }
-    public void CreateMarker(final Integer id_m, final double _lat, final double _lon, String title_marker) {
+
+    public void CreateMarker( final double _lat, final double _lon, String title_marker) {
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
                 .title(title_marker)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
-                .zIndex(id_m));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker)));
+
 
         markers.add(marker);
 
-        LongClickOnMarker();
+
+        // LongClickOnMarker();
 
     }
 
-    public void AddDataMarker (MarkerInformation marker){
+    public void AddDataMarker(MarkerInformation marker) {
 
         this.alldatamarkers.add(marker);
 
     }
-    private void LongClickOnMarker() {
+}
+    /*private void LongClickOnMarker() {
 
         googlemap.setOnMarkerDragListener(new LinkMarkerLongClickListener(markers) {
             @Override
@@ -214,7 +220,7 @@ public class DatabaseLoad {
     }
 
 
-    }
+    }*/
 
 
 /*
