@@ -1,0 +1,6 @@
+<translate
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/accelerate_cubic"
+    android:fromYDelta="0"
+    android:toYDelta="85%"
+    android:duration="500"/>

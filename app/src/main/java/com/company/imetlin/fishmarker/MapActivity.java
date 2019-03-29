@@ -20,6 +20,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -60,7 +64,7 @@ import com.google.android.gms.maps.model.Marker;
                 }*/
 
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, NavigationBar.BottomSheetListener{
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener/*, NavigationBar.BottomSheetListener*/{
 
 
     public GoogleMap googlemap;
@@ -80,6 +84,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     BottomSheetBehavior bottomSheetBehavior;
     Marker currentMarker;
 
+    private Button edit, detail;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +99,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         context = MapActivity.this;
+
+        linearLayout = (LinearLayout) findViewById(R.id.bottom_sheet);
+        edit = (Button) findViewById(R.id.button_detail);
+        detail = (Button) findViewById(R.id.button_detail);
+        linearLayout.setVisibility(View.GONE);
 
         DatabaseLoad.getInstance().setContext(context);
 
@@ -111,12 +123,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
 
+
         onCheckPermission(google);
 
         //mUiSettings.setMyLocationButtonEnabled(true);
         setUpMap(google);
 
-
+//////////////////////LONG CLICK MAP
         google.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(final LatLng latLng) {
@@ -130,18 +143,47 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         });
 
+
+
+//////////////////////CLICK MARKER
         google.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-
                 marker.showInfoWindow();
-                NavigationBar navigationBar = new NavigationBar();
 
-                navigationBar.show(getSupportFragmentManager(),"exampleBottomSheet");
+                mUiSettings.setZoomControlsEnabled(false);
+
+                final Animation show = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.show);
+                linearLayout.startAnimation(show);
+
+                linearLayout.setVisibility(View.VISIBLE);
+
+
+                //NavigationBar navigationBar = new NavigationBar();
+
+                //navigationBar.show(getSupportFragmentManager(),"exampleBottomSheet");*/
 
 
                 return true;
+            }
+        });
+
+
+
+/////////////////////////Click on MAP
+
+        google.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+
+
+
+                final Animation hide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide);
+                linearLayout.startAnimation(hide);
+
+                linearLayout.setVisibility(View.GONE);
+                mUiSettings.setZoomControlsEnabled(true);
             }
         });
 
@@ -389,10 +431,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     }
-
+/*
 
     @Override
     public void onButtonClicked(String text) {
 
-    }
+    }*/
 }
