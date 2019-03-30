@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.graphics.Color;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -101,7 +102,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         context = MapActivity.this;
 
         linearLayout = (LinearLayout) findViewById(R.id.bottom_sheet);
-        edit = (Button) findViewById(R.id.button_detail);
+        edit = (Button) findViewById(R.id.button_edit);
         detail = (Button) findViewById(R.id.button_detail);
         linearLayout.setVisibility(View.GONE);
 
@@ -148,7 +149,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //////////////////////CLICK MARKER
         google.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public boolean onMarkerClick(final Marker marker) {
 
                 marker.showInfoWindow();
 
@@ -158,6 +159,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 linearLayout.startAnimation(show);
 
                 linearLayout.setVisibility(View.VISIBLE);
+
+
+                detail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        DatabaseLoad.getInstance().DetailMarker(marker);
+
+                        Toast.makeText(MapActivity.this, marker.getId(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        DatabaseLoad.getInstance().UpdateMarkerOfMapActivity(marker);
+
+                    }
+                });
+
+
 
 
                 //NavigationBar navigationBar = new NavigationBar();
@@ -177,13 +200,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onMapClick(LatLng latLng) {
 
+                if (linearLayout.getVisibility() == View.VISIBLE) {
 
-
-                final Animation hide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide);
-                linearLayout.startAnimation(hide);
-
-                linearLayout.setVisibility(View.GONE);
-                mUiSettings.setZoomControlsEnabled(true);
+                    final Animation hide = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide);
+                    linearLayout.startAnimation(hide);
+                    linearLayout.setVisibility(View.GONE);
+                    mUiSettings.setZoomControlsEnabled(true);
+                }else {
+                    linearLayout.setVisibility(View.GONE);
+                    mUiSettings.setZoomControlsEnabled(true);
+                }
             }
         });
 

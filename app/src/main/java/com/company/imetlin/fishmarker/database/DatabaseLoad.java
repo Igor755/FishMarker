@@ -106,7 +106,7 @@ public class DatabaseLoad {
                     double longitude = alldatamarkers.get(i).getLongitude();
                     String tittle = alldatamarkers.get(i).getTitle();
 //                    Integer id_marker = Integer.valueOf(alldatamarkers.get(i).getMarker_id());
-                    CreateMarker( latitude, longitude, tittle);
+                    CreateMarker(latitude, longitude, tittle);
 
                 }
                 System.out.println(alldatamarkers);
@@ -121,10 +121,9 @@ public class DatabaseLoad {
         });
 
 
-
     }
 
-    public void CreateMarker( final double _lat, final double _lon, String title_marker) {
+    public void CreateMarker(final double _lat, final double _lon, String title_marker) {
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
@@ -144,6 +143,112 @@ public class DatabaseLoad {
         this.alldatamarkers.add(marker);
 
     }
+
+    public void DetailMarker(Marker detailmarker) {
+
+        for (final MarkerInformation modelClass : alldatamarkers) {
+            if (modelClass.getLatitude() == detailmarker.getPosition().latitude &&
+                    modelClass.getLongitude() == detailmarker.getPosition().longitude) {
+                alertDialog = new AlertDialog.Builder(context).create();
+
+
+                alertDialog.setTitle(R.string.complete_c);
+                alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
+                        context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
+                        context.getResources().getString(R.string.tit_c) + " " + modelClass.getTitle() + "\n" +
+                        context.getResources().getString(R.string.date_c) + " " + modelClass.getDate() + "\n" +
+                        context.getResources().getString(R.string.depth_c) + " " + modelClass.getDepth() + "\n" +
+                        context.getResources().getString(R.string.amount_c) + " " + modelClass.getAmount() + "\n" +
+                        context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());
+
+                alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finish();
+                    }
+                });
+
+                alertDialog.show();
+                break;
+
+            }
+        }
+    }
+
+    public void UpdateMarkerOfMapActivity(Marker upadtemarker) {
+
+        for (final MarkerInformation modelClass : alldatamarkers) {
+            if (modelClass.getLatitude() == upadtemarker.getPosition().latitude &&
+                    modelClass.getLongitude() == upadtemarker.getPosition().longitude) {
+
+                cardMarkerActivity = new CardMarkerActivity();
+                Bundle bundle = new Bundle();
+                bundle.putString("1", modelClass.getUid());
+                bundle.putString("2", modelClass.getMarker_id());
+                bundle.putString("3", String.valueOf(modelClass.getLatitude()));
+                bundle.putString("4", String.valueOf(modelClass.getLongitude()));
+                bundle.putString("5", modelClass.getTitle());
+                bundle.putString("6", modelClass.getDate());
+                bundle.putString("7", String.valueOf(modelClass.getDepth()));
+                bundle.putString("8", String.valueOf(modelClass.getAmount()));
+                bundle.putString("9", modelClass.getNote());
+
+
+                Intent intent = new Intent(DatabaseLoad.instance.context, CardMarkerActivity.class);
+
+                System.out.println(bundle);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+
+
+
+
+            }
+
+        }
+    }
+
+    public void UpdateMarker(MarkerInformation modelclass) {
+
+
+       /* ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
+        while (iterator.hasNext()) {
+            ModelClass next = iterator.next();
+            if (next.getModel_id() == modelclass.getModel_id()) {
+
+                iterator.set(modelclass);
+                break;
+            }
+        }
+
+        for (Marker marker : markers) {
+            if (modelclass.getModel_id() == marker.getZIndex()) {
+                marker.setTitle(modelclass.getTitle());
+                break;
+            }
+        }
+        System.out.println("GOOD");
+        // update marker in markers cycle
+        googlemap.clear();
+
+        ArrayList<Marker> markers_array = new ArrayList<Marker>();
+
+        for (Marker marker : markers) {
+
+            Marker marker_update = googlemap.addMarker(new MarkerOptions()
+                    .position(marker.getPosition())
+                    .title(marker.getTitle())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
+                    .zIndex(marker.getZIndex()));
+
+            markers_array.add(marker_update);
+        }
+
+        markers = new ArrayList<Marker>(markers_array);*/
+
+
+    }
+
 }
     /*private void LongClickOnMarker() {
 

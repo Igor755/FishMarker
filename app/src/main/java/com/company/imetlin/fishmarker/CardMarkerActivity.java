@@ -204,18 +204,17 @@ public class CardMarkerActivity extends AppCompatActivity {
         final String result5 = getIntent().getStringExtra("5");
         final String result6 = getIntent().getStringExtra("6");
         final String result7 = getIntent().getStringExtra("7");
-
-        //id
         final String result8 = getIntent().getStringExtra("8");
+        final String result9 = getIntent().getStringExtra("9");
 
 
-        etlatitude.setText(result1);
-        etlongitute.setText(result2);
-        ettitle.setText(result3);
-        etmDisplayDate.setText(result4);
-        etdepth.setText(result5);
-        etamountoffish.setText(result6);
-        etnote.setText(result7);
+        etlatitude.setText(result3);
+        etlongitute.setText(result4);
+        ettitle.setText(result5);
+        etmDisplayDate.setText(result6);
+        etdepth.setText(result7);
+        etamountoffish.setText(result8);
+        etnote.setText(result9);
 
         ok.setText("EDIT");
 
@@ -241,37 +240,31 @@ public class CardMarkerActivity extends AppCompatActivity {
                     String amountoffish = etamountoffish.getText().toString();
                     String note = etnote.getText().toString();
 
-
-                    contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
-                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
-                    contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
-                    contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
-                    contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
-                    contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
-                    contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
-
-                    //  int update_id = Integer.parseInt(result7);
-
-                    database.update(SQLiteHelper.DB_TABLE_NAME, contentValues, "_id = ?", new String[]{result8});
-
-
-                    Toast.makeText(context, R.string.update_complete, Toast.LENGTH_LONG).show();
-
-                    ModelClass modelClassupdate = new ModelClass(Integer.parseInt(result8),
-                            Double.parseDouble(latitude),
-                            Double.parseDouble(longitude),
+                    MarkerInformation markerInformation = new MarkerInformation(result1,
+                            result2,
+                            Double.valueOf(latitude),
+                            Double.valueOf(longitude),
                             title,
                             displayDate,
-                            Double.parseDouble(depth),
+                            Double.valueOf(depth),
                             Integer.parseInt(amountoffish),
                             note);
 
-                    //DatabaseLoad.getInstance().UpdateMarker(modelClassupdate);
+                    FirebaseDatabase.getInstance().getReference("Markers").child(result1).setValue(markerInformation);
+
+
+
+
+                    DatabaseLoad.getInstance().UpdateMarker(markerInformation);
                     finish();
+
+
+
+
 
                 }
 
-                dbHelper.close();
+
             }
         });
 

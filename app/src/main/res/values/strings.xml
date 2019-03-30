@@ -36,7 +36,7 @@
     ///////////////////////////////////////////////////////Сomplete marker information
 
 
-    <string name="complete_c">Сomplete marker information</string>
+    <string name="complete_c">Detail marker information</string>
     <string name="lat_c">Latitude: </string>
     <string name="lon_c">Longitude: </string>
     <string name="tit_c">Title marker: </string>
