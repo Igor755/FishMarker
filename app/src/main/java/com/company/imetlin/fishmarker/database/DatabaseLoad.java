@@ -184,7 +184,7 @@ public class DatabaseLoad {
                 cardMarkerActivity = new CardMarkerActivity();
                 Bundle bundle = new Bundle();
                 bundle.putString("1", modelClass.getUid());
-                bundle.putString("2", modelClass.getMarker_id());
+                bundle.putString("2", modelClass.getId_marker_key());
                 bundle.putString("3", String.valueOf(modelClass.getLatitude()));
                 bundle.putString("4", String.valueOf(modelClass.getLongitude()));
                 bundle.putString("5", modelClass.getTitle());
@@ -201,34 +201,38 @@ public class DatabaseLoad {
                 context.startActivity(intent);
 
 
-
-
             }
 
         }
     }
 
-    public void UpdateMarker(MarkerInformation modelclass) {
 
 
-       /* ListIterator<ModelClass> iterator = alldatamarkers.listIterator();
+    public void UpdateMarker(MarkerInformation updatemarker) {
+
+
+        ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
         while (iterator.hasNext()) {
-            ModelClass next = iterator.next();
-            if (next.getModel_id() == modelclass.getModel_id()) {
+            MarkerInformation next = iterator.next();
+            if (next.getLatitude().equals(updatemarker.getLatitude()) &&
+                    next.getLongitude().equals(updatemarker.getLongitude())) {
 
-                iterator.set(modelclass);
+                iterator.set(updatemarker);
                 break;
             }
         }
 
         for (Marker marker : markers) {
-            if (modelclass.getModel_id() == marker.getZIndex()) {
-                marker.setTitle(modelclass.getTitle());
+            if (updatemarker.getLatitude() == marker.getPosition().latitude  &&
+                    updatemarker.getLongitude() == marker.getPosition().longitude) {
+                marker.setTitle(updatemarker.getTitle());
                 break;
             }
         }
         System.out.println("GOOD");
-        // update marker in markers cycle
+
+        //update marker in markers cycle
+
         googlemap.clear();
 
         ArrayList<Marker> markers_array = new ArrayList<Marker>();
@@ -244,10 +248,64 @@ public class DatabaseLoad {
             markers_array.add(marker_update);
         }
 
-        markers = new ArrayList<Marker>(markers_array);*/
+        markers = new ArrayList<Marker>(markers_array);
+
+        System.out.println("GOOD");
+
+
+        //DatabaseLoad.getInstance().setContext(context);
 
 
     }
+
+
+    /*FUNCTION DELETE MARKER*/
+
+
+
+        public void DeleteMarker(MarkerInformation deletemarker){
+
+            ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
+
+            while (iterator.hasNext()) {
+                MarkerInformation next = iterator.next();
+                if (next.getLatitude().equals(deletemarker.getLatitude()) &&
+                        next.getLongitude().equals(deletemarker.getLongitude())) {
+                    iterator.remove();
+                    break;
+                }
+            }
+
+            for (Marker marker : markers) {
+                if (deletemarker.getLatitude() == marker.getPosition().latitude  &&
+                        deletemarker.getLongitude() == marker.getPosition().longitude) {
+
+                    markers.remove(marker);
+                    break;
+                }
+            }
+            googlemap.clear();
+
+            ArrayList<Marker> markers_array = new ArrayList<Marker>();
+
+            for (Marker marker : markers) {
+
+                Marker marker_delete = googlemap.addMarker(new MarkerOptions()
+                        .position(marker.getPosition())
+                        .title(marker.getTitle())
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
+                        .zIndex(marker.getZIndex()));
+
+                markers_array.add(marker_delete);
+            }
+
+            markers = new ArrayList<Marker>(markers_array);
+
+
+        }
+
+
+
 
 }
     /*private void LongClickOnMarker() {

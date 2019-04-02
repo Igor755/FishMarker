@@ -29,6 +29,7 @@ import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
@@ -56,7 +57,7 @@ public class CardMarkerActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     private SQLiteHelper dbHelper;
-    private String id_markers_keys;
+    private String id_marker_key;
 
     public Boolean isnull;
 
@@ -70,7 +71,7 @@ public class CardMarkerActivity extends AppCompatActivity {
         setContentView(R.layout.card_marker);
 
         this.id = id;
-        this.id_markers_keys = id_markers_keys;
+        this.id_marker_key = id_marker_key;
 
         etlatitude = (EditText) findViewById(R.id.edit_latitude);
         etlongitute = (EditText) findViewById(R.id.edit_longitude);
@@ -194,6 +195,7 @@ public class CardMarkerActivity extends AppCompatActivity {
     /*
         FUNCTION UPDATE DATA MARKER IN BASE
     */
+
     public void UpdateMarker() {
 
 
@@ -250,21 +252,14 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Integer.parseInt(amountoffish),
                             note);
 
-                    FirebaseDatabase.getInstance().getReference("Markers").child(result1).setValue(markerInformation);
+                    FirebaseDatabase.getInstance().getReference("Markers").child(result2).setValue(markerInformation);
 
-
-
-
+                    System.out.println("23123");
                     DatabaseLoad.getInstance().UpdateMarker(markerInformation);
                     finish();
 
 
-
-
-
                 }
-
-
             }
         });
 
@@ -298,6 +293,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                 } else {
 
+                    id_marker_key = UUID.randomUUID().toString();
                     String latitude = etlatitude.getText().toString();
                     String longitude = etlongitute.getText().toString();
                     String title = ettitle.getText().toString();
@@ -309,11 +305,11 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
 
-                    id_markers_keys = UUID.randomUUID().toString();
+
 
 
                     MarkerInformation markerInformation = new MarkerInformation(FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                            String.valueOf(getID()),
+                            id_marker_key,
                             Double.valueOf(latitude),
                             Double.valueOf(longitude),
                             title,
@@ -322,11 +318,11 @@ public class CardMarkerActivity extends AppCompatActivity {
                             Integer.parseInt(amountoffish),
                             note);
 
-                    FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(id_markers_keys)).setValue(markerInformation);
+                    FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(id_marker_key)).setValue(markerInformation);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("title", title);
-                    bundle.putString("id", String.valueOf(markerInformation.getMarker_id()));
+                    bundle.putString("id", String.valueOf(markerInformation.getId_marker_key()));
                     Intent intent = new Intent();
                     intent.putExtras(bundle);
 
@@ -341,7 +337,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
         });
     }
-    public static long getID() {
+   /* public static long getID() {
 
           final long LIMIT = 10000000000L;
           long last = 0;
@@ -351,7 +347,12 @@ public class CardMarkerActivity extends AppCompatActivity {
             id = (last + 1) % LIMIT;
         }
         return last = id;
-    }
+    }*/
+
+
+  /*FUNCTION DELETE MARKER*/
+
+
 
     public void DeleteMarker() {
 
@@ -366,7 +367,6 @@ public class CardMarkerActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
 
                 final String result1 = getIntent().getStringExtra("1");
                 final String result2 = getIntent().getStringExtra("2");
@@ -375,26 +375,33 @@ public class CardMarkerActivity extends AppCompatActivity {
                 final String result5 = getIntent().getStringExtra("5");
                 final String result6 = getIntent().getStringExtra("6");
                 final String result7 = getIntent().getStringExtra("7");
-                //id
                 final String result8 = getIntent().getStringExtra("8");
+                final String result9 = getIntent().getStringExtra("9");
 
-                database.delete(SQLiteHelper.DB_TABLE_NAME, SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result8, null);
+                //database.delete(SQLiteHelper.DB_TABLE_NAME, SQLiteHelper.DB_COL_ID_PRIMARY + "=" + result8, null);
 
-                ModelClass modelClassDelete = new ModelClass(Integer.parseInt(result8),
-                        Double.parseDouble(result1),
-                        Double.parseDouble(result2),
-                        result3,
-                        result4,
-                        Double.parseDouble(result5),
-                        Integer.parseInt(result6),
-                        result7);
+                MarkerInformation modelClassDelete = new MarkerInformation(result1,
+                        result2,
+                        Double.valueOf(result3),
+                        Double.valueOf(result4),
+                        result5,
+                        result6,
+                        Double.valueOf(result7),
+                        Integer.parseInt(result8),
+                        result9);
 
-                // DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);
+
+
+
+               DatabaseReference delmark =  FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(result2));
+
+                delmark.removeValue();
+                DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);
 
 
                 finish();
 
-                dbHelper.close();
+
 
             }
         });
@@ -441,160 +448,5 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
 }
-/*
-    public void AddMarker() {
-
-
-
-
-        String lat_lon = getIntent().getStringExtra("coordinate");
-        //String coordinate2 = getIntent().getStringExtra("lon");
-        //String newcoord = coordinate.replace("lat/lng: (", "").replace(")", "");
-        String[] parts = lat_lon.split("/");
-        String lat = parts[0];
-        String lon = parts[1];
-
-
-        etlatitude.setText(lat);
-        etlongitute.setText(lon);
-
-
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
-
-                ContentValues contentValues = new ContentValues();
-
-                if (isEmpty() == true) {
-                    Toast.makeText(context, R.string.fill, Toast.LENGTH_LONG).show();
-
-                } else {
-
-                    String latitude = etlatitude.getText().toString();
-                    String longitude = etlongitute.getText().toString();
-                    String title = ettitle.getText().toString();
-                    String displayDate = etmDisplayDate.getText().toString();
-                    String depth = etdepth.getText().toString();
-                    String amountoffish = etamountoffish.getText().toString();
-                    String note = etnote.getText().toString();
-
-                    contentValues.put(SQLiteHelper.DB_COL_ID_PRIMARY, DatabaseLoad.getInstance().last_id+1);
-                    contentValues.put(SQLiteHelper.DB_COL_LATITUDE, latitude);
-                    contentValues.put(SQLiteHelper.DB_COL_LONGITUDE, longitude);
-                    contentValues.put(SQLiteHelper.DB_COL_TITLE, title);
-                    contentValues.put(SQLiteHelper.DB_COL_DATE, displayDate);
-                    contentValues.put(SQLiteHelper.DB_COL_DEPTH, depth);
-                    contentValues.put(SQLiteHelper.DB_COL_AMOUNT, amountoffish);
-                    contentValues.put(SQLiteHelper.DB_COL_NOTE, note);
-
-                    database.insert(SQLiteHelper.DB_TABLE_NAME, null, contentValues);
-
-
-                    Toast.makeText(context, R.string.add_base, Toast.LENGTH_LONG).show();
-
-
-                    ModelClass modelClass = new ModelClass(DatabaseLoad.getInstance().last_id+1,
-                            Double.valueOf(latitude),
-                            Double.valueOf(longitude),
-                            title,
-                            displayDate,
-                            Double.valueOf(depth),
-                            Integer.parseInt(amountoffish),
-                            note);
-
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("result", title);
-                    bundle.putString("id", String.valueOf(modelClass.getModel_id()));
-
-
-                    Intent intent = new Intent();
-                    intent.putExtras(bundle);
-                    //returnIntent.putExtra("id",modelClass.getId());
-
-                    setResult(MapActivity.RESULT_OK, intent);
-
-
-
-/////////////////////////////////////////////////////////////in hands
-
-
-*//*
-
-                        FirebaseDatabase.getInstance().getReference().child("Markers").setValue(DatabaseLoad.getInstance().last_id+1);
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("Uid").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("latitude").setValue(Double.valueOf(latitude));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("longitude").setValue(Double.valueOf(longitude));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("title").setValue(title);
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("date").setValue(displayDate);
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("depth").setValue(Double.valueOf(depth));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("amount_of_fish").setValue(Integer.parseInt(amountoffish));
-                        FirebaseDatabase.getInstance().getReference().child("Markers").child("note").setValue(note);
-*//*
-
-                    id = UUID.randomUUID().toString();
-
-
-
-
-
-                    MarkerInformation markerInformation = new MarkerInformation(FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                            id,
-                            Double.valueOf(latitude),
-                            Double.valueOf(longitude),
-                            title,
-                            displayDate,
-                            Double.valueOf(depth),
-                            Integer.parseInt(amountoffish),
-                            note);
-
-                    //////////////////////////////Serializing Arrays is not supported, please use Lists instead
-                    ////////////////////////////// attend.put("depth", Arrays.asList(depth)) - keys under every point (+)
-                        *//*Map<String, Object> attend = new HashMap<>();
-                        attend.put("uid",  FirebaseAuth.getInstance().getCurrentUser().getUid()) ;
-                        attend.put("latitude", latitude) ;
-                        attend.put("longitude",  longitude) ;
-                        attend.put("title", title) ;
-                        attend.put("displayDate", displayDate) ;
-                        attend.put("depth",  depth) ;
-                        attend.put("amountoffish", amountoffish) ;
-                        attend.put("note", note) ;*//*
-
-
-                    FirebaseDatabase.getInstance().getReference("Markers").child(id).setValue(markerInformation);
-
-
-
-
-
-
-
-                    // DatabaseLoad.getInstance().AddDataMarker(modelClass);
-
-
-                    finish();
-
-
-                }
-
-                *//*} catch (SQLiteConstraintException e){
-
-
-                    Intent intent = new Intent();
-                    setResult(MapActivity.RESULT_CANCELED, intent);
-                    finish();
-
-                }*//*
-                dbHelper.close();
-
-            }
-
-        });
-    }*/
-
-
-
 
 
