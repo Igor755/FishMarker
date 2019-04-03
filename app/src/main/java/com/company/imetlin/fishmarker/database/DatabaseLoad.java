@@ -303,6 +303,17 @@ public class DatabaseLoad {
 
 
         }
+    public boolean SearchMarker (Double lat, Double lon){
+
+        for (Marker marker : markers) {
+            if ((marker.getPosition().latitude == lat) &&
+                    (marker.getPosition().longitude == lon)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 
 
 

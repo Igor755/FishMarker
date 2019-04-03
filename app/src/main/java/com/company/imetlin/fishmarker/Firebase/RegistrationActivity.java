@@ -57,6 +57,16 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         ///////24
 
 
+
+
+
+
+
+
+
+
+
+
         ArrayList<String> AllCountry = new ArrayList<String>();
 
 

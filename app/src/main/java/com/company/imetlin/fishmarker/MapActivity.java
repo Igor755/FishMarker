@@ -43,6 +43,7 @@ import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 /*
@@ -175,7 +176,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void onClick(View v) {
 
-                        DatabaseLoad.getInstance().UpdateMarkerOfMapActivity(marker);
+                      //  if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(DatabaseLoad.getInstance().alldatamarkers.get(i).getUid()) )
+
+                        for (int i = 0; i < DatabaseLoad.getInstance().alldatamarkers.size(); i++) {
+
+                            if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(DatabaseLoad.getInstance().alldatamarkers.get(i).getUid())){
+
+                                DatabaseLoad.getInstance().UpdateMarkerOfMapActivity(marker);
+
+                            }
+                            else{
+
+                                Toast.makeText(MapActivity.this, "Don't edit foreign markers ", Toast.LENGTH_SHORT).show();
+
+                            }
+
+
+                        }
+
+
+
+
+
+
 
                     }
                 });
@@ -385,7 +408,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
                 googlemap.animateCamera(cameraUpdate);
 
-/*
+
                boolean ismarkerExist = DatabaseLoad.getInstance().SearchMarker(latitude, longitude);
 
                 if (!ismarkerExist) {
@@ -394,7 +417,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 } else {
                     Toast.makeText(context, R.string.unique, Toast.LENGTH_SHORT)
                             .show();
-                }*/
+                }
 
             }
 

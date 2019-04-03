@@ -57,6 +57,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         //если уже авторизован
+
         if (currentUser != null) {
             Intent intent = new Intent();
             setResult(MainActivity.RESULT_OK, intent);
