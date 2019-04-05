@@ -31,24 +31,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.sign_in_activity);
 
         mAuth = FirebaseAuth.getInstance();
-        //если пользователь зарегестрирован или прошел авторизацию
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                if (currentUser != null) {
 
-                    Intent intent = new Intent();
-                    setResult(MainActivity.RESULT_OK, intent);
-                    finish();
-
-
-                } else {
-
-                }
-
-            }
-        };
 
         edEmail = (EditText) findViewById(R.id.et_email);
         edPassword = (EditText) findViewById(R.id.et_password);
@@ -91,16 +74,43 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent();
-                    setResult(MainActivity.RESULT_OK, intent);
-                    finish();
-                    Toast.makeText(SignInActivity.this, "Autorization complete", Toast.LENGTH_SHORT).show();
+
+                    checkIfEmailVerified();
+
+                    //Toast.makeText(SignInActivity.this, "Autorithation complete", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(SignInActivity.this, "Autorization ERROR", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(SignInActivity.this, "Autorithation ERROR", Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
+    }
+    private void checkIfEmailVerified()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user.isEmailVerified())
+        {
+
+            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+
+            //user is verified, so you can finish this activity or send user to activity which you want.
+            //finish();
+            Toast.makeText(SignInActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            // email is not verified, so just prompt the message to the user and restart this activity.
+            //            // NOTE: don't forget to log out the user.
+
+            Toast.makeText(SignInActivity.this, "Please verify your account................", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+            //restart this activity
+
+        }
     }
 
 

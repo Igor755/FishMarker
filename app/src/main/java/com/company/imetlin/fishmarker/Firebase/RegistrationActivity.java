@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private Spinner spinnerLocation;
     public Menu menu;
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +55,30 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         mAuth = FirebaseAuth.getInstance();
 
+
+
         findViewById(R.id.button_register).setOnClickListener(this);
         ///////24
 
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    // NOTE: this Activity should get onpen only when the user is not signed in, otherwise
+                    // the user will receive another verification email.
+                    sendVerificationEmail();
+                } else {
+                    // User is signed out
 
-
-
-
-
-
-
-
-
+                }
+                // ...
+            }
+        };
 
         ArrayList<String> AllCountry = new ArrayList<String>();
-
-
         String[] isoCountryCodes = Locale.getISOCountries();
         for (String countryCode : isoCountryCodes) {
             Locale locale = new Locale("", countryCode);
@@ -155,8 +164,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                                 public void onComplete(@NonNull Task<Void> task) {
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
-                                        backToBack();
-                                        Toast.makeText(RegistrationActivity.this, "success registration", Toast.LENGTH_LONG).show();
+
+                                        sendVerificationEmail();
+                                        //backToBack();
+
 
                                     } else {
 
@@ -210,7 +221,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
        backToBack();
     }
     public void backToBack(){
-        startActivity(new Intent(RegistrationActivity.this, MainActivity.class));
+        startActivity(new Intent(RegistrationActivity.this, SignInActivity.class));
         finish();
     }
     public void RulesClick(View v) {
@@ -234,5 +245,38 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         alert.show();
 
     }
+    private void sendVerificationEmail()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            // email sent
+
+
+                            // after email is sent just logout the user and finish this activity
+                            FirebaseAuth.getInstance().signOut();
+                            startActivity(new Intent(RegistrationActivity.this, SignInActivity.class));
+                            finish();
+                            Toast.makeText(RegistrationActivity.this, "please check email", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
+
+                            //restart this activity
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
+
+                        }
+                    }
+                });
+    }
+
 
 }

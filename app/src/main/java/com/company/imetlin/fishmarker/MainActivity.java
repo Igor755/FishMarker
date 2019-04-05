@@ -36,19 +36,34 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
- //DROP BASE
-      dbHelper = new SQLiteHelper(this);
-      SQLiteDatabase database = dbHelper.getWritableDatabase();
-      database.delete(SQLiteHelper.DB_TABLE_NAME,null,null);
-*/
-
-        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-        startActivityForResult(intent, 1);
 
 
+        List<ModelClass> image_details = getListData();
 
+        final GridView gridView = (GridView) findViewById(R.id.gridView);
+
+
+        gridView.setAdapter(new AdapterGrid(this, image_details));
+
+        // When the user clicks on the GridItem
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                Object o = gridView.getItemAtPosition(position);
+                ModelClass _modelClass = (ModelClass) o;
+                //Toast.makeText(MainActivity.this, "Selected :"
+                //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getBaseContext(), WaterActivity.class);
+                intent.putExtra("name", _modelClass.getName());
+                startActivity(intent);
+
+
+            }
+        });
     }
+
 
     private List<ModelClass> getListData() {
 
@@ -121,43 +136,4 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
 
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-
-        if (requestCode == 1) {
-            if (resultCode == MainActivity.RESULT_OK) {
-                List<ModelClass> image_details = getListData();
-
-                final GridView gridView = (GridView) findViewById(R.id.gridView);
-
-
-                gridView.setAdapter(new AdapterGrid(this, image_details));
-
-                // When the user clicks on the GridItem
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                    @Override
-                    public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                        Object o = gridView.getItemAtPosition(position);
-                        ModelClass _modelClass = (ModelClass) o;
-                        //Toast.makeText(MainActivity.this, "Selected :"
-                        //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
-
-                        Intent intent = new Intent(getBaseContext(), WaterActivity.class);
-                        intent.putExtra("name", _modelClass.getName());
-                        startActivity(intent);
-                    }
-                });
-
-            }
-            if (resultCode == MainActivity.RESULT_CANCELED) {
-
-            }
-
-
-        }
-    }
-
 }
