@@ -393,7 +393,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
 
 
-               DatabaseReference delmark =  FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(result2));
+                DatabaseReference delmark =  FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(result2));
 
                 delmark.removeValue();
                 DatabaseLoad.getInstance().DeleteMarker(modelClassDelete);

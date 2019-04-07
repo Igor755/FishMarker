@@ -7,12 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
-import android.graphics.Color;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,7 +17,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -29,10 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.GPS.GPSTracker;
-import com.company.imetlin.fishmarker.Navigation.NavigationBar;
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
+import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -46,25 +40,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-/*
-                /////////////////////////////////////DEPRECATED method.getMylocation()
-
-
-                Location location = this.googlemap.getMyLocation();
-
-                if (location != null) {
-
-                    LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
-                    CameraPosition position = this.googlemap.getCameraPosition();
-
-                    CameraPosition.Builder builder = new CameraPosition.Builder();
-                    builder.zoom(15);
-                    builder.target(target);
-
-                    this.googlemap.animateCamera(CameraUpdateFactory.newCameraPosition(builder.build()));
-
-                }*/
-
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener/*, NavigationBar.BottomSheetListener*/{
 
@@ -74,17 +49,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     AlertDialog.Builder add_marker;
     private ModelClass modelClass;
     Context context;
-    public DatabaseLoad databaseLoad;
     public Menu menu;
-    private GoogleApiClient googleApiClient;
 
     public double latitude, longitude;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE_TWO = 2;
 
     LinearLayout linearLayout;
-    BottomSheetBehavior bottomSheetBehavior;
-    Marker currentMarker;
+
 
     private Button edit, detail;
 
@@ -94,7 +66,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_activity);
-        // button = (ImageButton) findViewById(R.id.imageButton);
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -176,39 +148,37 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void onClick(View v) {
 
-                      //  if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(DatabaseLoad.getInstance().alldatamarkers.get(i).getUid()) )
+                        boolean isMyMarker = false;
 
-                        for (int i = 0; i < DatabaseLoad.getInstance().alldatamarkers.size(); i++) {
+                        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                            if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(DatabaseLoad.getInstance().alldatamarkers.get(i).getUid())){
+                        for (MarkerInformation item:DatabaseLoad.getInstance().alldatamarkers) {
 
-                                DatabaseLoad.getInstance().UpdateMarkerOfMapActivity(marker);
 
+                            if(item.getLongitude() == marker.getPosition().longitude &&
+                                    item.getLatitude() == marker.getPosition().latitude &&
+                                    item.getTitle().equals(marker.getTitle()) &&
+                                    userId.equals(item.getUid()))
+                            {
+                                isMyMarker = true;
+                                break;
                             }
-                            else{
-
-                                Toast.makeText(MapActivity.this, "Don't edit foreign markers ", Toast.LENGTH_SHORT).show();
-
-                            }
-
 
                         }
+                        if(isMyMarker){
 
+                            DatabaseLoad.getInstance().UpdateMarkerOfMapActivity(marker);
+                        }
+                        else{
 
+                            Toast.makeText(MapActivity.this, "Don't edit/delete foreign markers ", Toast.LENGTH_SHORT).show();
 
-
-
+                        }
 
 
                     }
                 });
 
-
-
-
-                //NavigationBar navigationBar = new NavigationBar();
-
-                //navigationBar.show(getSupportFragmentManager(),"exampleBottomSheet");*/
 
 
                 return true;
@@ -378,8 +348,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             case R.id.plus:
 
                 onMyLocation();
-
-
                 return true;
 
             default:
@@ -480,10 +448,5 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     }
-/*
 
-    @Override
-    public void onButtonClicked(String text) {
-
-    }*/
 }
