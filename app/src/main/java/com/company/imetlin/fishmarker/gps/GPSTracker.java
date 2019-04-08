@@ -1,4 +1,4 @@
-package com.company.imetlin.fishmarker.GPS;
+package com.company.imetlin.fishmarker.gps;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

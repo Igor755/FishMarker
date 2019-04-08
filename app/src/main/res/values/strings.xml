@@ -6,7 +6,7 @@
     <string name="coordinate">Coordinate will be add on base</string>
     <string name="latlng">Latitude/Longitude</string>
     <string name="date">Date</string>
-    <string name="depth">through point</string>
+    <string name="depth">0.00</string>
     <string name="Depth">Depth(meter)</string>
     <string name="Number">Amount of fish</string>
     <string name="number">integer</string>
@@ -157,8 +157,6 @@
     <string name="empty_email">empty email</string>
     <string name="not_valid_email">not valid email</string>
     <string name="not_valid_password">not valid password</string>
-
-
 
 
 </resources>

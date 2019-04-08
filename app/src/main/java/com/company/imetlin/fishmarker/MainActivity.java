@@ -1,10 +1,8 @@
 package com.company.imetlin.fishmarker;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.company.imetlin.fishmarker.Firebase.SignInActivity;
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.ModelClass;

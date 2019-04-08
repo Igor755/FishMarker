@@ -5,7 +5,7 @@
     android:id="@+id/activity_authentication"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Firebase.SignInActivity">
+    tools:context=".firebaseAuth.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +64,17 @@
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/colorPrimary"
             android:text="@string/Dont_have" />
+
+        <TextView
+            android:id="@+id/btn_forgot_password"
+            android:layout_width="150dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:text="Forgot Password"/>
     </LinearLayout>
 
 

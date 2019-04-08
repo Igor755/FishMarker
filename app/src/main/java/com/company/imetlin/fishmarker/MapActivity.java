@@ -23,7 +23,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.company.imetlin.fishmarker.GPS.GPSTracker;
+import com.company.imetlin.fishmarker.gps.GPSTracker;
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.ModelClass;

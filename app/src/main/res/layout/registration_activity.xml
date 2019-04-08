@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Firebase.RegistrationActivity">
+    tools:context=".firebaseAuth.RegistrationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +15,7 @@
             android:id="@+id/imageView3"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginTop="40dp"
             android:src="@drawable/web_fish"
             android:onClick="RulesClick"/>
 
@@ -22,14 +23,17 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="cursive"
+            android:textColor="@color/colorAccent"
             android:text="@string/Register"
             android:textAlignment="center"
             android:textSize="20sp"/>
 
         <EditText
             android:id="@+id/edit_text_name"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
+            android:imeOptions="actionDone"
+            android:layout_marginTop="30dp"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:nextFocusDown="@id/edit_text_email"
             android:hint="@string/Name"/>
@@ -37,7 +41,9 @@
 
         <EditText
             android:id="@+id/edit_text_email"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:nextFocusDown="@id/edit_text_password"
             android:hint="@string/Email"/>
@@ -45,7 +51,9 @@
 
         <EditText
             android:id="@+id/edit_text_password"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:nextFocusDown="@id/spinner_location"
             android:hint="@string/Password"/>
@@ -54,7 +62,8 @@
 
         <Spinner
             android:id="@+id/spinner_location"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
+            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:hint="@string/location"/>
 
@@ -63,15 +72,10 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector"
+            android:layout_marginTop="70dp"
             android:text="@string/Register"
             android:textAllCaps="false" />
-<!--
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/gif"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/mygif"
-            android:background="#FFFFFF"/>-->
+
     </LinearLayout>
 
 

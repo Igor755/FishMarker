@@ -104,6 +104,7 @@
                 android:id="@+id/tvDate"
                 style="@style/CategoryStyle"
                 android:layout_width="wrap_content"
+                android:textColor="@color/colorAccent"
                 android:layout_height="48dp"
                 android:paddingLeft="6dp"
                 android:hint="@string/selectdate" />
@@ -205,7 +206,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
 
         <Button
             android:id="@+id/btnCancel"

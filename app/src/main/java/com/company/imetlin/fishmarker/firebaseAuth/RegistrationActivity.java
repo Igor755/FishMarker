@@ -1,4 +1,4 @@
-package com.company.imetlin.fishmarker.Firebase;
+package com.company.imetlin.fishmarker.firebaseAuth;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.company.imetlin.fishmarker.MainActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,9 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener{
@@ -80,11 +78,16 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         ArrayList<String> AllCountry = new ArrayList<String>();
         String[] isoCountryCodes = Locale.getISOCountries();
+
         for (String countryCode : isoCountryCodes) {
             Locale locale = new Locale("", countryCode);
             String countryName = locale.getDisplayCountry();
             AllCountry.add(countryName);
+
         }
+        Collections.sort(AllCountry);
+
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, AllCountry);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,16 +107,23 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private void registerUser() {
 
 
-        Map<String, String> countries = new HashMap<>();
+        HashMap<String, String> countries = new HashMap<>();
+
         for (String iso : Locale.getISOCountries()) {
+
             Locale l = new Locale("", iso);
             countries.put(l.getDisplayCountry(), iso);
+
         }
+
+
 
         final String name = editTextName.getText().toString().trim();
         final String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         final String location = countries.get(spinnerLocation.getSelectedItem().toString().trim());
+
+
 
 
         if (name.isEmpty()) {

@@ -1,9 +1,7 @@
-package com.company.imetlin.fishmarker.Firebase;
+package com.company.imetlin.fishmarker.firebaseAuth;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,17 +33,20 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         edEmail = (EditText) findViewById(R.id.et_email);
         edPassword = (EditText) findViewById(R.id.et_password);
+
         findViewById(R.id.btn_sign_in).setOnClickListener(this);
         findViewById(R.id.btn_registration).setOnClickListener(this);
+        findViewById(R.id.btn_forgot_password).setOnClickListener(this);
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         //если уже авторизован
-
+/*
         if (currentUser != null) {
             Intent intent = new Intent();
             setResult(MainActivity.RESULT_OK, intent);
             finish();
-        }
+        }*/
     }
 
 
@@ -62,7 +63,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(SignInActivity.this, RegistrationActivity.class));
             finish();
 
-        } else {
+        }else if (view.getId() == R.id.btn_forgot_password) {
+            startActivity(new Intent(SignInActivity.this, ForgotPassword.class));
+            finish();
+
+        }
+        else {
             Toast.makeText(SignInActivity.this, "Does not meet the requirements", Toast.LENGTH_SHORT).show();
         }
 
