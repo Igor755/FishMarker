@@ -142,12 +142,12 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             return;
         }
         if (password.isEmpty()) {
-            editTextPassword.setError(getText(R.string.not_valid_password));
+            editTextPassword.setError(getText(R.string.password_empty));
             editTextPassword.requestFocus();
             return;
         }
         if (isPasswordValid(editTextPassword.getText().toString())){
-            editTextPassword.setError(("not valid"));
+            editTextPassword.setError(getText(R.string.password_not_valid));
             editTextPassword.requestFocus();
             return;
         }
@@ -181,7 +181,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
                                     } else {
 
-                                        Toast.makeText(RegistrationActivity.this, "not valid data", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegistrationActivity.this, R.string.valid, Toast.LENGTH_SHORT).show();
                                         //display a failure message
                                     }
                                 }
@@ -237,12 +237,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     public void RulesClick(View v) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationActivity.this);
-        builder.setTitle("Требования к паролю")
-                .setMessage("1)At least 8 chars\n" +
-                        "2)Contains at least one digit\n" +
-                        "3)Contains at least one lower alpha char and one upper alpha char\n" +
-                        "4)Contains at least one char within a set of special chars (@#%$^ etc.)\n" +
-                        "5)Does not contain space, tab, etc.")
+        builder.setTitle(R.string.password_requirements)
+                .setMessage(R.string.requirements)
                 .setIcon(R.drawable.i)
                 .setCancelable(false)
                 .setNegativeButton(R.string.ok,
@@ -271,7 +267,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             FirebaseAuth.getInstance().signOut();
                             startActivity(new Intent(RegistrationActivity.this, SignInActivity.class));
                             finish();
-                            Toast.makeText(RegistrationActivity.this, "please check email", Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegistrationActivity.this, R.string.check, Toast.LENGTH_LONG).show();
                         }
                         else
                         {

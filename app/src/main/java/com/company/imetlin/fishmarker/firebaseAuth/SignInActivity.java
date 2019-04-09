@@ -40,6 +40,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+
+
         //если уже авторизован
 /*
         if (currentUser != null) {
@@ -57,7 +59,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     !edPassword.getText().toString().equals("")) {
                 signing(edEmail.getText().toString(), edPassword.getText().toString());
             } else {
-                Toast.makeText(SignInActivity.this, "username or password is empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, R.string.empty_email_or_password, Toast.LENGTH_SHORT).show();
             }
         } else if (view.getId() == R.id.btn_registration) {
             startActivity(new Intent(SignInActivity.this, RegistrationActivity.class));
@@ -69,7 +71,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         }
         else {
-            Toast.makeText(SignInActivity.this, "Does not meet the requirements", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInActivity.this, R.string.requirementsy, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -86,7 +88,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     //Toast.makeText(SignInActivity.this, "Autorithation complete", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    Toast.makeText(SignInActivity.this, "Autorithation ERROR", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this, R.string.autorithation, Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -105,14 +107,14 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             //user is verified, so you can finish this activity or send user to activity which you want.
             //finish();
-            Toast.makeText(SignInActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInActivity.this, R.string.successfully, Toast.LENGTH_SHORT).show();
         }
         else
         {
             // email is not verified, so just prompt the message to the user and restart this activity.
             //            // NOTE: don't forget to log out the user.
 
-            Toast.makeText(SignInActivity.this, "Please verify your account................", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SignInActivity.this, R.string.verify, Toast.LENGTH_SHORT).show();
             FirebaseAuth.getInstance().signOut();
             //restart this activity
 

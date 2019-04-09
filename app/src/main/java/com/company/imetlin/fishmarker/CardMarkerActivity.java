@@ -254,7 +254,7 @@ public class CardMarkerActivity extends AppCompatActivity {
 
                     FirebaseDatabase.getInstance().getReference("Markers").child(result2).setValue(markerInformation);
 
-                    System.out.println("23123");
+
                     DatabaseLoad.getInstance().UpdateMarker(markerInformation);
                     finish();
 

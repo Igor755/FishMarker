@@ -40,6 +40,7 @@
         android:imeOptions="actionDone"
         android:singleLine="true"
         android:hint="@string/Password"
+        android:inputType="textPassword"
         android:textSize="15sp"
         android:id="@+id/et_password" />
 
@@ -74,7 +75,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
-            android:text="Forgot Password"/>
+            android:text="@string/forgot"/>
     </LinearLayout>
 
 

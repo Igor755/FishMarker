@@ -149,12 +149,28 @@
     <string name="sign_in">Войти</string>
     <string name="Location">Страна</string>
     <string name="location">страна</string>
-    <string name="Dont_have">Не имею аккаунта, создать</string>
+    <string name="Dont_have">Нет аккаунта, создать</string>
     <string name="Register">Регистрация</string>
     <string name="empty_name">пустое имя</string>
     <string name="empty_email">пустая почта</string>
     <string name="not_valid_email">не валидная почта</string>
     <string name="not_valid_password">не валидный пароль</string>
+    <string name="empty_email_or_password">email или пароль пуст</string>
+    <string name="requirementsy">не удовлетворяет требованиям</string>
+    <string name="autorithation">Ошибка авторизации, email или пароль не верны</string>
+    <string name="successfully">удачный вход)</string>
+    <string name="verify">посмотри свой email и подтверди регистрацию</string>
+    <string name="sent">пароль отправлен на email</string>
+    <string name="valid">не правильно введены данные</string>
+    <string name="password_empty">пароль пуст</string>
+    <string name="password_not_valid">пароль слабый</string>
+    <string name="check">проверь email и подтверди регистрацию</string>
+    <string name="password_requirements">Рекомендации к паролю:</string>
+    <string name="requirements">
+    1)Минимум 8 символов\n2)Содержит хотябы одну цифру\n3)Содержит хотябы 1 букву нижнего регистра и 1 заглавную букву\n4)Содержит хотя бы один символ в наборе спец. символов(@#%$^ и т.д.)\n5)Не должен содержать пробелов, табуляции и т.д.</string>
+    <string name="sent_pass">Отправить пароль</string>
+    <string name="forgot">Не помню пароль</string>
+
 
 
 

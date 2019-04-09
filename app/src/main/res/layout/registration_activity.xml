@@ -54,6 +54,7 @@
             android:layout_width="300dp"
             android:imeOptions="actionDone"
             android:singleLine="true"
+            android:inputType="textPassword"
             android:layout_height="wrap_content"
             android:nextFocusDown="@id/spinner_location"
             android:hint="@string/Password"/>
@@ -69,7 +70,7 @@
 
         <Button
             android:id="@+id/button_register"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector"
             android:layout_marginTop="70dp"
