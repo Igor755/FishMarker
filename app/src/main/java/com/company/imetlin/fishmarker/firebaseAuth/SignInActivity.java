@@ -43,12 +43,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
 
         //если уже авторизован
-/*
+
         if (currentUser != null) {
-            Intent intent = new Intent();
-            setResult(MainActivity.RESULT_OK, intent);
+            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            startActivity(intent);
             finish();
-        }*/
+        }
     }
 
 

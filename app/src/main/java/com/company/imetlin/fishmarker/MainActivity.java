@@ -14,6 +14,7 @@ import android.widget.GridView;
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
+import com.company.imetlin.fishmarker.userplaces.PlacesUserActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 //Toast.makeText(MainActivity.this, "Selected :"
                 //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(getBaseContext(), WaterActivity.class);
+                Intent intent = new Intent(getBaseContext(), PlacesUserActivity.class);
                 intent.putExtra("name", _modelClass.getName());
                 startActivity(intent);
 
