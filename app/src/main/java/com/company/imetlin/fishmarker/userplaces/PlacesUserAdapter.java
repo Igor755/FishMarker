@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.R;
+import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
+import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.company.imetlin.fishmarker.pojo.Places;
 
 import java.util.List;
@@ -18,10 +20,17 @@ import java.util.List;
 public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.ViewHolder> {
     private List<Places> listItems;
     private Context mContext;
+    private OnItemClickListener itemClickListener;
+
 
     public PlacesUserAdapter(List<Places> listItems, Context mContext) {
         this.listItems = listItems;
         this.mContext = mContext;
+    }
+
+    public PlacesUserAdapter(List<Places> listItems, OnItemClickListener itemClickListener) {
+        this.itemClickListener =itemClickListener;
+        this.listItems = listItems;
     }
 
     @Override
@@ -37,7 +46,7 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
         holder.txtNamePlaces.setText(itemList.getNameplace());
         holder.txtLatitude.setText(Double.toString(itemList.getLatitude()));
         holder.txtLongitude.setText(Double.toString(itemList.getLongitude()));
-        holder.txtZoom.setText(Integer.toString(itemList.getZoom()));
+        holder.txtZoom.setText(Double.toString(itemList.getZoom()));
         holder.txt_menu_places.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

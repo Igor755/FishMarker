@@ -31,6 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".userplaces.PlacesUserMapActivity"></activity>
         <activity
             android:name=".firebaseAuth.SignInActivity"
             android:screenOrientation="portrait">

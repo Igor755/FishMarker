@@ -31,6 +31,22 @@
           }
         },
         {
+          "client_id": "1060885258489-96g6rsdlqfn11fobems0hqjpbdeurl0n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.imetlin.fishmarker",
+            "certificate_hash": "000401de7748c146d2eec4cc5743088f46f533ca"
+          }
+        },
+        {
+          "client_id": "1060885258489-ilq9pud7kaob9cqrnqsqjin0jhr03rm4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.company.imetlin.fishmarker",
+            "certificate_hash": "fcd94b9e24467a8c8d49e482c5860cafadb98672"
+          }
+        },
+        {
           "client_id": "1060885258489-vlji332omb9u1dd45l5au94g9qc52ccn.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -41,20 +57,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "1060885258489-vlji332omb9u1dd45l5au94g9qc52ccn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

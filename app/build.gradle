@@ -33,6 +33,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
 
+
     //firebase
     implementation 'com.google.firebase:firebase-auth:16.2.1'
     implementation 'com.google.firebase:firebase-database:16.1.0'
