@@ -14,10 +14,12 @@ import android.widget.ImageButton;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.Places;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class PlacesUserActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PlacesUserAdapter adapter;
     private List<Places> listItems;
+    public static ArrayList<Places> alldataplaces;
     ImageButton imageButton;
     Menu menu;
 
@@ -35,6 +38,9 @@ public class PlacesUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.places_user_activity);
+
+
+        this.alldataplaces = new ArrayList<Places>();
 
         imageButton = (ImageButton) findViewById(R.id.add_place);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -59,7 +65,10 @@ public class PlacesUserActivity extends AppCompatActivity {
         });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Places");
+        Query myRef = database.getReference("Places").orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+       /* myRef.orderByChild("uid")
+                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());*/
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -67,7 +76,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
 
                     Places place_information = dataSnapshot1.getValue(Places.class);
-                    //alldatamarkers.add(place_information);
+                    alldataplaces.add(place_information);
                     System.out.println(place_information);
 
                 }
@@ -82,20 +91,9 @@ public class PlacesUserActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
         //Generate sample data
-      /* listItems = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            listItems.add(new Places("Dnepr", 12.232, 12.2, 2));
-        }
-*/
+
 
 /*
         adapter = new PlacesUserAdapter(image_details, new OnItemClickListener() {
@@ -115,7 +113,7 @@ public class PlacesUserActivity extends AppCompatActivity {
             }
         });*/
         //Set adapter
-        adapter = new PlacesUserAdapter(listItems, this);
+        adapter = new PlacesUserAdapter(alldataplaces, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -129,6 +127,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 
             case "Ocean":
             case "Океан":
+
+                System.out.println(alldataplaces);
 ////////////////////////////////
                 break;
 
