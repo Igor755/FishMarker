@@ -46,18 +46,12 @@ public class AdapterGrid extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+
         if (convertView == null) {
-
-
-
-
-
             convertView = layoutInflater.inflate(R.layout.one_item_grid, null);
             holder = new ViewHolder();
             holder.PhotoWater = (ImageView) convertView.findViewById(R.id.imageViewWater);
             holder.NameWater = (TextView) convertView.findViewById(R.id.textViewWaterName);
-
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -66,13 +60,7 @@ public class AdapterGrid extends BaseAdapter {
         ModelClass ModelClass = this.listData.get(position);
         holder.NameWater.setText(ModelClass.getName());
 
-
-
-
         int imageId = this.getMipmapResIdByName(ModelClass.getPhoto());
-
-
-
         holder.PhotoWater.setImageResource(imageId);
 
         return convertView;

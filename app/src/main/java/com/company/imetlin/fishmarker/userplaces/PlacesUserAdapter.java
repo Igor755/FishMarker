@@ -100,6 +100,15 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
             txtLongitude = (TextView) itemView.findViewById(R.id.txtlongitude);
             txtZoom = (TextView) itemView.findViewById(R.id.txtzoom);
             txt_menu_places = (TextView) itemView.findViewById(R.id.txt_menu_places);
+
+             itemView.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     int pos = ViewHolder.super.getAdapterPosition();
+                     itemClickListener.onItemClick(v,pos);
+
+                 }
+             });
         }
     }
 }

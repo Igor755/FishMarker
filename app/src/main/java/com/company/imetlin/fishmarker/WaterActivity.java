@@ -43,9 +43,7 @@ public class WaterActivity extends AppCompatActivity {
 
         // используем linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
-
         final List<ModelClass> image_details = getListData();
-
 
         DividerItemDecoration divider = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.separator));

@@ -10,8 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.company.imetlin.fishmarker.MapActivity;
 import com.company.imetlin.fishmarker.R;
+import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.Places;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,8 +34,10 @@ public class PlacesUserActivity extends AppCompatActivity {
     private PlacesUserAdapter adapter;
     private List<Places> listItems;
     public static ArrayList<Places> alldataplaces;
-    ImageButton imageButton;
-    Menu menu;
+    public ImageButton imageButton;
+    public Menu menu;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private TextView txtnameplace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +45,17 @@ public class PlacesUserActivity extends AppCompatActivity {
         setContentView(R.layout.places_user_activity);
 
 
-        this.alldataplaces = new ArrayList<Places>();
+        alldataplaces = new ArrayList<>();
 
+
+        txtnameplace = (TextView) findViewById(R.id.txtnameplace);
         imageButton = (ImageButton) findViewById(R.id.add_place);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Intent intent = getIntent();
         final String txtName = getIntent().getStringExtra("name");
 
-
-        final List<Places> image_details = getListData();
-
-        listItems = new ArrayList<>();
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,11 +66,13 @@ public class PlacesUserActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         Query myRef = database.getReference("Places").orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-       /* myRef.orderByChild("uid")
-                .equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());*/
+
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -80,7 +84,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                     System.out.println(place_information);
 
                 }
-
+                setAdapter();
 
             }
 
@@ -91,33 +95,44 @@ public class PlacesUserActivity extends AppCompatActivity {
             }
         });
 
-        //Generate sample data
 
 
 
-/*
+
+    }
+
+    private void setAdapter(){
+
+
+        final List<Places> image_details = getListData();
+
+        System.out.println("ssss");
+
         adapter = new PlacesUserAdapter(image_details, new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
 
-           *//*     Intent intent = new Intent(PlacesUserActivity.this, MapActivity.class);
+                Intent intent = new Intent(PlacesUserActivity.this, MapActivity.class);
                 Places m = image_details.get(position);
 
                 intent.putExtra("latitude", m.getLatitude());
                 intent.putExtra("longitude", m.getLongitude());
                 intent.putExtra("zoom", m.getZoom());
-                startActivity(intent);*//*
-
+                startActivity(intent);
 
             }
-        });*/
-        //Set adapter
-        adapter = new PlacesUserAdapter(alldataplaces, this);
+        });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
     }
 
     private List<Places> getListData() {
+
+        System.out.println(alldataplaces);
+        System.out.println(alldataplaces);
 
         Intent intent = getIntent();
         String txtName = getIntent().getStringExtra("name");
@@ -128,33 +143,74 @@ public class PlacesUserActivity extends AppCompatActivity {
             case "Ocean":
             case "Океан":
 
-                System.out.println(alldataplaces);
-////////////////////////////////
+                for (Places place : alldataplaces){
+                    if(place.getWaterobject().equals("Ocean")){
+                        list.add(place);
+                        txtnameplace.setVisibility(View.GONE);
+                        System.out.println(place);
+                    }
+                }
+/////////////////////
                 break;
 
             case "Sea":
             case "Море":
-////////////////////////////////
+                for (Places place : alldataplaces){
+                    if(place.getWaterobject().equals("Sea")){
+                        list.add(place);
+                        txtnameplace.setVisibility(View.GONE);
+                        System.out.println(place);
+                    }
+                }
+/////////////////////
                 break;
 
             case "Lake":
             case "Озеро":
-////////////////////////////////
+                for (Places place : alldataplaces){
+                    if(place.getWaterobject().equals("Lake")){
+                        list.add(place);
+                        txtnameplace.setVisibility(View.GONE);
+                        System.out.println(place);
+                    }
+                }
+/////////////////////
                 break;
 
             case "River":
             case "Река":
-//////////////////////////////////
+                for (Places place : alldataplaces){
+                    if(place.getWaterobject().equals("River")){
+                        list.add(place);
+                        txtnameplace.setVisibility(View.GONE);
+                        System.out.println(place);
+                    }
+                }
+/////////////////////
                 break;
 
             case "Gulf":
             case "Залив":
-//////////////////////////
+                for (Places place : alldataplaces){
+                    if(place.getWaterobject().equals("Gulf")){
+                        list.add(place);
+                        txtnameplace.setVisibility(View.GONE);
+                        System.out.println(place);
+                    }
+                }
+/////////////////////
                 break;
 
             case "Another":
             case "Другое":
-//////////////////////
+                for (Places place : alldataplaces){
+                    if(place.getWaterobject().equals("Another")){
+                        list.add(place);
+                        txtnameplace.setVisibility(View.GONE);
+                        System.out.println(place);
+                    }
+                }
+////////////////////
                 break;
 
 
