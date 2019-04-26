@@ -47,6 +47,8 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
     private EditText name_water_object;
     private String id_place_key;
 
+    private PlacesUserActivity placesUserActivity;
+
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE_TWO = 2;
@@ -173,11 +175,14 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
     public void MapClick(final double lat, final double lon) {
 
         Intent intent = getIntent();
+        this.placesUserActivity = new PlacesUserActivity();
 
 
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.alert, null);
         add_marker = new AlertDialog.Builder(context);
+
+
 
         //Настраиваем prompt.xml для нашего AlertDialog:
         add_marker.setView(promptsView);
@@ -225,6 +230,9 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
                 System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                 FirebaseDatabase.getInstance().getReference("Places").child(id_place_key).setValue(place_info);
+
+                placesUserActivity.AddDataWater(place_info);
+                System.out.println("eeee");
                 finish();
 
 

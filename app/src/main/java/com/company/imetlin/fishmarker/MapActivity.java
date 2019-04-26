@@ -276,13 +276,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         this.googlemap = google;
-        double[] cats = getIntent().getDoubleArrayExtra("coordinates");
-        Integer myZoom = getIntent().getExtras().getInt("zoom");
+      /*  double[] cats = getIntent().getDoubleArrayExtra("coordinates");
+        Integer myZoom = getIntent().getExtras().getInt("zoom");*/
+
+        Bundle arguments = getIntent().getExtras();
+
+
+            String latitude_water = arguments.get("latitude").toString();
+            String longitude_water = arguments.get("longitude").toString();
+            String zoom_water = arguments.get("zoom").toString();
+
+            Double lat = Double.valueOf(latitude_water);
+            Double lon = Double.valueOf(longitude_water);
+            Float zom = Float.valueOf(zoom_water);
+
+
 
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(cats[0], cats[1]))
-                .zoom(myZoom)
+                .target(new LatLng(lat, lon))
+                .zoom(zom)
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         google.animateCamera(cameraUpdate);

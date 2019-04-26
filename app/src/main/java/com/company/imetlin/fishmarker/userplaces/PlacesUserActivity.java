@@ -28,6 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 public class PlacesUserActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -38,6 +41,8 @@ public class PlacesUserActivity extends AppCompatActivity {
     public Menu menu;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView txtnameplace;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String txtName = getIntent().getStringExtra("name");
+
+        txtnameplace.setVisibility(VISIBLE);
 
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +111,18 @@ public class PlacesUserActivity extends AppCompatActivity {
     private void setAdapter(){
 
 
-        final List<Places> image_details = getListData();
+        Intent intent = getIntent();
+        String txtNameAdapter = getIntent().getStringExtra("name");
+
+        final List<Places> image_details = getListData(txtNameAdapter);
 
         System.out.println("ssss");
+
+        if(image_details.size() != 0){
+            txtnameplace.setVisibility(View.GONE);
+            System.out.println("Sdsd");
+
+        }
 
         adapter = new PlacesUserAdapter(image_details, new OnItemClickListener() {
             @Override
@@ -129,14 +145,11 @@ public class PlacesUserActivity extends AppCompatActivity {
 
     }
 
-    private List<Places> getListData() {
+    private List<Places> getListData(String txtName) {
 
-        System.out.println(alldataplaces);
-        System.out.println(alldataplaces);
 
-        Intent intent = getIntent();
-        String txtName = getIntent().getStringExtra("name");
         ArrayList<Places> list = new ArrayList<Places>();
+
 
         switch (txtName) {
 
@@ -146,73 +159,67 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces){
                     if(place.getWaterobject().equals("Ocean")){
                         list.add(place);
-                        txtnameplace.setVisibility(View.GONE);
                         System.out.println(place);
                     }
                 }
-/////////////////////
-                break;
 
+                break;
+//////////////////////////////////////////////////////////////
             case "Sea":
             case "Море":
                 for (Places place : alldataplaces){
                     if(place.getWaterobject().equals("Sea")){
                         list.add(place);
-                        txtnameplace.setVisibility(View.GONE);
                         System.out.println(place);
                     }
                 }
-/////////////////////
-                break;
 
+                break;
+//////////////////////////////////////////////////////////////
             case "Lake":
             case "Озеро":
                 for (Places place : alldataplaces){
                     if(place.getWaterobject().equals("Lake")){
                         list.add(place);
-                        txtnameplace.setVisibility(View.GONE);
                         System.out.println(place);
                     }
                 }
-/////////////////////
-                break;
 
+                break;
+//////////////////////////////////////////////////////////////
             case "River":
             case "Река":
                 for (Places place : alldataplaces){
                     if(place.getWaterobject().equals("River")){
                         list.add(place);
-                        txtnameplace.setVisibility(View.GONE);
                         System.out.println(place);
                     }
                 }
-/////////////////////
-                break;
 
+                break;
+//////////////////////////////////////////////////////////////
             case "Gulf":
             case "Залив":
                 for (Places place : alldataplaces){
                     if(place.getWaterobject().equals("Gulf")){
                         list.add(place);
-                        txtnameplace.setVisibility(View.GONE);
                         System.out.println(place);
                     }
                 }
-/////////////////////
-                break;
 
+                break;
+//////////////////////////////////////////////////////////////
             case "Another":
             case "Другое":
                 for (Places place : alldataplaces){
                     if(place.getWaterobject().equals("Another")){
                         list.add(place);
-                        txtnameplace.setVisibility(View.GONE);
                         System.out.println(place);
                     }
                 }
-////////////////////
-                break;
 
+                break;
+//////////////////////////////////////////////////////////////
 
             default:
                 break;
@@ -242,6 +249,13 @@ public class PlacesUserActivity extends AppCompatActivity {
         }
     }
 
+   public void AddDataWater(Places water) {
+
+        String water_object = water.getWaterobject();
+        alldataplaces.add(water);
+        getListData(water_object);
+
+    }
 
 }
 

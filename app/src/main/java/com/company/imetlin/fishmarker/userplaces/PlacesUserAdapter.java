@@ -42,6 +42,7 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+
         final Places itemList = listItems.get(position);
         holder.txtNamePlaces.setText(itemList.getNameplace());
         holder.txtLatitude.setText(Double.toString(itemList.getLatitude()));
