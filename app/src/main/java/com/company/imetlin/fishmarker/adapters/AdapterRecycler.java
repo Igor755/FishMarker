@@ -1,5 +1,6 @@
 package com.company.imetlin.fishmarker.adapters;
 
+import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,4 +83,5 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.ViewHo
         //return listData.length;
         return listData.size();
     }
+
 }

@@ -2,6 +2,7 @@ package com.company.imetlin.fishmarker.userplaces;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +42,8 @@ public class PlacesUserActivity extends AppCompatActivity {
     public Menu menu;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView txtnameplace;
+    public  List<Places> image_details;
+
 
 
 
@@ -55,8 +58,7 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         txtnameplace = (TextView) findViewById(R.id.txtnameplace);
         imageButton = (ImageButton) findViewById(R.id.add_place);
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
+
 
         Intent intent = getIntent();
         final String txtName = getIntent().getStringExtra("name");
@@ -69,7 +71,7 @@ public class PlacesUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PlacesUserActivity.this, PlacesUserMapActivity.class);
                 intent.putExtra("name", txtName);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -91,7 +93,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                     System.out.println(place_information);
 
                 }
-                setAdapter();
+                setAdapter(txtName);
 
             }
 
@@ -108,13 +110,16 @@ public class PlacesUserActivity extends AppCompatActivity {
 
     }
 
-    private void setAdapter(){
+    private void setAdapter(String txt){
+
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
 
 
-        Intent intent = getIntent();
-        String txtNameAdapter = getIntent().getStringExtra("name");
+        //Intent intent = getIntent();
+        //String txtNameAdapter = getIntent().getStringExtra("name");
 
-        final List<Places> image_details = getListData(txtNameAdapter);
+        image_details = getListData(txt);
 
         System.out.println("ssss");
 
@@ -124,7 +129,7 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         }
 
-        adapter = new PlacesUserAdapter(image_details, new OnItemClickListener() {
+        adapter = new PlacesUserAdapter(image_details, getBaseContext(), new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
@@ -253,10 +258,25 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         String water_object = water.getWaterobject();
         alldataplaces.add(water);
-        getListData(water_object);
+        //getListData(water_object);
+       //setAdapter(water_object);
+      // image_details = getListData(water_object);
+      // adapter.setItems(image_details);
+
+       //recyclerView.getAdapter().notifyDataSetChanged();
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        String name_water_object = data.getStringExtra("water_object");
+        setAdapter(name_water_object);
+        recyclerView.getAdapter().notifyDataSetChanged();
+
+    }
 }
 
 

@@ -14,6 +14,8 @@ import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.company.imetlin.fishmarker.pojo.Places;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -23,14 +25,15 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
     private OnItemClickListener itemClickListener;
 
 
-    public PlacesUserAdapter(List<Places> listItems, Context mContext) {
+    /*public PlacesUserAdapter(List<Places> listItems, Context mContext) {
         this.listItems = listItems;
         this.mContext = mContext;
-    }
+    }*/
 
-    public PlacesUserAdapter(List<Places> listItems, OnItemClickListener itemClickListener) {
+    public PlacesUserAdapter(List<Places> listItems,Context mContext, OnItemClickListener itemClickListener) {
         this.itemClickListener =itemClickListener;
         this.listItems = listItems;
+        this.mContext = mContext;
     }
 
     @Override
@@ -48,12 +51,12 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
         holder.txtLatitude.setText(Double.toString(itemList.getLatitude()));
         holder.txtLongitude.setText(Double.toString(itemList.getLongitude()));
         holder.txtZoom.setText(Double.toString(itemList.getZoom()));
-        holder.txt_menu_places.setOnClickListener(new View.OnClickListener() {
+        holder.menu_places.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Display option menu
 
-                PopupMenu popupMenu = new PopupMenu(mContext, holder.txt_menu_places);
+                PopupMenu popupMenu = new PopupMenu(mContext, holder.menu_places);
                 popupMenu.inflate(R.menu.menu_places);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -65,6 +68,15 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
                                 break;
                             case R.id.delete:
                                 //Delete item
+
+                                /*
+                                DatabaseReference delmark =  FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(result2));
+
+                                delmark.removeValue();
+                                */
+
+                                listItems.get(position);
+
                                 listItems.remove(position);
                                 notifyDataSetChanged();
                                 Toast.makeText(mContext, "delete", Toast.LENGTH_LONG).show();
@@ -91,7 +103,7 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
          TextView txtLatitude;
          TextView txtLongitude;
          TextView txtZoom;
-         TextView txt_menu_places;
+         TextView menu_places;
 
          ViewHolder(View itemView) {
             super(itemView);
@@ -100,7 +112,7 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
             txtLatitude = (TextView) itemView.findViewById(R.id.txtlatitude);
             txtLongitude = (TextView) itemView.findViewById(R.id.txtlongitude);
             txtZoom = (TextView) itemView.findViewById(R.id.txtzoom);
-            txt_menu_places = (TextView) itemView.findViewById(R.id.txt_menu_places);
+             menu_places = (TextView) itemView.findViewById(R.id.txt_menu_places);
 
              itemView.setOnClickListener(new View.OnClickListener() {
                  @Override
@@ -112,4 +124,5 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
              });
         }
     }
+
 }

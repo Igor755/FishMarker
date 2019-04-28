@@ -232,7 +232,16 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
                 FirebaseDatabase.getInstance().getReference("Places").child(id_place_key).setValue(place_info);
 
                 placesUserActivity.AddDataWater(place_info);
-                System.out.println("eeee");
+
+                Bundle bundle = new Bundle();
+                bundle.putString("water_object", water_object);
+                Intent intent = new Intent();
+                intent.putExtras(bundle);
+
+
+                setResult(PlacesUserActivity.RESULT_OK, intent);
+
+
                 finish();
 
 
