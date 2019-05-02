@@ -3,6 +3,7 @@ package com.company.imetlin.fishmarker.userplaces;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +13,21 @@ import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
+import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.company.imetlin.fishmarker.pojo.Places;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Queue;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.ViewHolder> {
     private List<Places> listItems;
@@ -67,15 +77,57 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
                                 Toast.makeText(mContext, "update", Toast.LENGTH_LONG).show();
                                 break;
                             case R.id.delete:
+
+
                                 //Delete item
 
-                                /*
-                                DatabaseReference delmark =  FirebaseDatabase.getInstance().getReference("Markers").child(String.valueOf(result2));
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                Query delmark =  ref.child("Places").
+                                        orderByChild("place_id").
+                                        equalTo(itemList.getPlace_id());
 
-                                delmark.removeValue();
-                                */
 
-                                listItems.get(position);
+                                ListIterator<Places> iterator = PlacesUserActivity.alldataplaces.listIterator();
+                                System.out.println("sdsds");
+
+                                while (iterator.hasNext()) {
+                                    Places next = iterator.next();
+                                    System.out.println("sdsds");
+                                    if (next.getPlace_id().equals(itemList.getPlace_id())) {
+                                        System.out.println("sdsds");
+                                        iterator.remove();
+                                        break;
+                                    }
+                                }
+
+
+                                delmark.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                            appleSnapshot.getRef().removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e(TAG, "onCancelled", databaseError.toException());
+                                    }
+                                });
+
+
+
+
+
+                               /* System.out.println(itemList);
+
+                                System.out.println(itemList.getWaterobject() +
+                                        itemList.getLatitude() +
+                                        itemList.getLongitude() +
+                                        itemList.getNameplace() +
+                                        itemList.getZoom() +
+                                        itemList.getUid());
+                                listItems.get(position);*/
 
                                 listItems.remove(position);
                                 notifyDataSetChanged();

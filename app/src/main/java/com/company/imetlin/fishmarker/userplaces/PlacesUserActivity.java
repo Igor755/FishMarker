@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.MapActivity;
 import com.company.imetlin.fishmarker.R;
@@ -42,9 +43,7 @@ public class PlacesUserActivity extends AppCompatActivity {
     public Menu menu;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView txtnameplace;
-    public  List<Places> image_details;
-
-
+    public List<Places> image_details;
 
 
     @Override
@@ -71,11 +70,9 @@ public class PlacesUserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(PlacesUserActivity.this, PlacesUserMapActivity.class);
                 intent.putExtra("name", txtName);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent, 1);
             }
         });
-
-
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -105,12 +102,9 @@ public class PlacesUserActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
 
-    private void setAdapter(String txt){
+    private void setAdapter(String txt) {
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -123,7 +117,7 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         System.out.println("ssss");
 
-        if(image_details.size() != 0){
+        if (image_details.size() != 0) {
             txtnameplace.setVisibility(View.GONE);
             System.out.println("Sdsd");
 
@@ -161,8 +155,8 @@ public class PlacesUserActivity extends AppCompatActivity {
             case "Ocean":
             case "Океан":
 
-                for (Places place : alldataplaces){
-                    if(place.getWaterobject().equals("Ocean")){
+                for (Places place : alldataplaces) {
+                    if (place.getWaterobject().equals("Ocean")) {
                         list.add(place);
                         System.out.println(place);
                     }
@@ -172,8 +166,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 //////////////////////////////////////////////////////////////
             case "Sea":
             case "Море":
-                for (Places place : alldataplaces){
-                    if(place.getWaterobject().equals("Sea")){
+                for (Places place : alldataplaces) {
+                    if (place.getWaterobject().equals("Sea")) {
                         list.add(place);
                         System.out.println(place);
                     }
@@ -183,8 +177,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 //////////////////////////////////////////////////////////////
             case "Lake":
             case "Озеро":
-                for (Places place : alldataplaces){
-                    if(place.getWaterobject().equals("Lake")){
+                for (Places place : alldataplaces) {
+                    if (place.getWaterobject().equals("Lake")) {
                         list.add(place);
                         System.out.println(place);
                     }
@@ -194,8 +188,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 //////////////////////////////////////////////////////////////
             case "River":
             case "Река":
-                for (Places place : alldataplaces){
-                    if(place.getWaterobject().equals("River")){
+                for (Places place : alldataplaces) {
+                    if (place.getWaterobject().equals("River")) {
                         list.add(place);
                         System.out.println(place);
                     }
@@ -205,8 +199,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 //////////////////////////////////////////////////////////////
             case "Gulf":
             case "Залив":
-                for (Places place : alldataplaces){
-                    if(place.getWaterobject().equals("Gulf")){
+                for (Places place : alldataplaces) {
+                    if (place.getWaterobject().equals("Gulf")) {
                         list.add(place);
                         System.out.println(place);
                     }
@@ -216,8 +210,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 //////////////////////////////////////////////////////////////
             case "Another":
             case "Другое":
-                for (Places place : alldataplaces){
-                    if(place.getWaterobject().equals("Another")){
+                for (Places place : alldataplaces) {
+                    if (place.getWaterobject().equals("Another")) {
                         list.add(place);
                         System.out.println(place);
                     }
@@ -254,16 +248,16 @@ public class PlacesUserActivity extends AppCompatActivity {
         }
     }
 
-   public void AddDataWater(Places water) {
+    public void AddDataWater(Places water) {
 
         String water_object = water.getWaterobject();
         alldataplaces.add(water);
         //getListData(water_object);
-       //setAdapter(water_object);
-      // image_details = getListData(water_object);
-      // adapter.setItems(image_details);
+        //setAdapter(water_object);
+        // image_details = getListData(water_object);
+        // adapter.setItems(image_details);
 
-       //recyclerView.getAdapter().notifyDataSetChanged();
+        //recyclerView.getAdapter().notifyDataSetChanged();
 
     }
 
@@ -271,12 +265,23 @@ public class PlacesUserActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 1) {
+            if (resultCode == PlacesUserActivity.RESULT_OK) {
 
-        String name_water_object = data.getStringExtra("water_object");
-        setAdapter(name_water_object);
-        recyclerView.getAdapter().notifyDataSetChanged();
 
+                String name_water_object = data.getStringExtra("water_object");
+                setAdapter(name_water_object);
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }
+            if (resultCode == PlacesUserActivity.RESULT_CANCELED) {
+                //Write your code if there's no result
+
+                Toast.makeText(getBaseContext(), R.string.cancel, Toast.LENGTH_SHORT)
+                        .show();
+            }
+
+        }
+        }
     }
-}
 
 

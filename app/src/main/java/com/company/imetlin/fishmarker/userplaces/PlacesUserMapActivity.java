@@ -225,7 +225,8 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
                         lon,
                         (double) zoom,
                         FirebaseAuth.getInstance().getCurrentUser().getUid(),
-                        water_object);
+                        water_object,
+                        id_place_key);
 
                 System.out.println(FirebaseAuth.getInstance().getCurrentUser().getUid());
 

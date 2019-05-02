@@ -7,6 +7,7 @@ public class Places {
     private Double longitude;
     private Double zoom;
     private String uid;
+    private String place_id;
     private String waterobject;
 
     public Places() {
@@ -41,13 +42,22 @@ public class Places {
         this.waterobject = waterobject;
     }
 
-    public Places(String nameplace, Double latitude, Double longitude, Double zoom, String uid, String waterobject) {
+    public Places(String nameplace, Double latitude, Double longitude, Double zoom, String uid, String waterobject, String place_id) {
         this.nameplace = nameplace;
         this.latitude = latitude;
         this.longitude = longitude;
         this.zoom = zoom;
         this.uid = uid;
         this.waterobject = waterobject;
+        this.place_id = place_id;
+    }
+
+    public String getPlace_id() {
+        return place_id;
+    }
+
+    public void setPlace_id(String place_id) {
+        this.place_id = place_id;
     }
 
     public String getNameplace() {
