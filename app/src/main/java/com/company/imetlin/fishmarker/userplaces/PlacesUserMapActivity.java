@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,10 +24,15 @@ import android.widget.Toast;
 import com.company.imetlin.fishmarker.CardMarkerActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.Places;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -264,6 +270,27 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
 
         add_marker.show();
 
+
+    }
+    public void UpdatePlace(Double lat, Double lon, Float zom){
+
+        this.googlemap = googlemap;
+        this.placesUserActivity = new PlacesUserActivity();
+        context = PlacesUserMapActivity.this;
+
+
+
+
+        googlemap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
+                LatLng(lat, lon), zom));
+
+
+        /*CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(lat, lon))
+                .zoom(zom)
+                .build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        googlemap.animateCamera(cameraUpdate);*/
 
     }
 

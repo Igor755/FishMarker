@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.R;
+import com.company.imetlin.fishmarker.database.DatabaseLoad;
 import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
@@ -73,19 +74,43 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
                     public boolean onMenuItemClick(MenuItem item) {
 
                         switch (item.getItemId()) {
+
+
+///////////////////////////////////////////////////////////UPDATE PLACES
                             case R.id.update:
+
+                                float f3 = Float.parseFloat(itemList.getZoom().toString());
+                                PlacesUserMapActivity placesUserMapActivity = new PlacesUserMapActivity();
+                                placesUserMapActivity.UpdatePlace(itemList.getLatitude(),itemList.getLongitude(),f3);
+
+
+
+                                /*String id_place = itemList.getPlace_id();
+                                FirebaseDatabase.getInstance().getReference("Places").child(id_place).setValue(itemList);
+
+                                ListIterator<Places> iterator_update = PlacesUserActivity.alldataplaces.listIterator();
+                                while (iterator_update.hasNext()) {
+                                    Places next = iterator_update.next();
+                                    if (next.getPlace_id().equals(itemList.getPlace_id())) {
+
+                                        iterator_update.set(itemList);
+                                        break;
+                                    }
+                                }
+                                notifyDataSetChanged();*/
+
+
                                 Toast.makeText(mContext, "update", Toast.LENGTH_LONG).show();
                                 break;
+
+///////////////////////////////////////////////////////////DELETE PLACES
                             case R.id.delete:
 
-
-                                //Delete item
 
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                                 Query delmark =  ref.child("Places").
                                         orderByChild("place_id").
                                         equalTo(itemList.getPlace_id());
-
 
                                 ListIterator<Places> iterator = PlacesUserActivity.alldataplaces.listIterator();
                                 System.out.println("sdsds");
@@ -115,19 +140,6 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
                                     }
                                 });
 
-
-
-
-
-                               /* System.out.println(itemList);
-
-                                System.out.println(itemList.getWaterobject() +
-                                        itemList.getLatitude() +
-                                        itemList.getLongitude() +
-                                        itemList.getNameplace() +
-                                        itemList.getZoom() +
-                                        itemList.getUid());
-                                listItems.get(position);*/
 
                                 listItems.remove(position);
                                 notifyDataSetChanged();
