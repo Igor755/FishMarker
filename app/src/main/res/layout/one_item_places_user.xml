@@ -42,7 +42,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:layout_below="@id/txtlongitude"/>
 
-            <TextView
+        <!--    <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="&#8942;"
@@ -50,7 +50,18 @@
                 android:textAppearance="?android:textAppearanceLarge"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
-                android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                android:paddingLeft="@dimen/activity_horizontal_margin"/>-->
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_menu_places"
+                android:src = "@drawable/recycler2"
+                android:background="@color/colorTransparent"
+                android:layout_gravity="bottom|end"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/txtlatitude"
+                />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

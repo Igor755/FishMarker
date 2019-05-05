@@ -43,7 +43,7 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
 
     public GoogleMap googlemap;
     private UiSettings mUiSettings;
-    AlertDialog.Builder add_marker;
+    AlertDialog.Builder add_place_marker_dialog;
     Context context;
     public Menu menu;
     private Places modelClass;
@@ -178,6 +178,7 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
                 return super.onOptionsItemSelected(item);
         }
     }
+    @SuppressLint("SetTextI18n")
     public void MapClick(final double lat, final double lon) {
 
         Intent intent = getIntent();
@@ -186,12 +187,12 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
 
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.alert, null);
-        add_marker = new AlertDialog.Builder(context);
+        add_place_marker_dialog = new AlertDialog.Builder(context);
 
 
 
         //Настраиваем prompt.xml для нашего AlertDialog:
-        add_marker.setView(promptsView);
+        add_place_marker_dialog.setView(promptsView);
 
         name_water_object = (EditText) promptsView.findViewById(R.id.input_text);
         latitude_txt = (TextView) promptsView.findViewById(R.id.latitude_alert);
@@ -200,31 +201,19 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
 
         final float zoom = googlemap.getCameraPosition().zoom;
 
-        latitude_txt.setText("Latitude: " + lat);
-        longitude_txt.setText("Longitude: " + lon);
-        zoom_txt.setText("Zoom: " + zoom);
+        latitude_txt.setText(context.getResources().getString(R.string.lat_c) + " " + lat);
+        longitude_txt.setText(context.getResources().getString(R.string.lon_c) + " " + lon);
+        zoom_txt.setText(context.getResources().getString(R.string.zoom) + " " + zoom);
 
 
 
-        add_marker.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+        add_place_marker_dialog.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
 
-/*
-                String a = String.valueOf(lat) + "/" + String.valueOf(lon);
-
-                Intent intent = new Intent(PlacesUserMapActivity.this, CardMarkerActivity.class);
-                intent.putExtra("coordinate", a);
-                startActivityForResult(intent, 1);*/
-
-//if (name_water_object == "")
 
                 id_place_key = UUID.randomUUID().toString();
                 String name_place = name_water_object.getText().toString();
                 String water_object = getIntent().getStringExtra("name");
-
-
-
-
 
                 Places place_info = new Places(name_place,
                         lat,
@@ -254,21 +243,21 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
 
             }
         });
-        add_marker.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        add_place_marker_dialog.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
                 Toast.makeText(context, R.string.cancel, Toast.LENGTH_SHORT)
                         .show();
             }
         });
-        add_marker.setCancelable(true);
-        add_marker.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        add_place_marker_dialog.setCancelable(true);
+        add_place_marker_dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             public void onCancel(DialogInterface dialog) {
                 Toast.makeText(context, R.string.ups,
                         Toast.LENGTH_SHORT).show();
             }
         });
 
-        add_marker.show();
+        add_place_marker_dialog.show();
 
 
     }

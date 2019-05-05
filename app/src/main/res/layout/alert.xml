@@ -13,28 +13,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
-        android:text="You want add water object?"
+        android:text="@string/add_place"
+        android:textSize="20sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <TextView
         android:id="@+id/latitude_alert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
-        android:text="latitude:"
+        android:textSize="20sp"
+        android:text="@string/lat_c"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <TextView
         android:id="@+id/longitude_alert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
-        android:text="longitude:"
+        android:textSize="20sp"
+        android:text="@string/lon_c"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <TextView
         android:id="@+id/zoom_alert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
-        android:text="zoom:"
+        android:textSize="20sp"
+        android:text="@string/zoom"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
@@ -42,8 +46,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
-        android:hint="name object">
-        <requestFocus />
+        android:textSize="20sp"
+        android:hint="@string/name_object">
+
     </EditText>
 
 </LinearLayout>

@@ -179,6 +179,16 @@
     Specify the middle of the water body using and set the zoom.</string>
 
 
+    ////////////////////////////////PLACE
+
+    <string name="delete">Удалить</string>
+    <string name="delete_place_title">Удаление рыбного места</string>
+    <string name="delete_place_message">Место будет удалено из базы(, вы действительно хотите этого?</string>
+    <string name="zoom">Zoom: </string>
+    <string name="name_object">Имя объекта</string>
+    <string name="add_place">Вы действительно хотите добавить водный объект?</string>
+
+
 
 
 </resources>

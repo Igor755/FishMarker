@@ -1,6 +1,7 @@
 package com.company.imetlin.fishmarker.userplaces;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,8 @@ public class PlacesUserActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView txtnameplace;
     public List<Places> image_details;
+    private ProgressBar progressBar;
+
 
 
     @Override
@@ -52,7 +56,11 @@ public class PlacesUserActivity extends AppCompatActivity {
         setContentView(R.layout.places_user_activity);
 
 
+
+
         alldataplaces = new ArrayList<>();
+        //progressBar = findViewById(R.id.progressbar_place);
+        //progressBar.setVisibility(VISIBLE);
 
 
         txtnameplace = (TextView) findViewById(R.id.txtnameplace);
@@ -63,6 +71,10 @@ public class PlacesUserActivity extends AppCompatActivity {
         final String txtName = getIntent().getStringExtra("name");
 
         txtnameplace.setVisibility(VISIBLE);
+
+
+
+
 
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -115,11 +127,9 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         image_details = getListData(txt);
 
-        System.out.println("ssss");
 
         if (image_details.size() != 0) {
             txtnameplace.setVisibility(View.GONE);
-            System.out.println("Sdsd");
 
         }
 
@@ -158,7 +168,6 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Ocean")) {
                         list.add(place);
-                        System.out.println(place);
                     }
                 }
 
@@ -169,7 +178,6 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Sea")) {
                         list.add(place);
-                        System.out.println(place);
                     }
                 }
 
@@ -180,7 +188,6 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Lake")) {
                         list.add(place);
-                        System.out.println(place);
                     }
                 }
 
@@ -191,7 +198,6 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("River")) {
                         list.add(place);
-                        System.out.println(place);
                     }
                 }
 
@@ -202,7 +208,6 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Gulf")) {
                         list.add(place);
-                        System.out.println(place);
                     }
                 }
 
@@ -213,7 +218,6 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Another")) {
                         list.add(place);
-                        System.out.println(place);
                     }
                 }
 

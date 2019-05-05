@@ -180,5 +180,20 @@
     Specify the middle of the water body using and set the zoom.
     Anchor to the right place.</string>
 
+    ////////////////////////////////PLACE
+
+    <string name="delete">Delete</string>
+    <string name="delete_place_title">Deleting a fishing place</string>
+    <string name="delete_place_message">The place will be removed from the database(, do you really want this?</string>
+    <string name="zoom">Zoom: </string>
+    <string name="name_object">Name object</string>
+    <string name="add_place">You want add water object?</string>
+
+
+
+
+
+
+
 
 </resources>
