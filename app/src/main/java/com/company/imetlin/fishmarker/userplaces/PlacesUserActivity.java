@@ -30,6 +30,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
@@ -168,8 +170,10 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Ocean")) {
                         list.add(place);
+
                     }
                 }
+                Collections.sort(list);
 
                 break;
 //////////////////////////////////////////////////////////////
@@ -178,9 +182,10 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Sea")) {
                         list.add(place);
+
                     }
                 }
-
+                Collections.sort(list);
                 break;
 //////////////////////////////////////////////////////////////
             case "Lake":
@@ -188,9 +193,11 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Lake")) {
                         list.add(place);
+
+
                     }
                 }
-
+                Collections.sort(list);
                 break;
 //////////////////////////////////////////////////////////////
             case "River":
@@ -198,8 +205,10 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("River")) {
                         list.add(place);
+
                     }
                 }
+                Collections.sort(list);
 
                 break;
 //////////////////////////////////////////////////////////////
@@ -210,6 +219,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                         list.add(place);
                     }
                 }
+                Collections.sort(list);
 
                 break;
 //////////////////////////////////////////////////////////////
@@ -218,8 +228,10 @@ public class PlacesUserActivity extends AppCompatActivity {
                 for (Places place : alldataplaces) {
                     if (place.getWaterobject().equals("Another")) {
                         list.add(place);
+
                     }
                 }
+                Collections.sort(list);
 
                 break;
 //////////////////////////////////////////////////////////////

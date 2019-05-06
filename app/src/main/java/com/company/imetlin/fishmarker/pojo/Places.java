@@ -1,6 +1,6 @@
 package com.company.imetlin.fishmarker.pojo;
 
-public class Places {
+public class Places implements  Comparable<Places>{
 
     private String nameplace;
     private Double latitude;
@@ -90,5 +90,10 @@ public class Places {
 
     public void setZoom(Double zoom) {
         this.zoom = zoom;
+    }
+
+    @Override
+    public int compareTo(Places o) {
+        return this.nameplace.compareTo(o.nameplace);
     }
 }

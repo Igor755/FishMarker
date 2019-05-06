@@ -103,8 +103,19 @@ public class MarkerInformation {
         this.note = note;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "MarkerInformation{" +
+                "uid='" + uid + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", depth='" + depth + '\'' +
+                ", amount='" + amount + '\'' +
+                ", note='" + note + '\'' +
+                ", id_marker_key='" + id_marker_key + '\'' +
+                '}';
+    }
 
 }

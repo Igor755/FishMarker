@@ -42,10 +42,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WaterActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".userplaces.PlacesUserActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
