@@ -50,11 +50,10 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = gridView.getItemAtPosition(position);
                 ModelClass _modelClass = (ModelClass) o;
-                //Toast.makeText(MainActivity.this, "Selected :"
-                //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
+
 
                 Intent intent = new Intent(getBaseContext(), PlacesUserActivity.class);
-                intent.putExtra("name", _modelClass.getName());
+                intent.putExtra("name", _modelClass.getName_fbase());
                 startActivity(intent);
 
 
@@ -66,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
     private List<ModelClass> getListData() {
 
         List<ModelClass> list = new ArrayList<ModelClass>();
-        ModelClass ocean = new ModelClass(getApplicationContext().getResources().getString(R.string.ocean), "ocean");
-        ModelClass sea = new ModelClass(getApplicationContext().getResources().getString(R.string.sea), "sea");
-        ModelClass river = new ModelClass(getApplicationContext().getResources().getString(R.string.river), "river");
-        ModelClass lake = new ModelClass(getApplicationContext().getResources().getString(R.string.lake), "ozero");
+        ModelClass ocean = new ModelClass(getApplicationContext().getResources().getString(R.string.ocean), "ocean","ocean");
+        ModelClass sea = new ModelClass(getApplicationContext().getResources().getString(R.string.sea), "sea","sea");
+        ModelClass river = new ModelClass(getApplicationContext().getResources().getString(R.string.river), "river", "river");
+        ModelClass lake = new ModelClass(getApplicationContext().getResources().getString(R.string.lake), "ozero","lake");
 
         ////zaliv
-        ModelClass Gulf = new ModelClass(getApplicationContext().getResources().getString(R.string.gulf), "zaliv");
-        ModelClass Another = new ModelClass(getApplicationContext().getResources().getString(R.string.another), "reservior");
+        ModelClass Gulf = new ModelClass(getApplicationContext().getResources().getString(R.string.gulf), "zaliv","gulf");
+        ModelClass Another = new ModelClass(getApplicationContext().getResources().getString(R.string.another), "reservior", "another");
 
 
         list.add(ocean);

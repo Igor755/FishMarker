@@ -105,6 +105,8 @@ public class PlacesUserActivity extends AppCompatActivity {
 
                 }
                 setAdapter(txtName);
+                System.out.println("25");
+
 
             }
 
@@ -122,7 +124,6 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-
 
         //Intent intent = getIntent();
         //String txtNameAdapter = getIntent().getStringExtra("name");
@@ -164,11 +165,10 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         switch (txtName) {
 
-            case "Ocean":
-            case "Океан":
+            case "ocean":
 
                 for (Places place : alldataplaces) {
-                    if (place.getWaterobject().equals("Ocean")) {
+                    if (place.getWaterobject().equals("ocean")) {
                         list.add(place);
 
                     }
@@ -177,10 +177,9 @@ public class PlacesUserActivity extends AppCompatActivity {
 
                 break;
 //////////////////////////////////////////////////////////////
-            case "Sea":
-            case "Море":
+            case "sea":
                 for (Places place : alldataplaces) {
-                    if (place.getWaterobject().equals("Sea")) {
+                    if (place.getWaterobject().equals("sea")) {
                         list.add(place);
 
                     }
@@ -188,10 +187,9 @@ public class PlacesUserActivity extends AppCompatActivity {
                 Collections.sort(list);
                 break;
 //////////////////////////////////////////////////////////////
-            case "Lake":
-            case "Озеро":
+            case "lake":
                 for (Places place : alldataplaces) {
-                    if (place.getWaterobject().equals("Lake")) {
+                    if (place.getWaterobject().equals("lake")) {
                         list.add(place);
 
 
@@ -200,10 +198,9 @@ public class PlacesUserActivity extends AppCompatActivity {
                 Collections.sort(list);
                 break;
 //////////////////////////////////////////////////////////////
-            case "River":
-            case "Река":
+            case "river":
                 for (Places place : alldataplaces) {
-                    if (place.getWaterobject().equals("River")) {
+                    if (place.getWaterobject().equals("river")) {
                         list.add(place);
 
                     }
@@ -212,10 +209,9 @@ public class PlacesUserActivity extends AppCompatActivity {
 
                 break;
 //////////////////////////////////////////////////////////////
-            case "Gulf":
-            case "Залив":
+            case "gulf":
                 for (Places place : alldataplaces) {
-                    if (place.getWaterobject().equals("Gulf")) {
+                    if (place.getWaterobject().equals("gulf")) {
                         list.add(place);
                     }
                 }
@@ -223,10 +219,9 @@ public class PlacesUserActivity extends AppCompatActivity {
 
                 break;
 //////////////////////////////////////////////////////////////
-            case "Another":
-            case "Другое":
+            case "another":
                 for (Places place : alldataplaces) {
-                    if (place.getWaterobject().equals("Another")) {
+                    if (place.getWaterobject().equals("another")) {
                         list.add(place);
 
                     }
