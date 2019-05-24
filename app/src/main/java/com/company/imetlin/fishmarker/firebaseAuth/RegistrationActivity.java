@@ -251,7 +251,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         alert.show();
 
     }
-    private void sendVerificationEmail()
+    public void sendVerificationEmail()
     {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

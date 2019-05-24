@@ -8,6 +8,7 @@
     tools:context=".firebaseAuth.SignInActivity">
 
     <LinearLayout
+        android:id="@+id/main_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -44,11 +45,17 @@
         android:textSize="15sp"
         android:id="@+id/et_password" />
 
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:id="@+id/button_layout"
         android:orientation="vertical">
+
+
+
 
 
         <Button
@@ -72,11 +79,33 @@
             android:id="@+id/btn_forgot_password"
             android:layout_width="150dp"
             android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             android:text="@string/forgot"/>
+
+
+
     </LinearLayout>
 
+///////////////////////////FACEBOOK  AND GOOGLE
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_layout"
+        android:padding="40dp"
+        android:layout_centerHorizontal="true">
 
+        <ImageView
+            android:layout_width="66dp"
+            android:layout_height="46dp"
+            android:id="@+id/google_button"
+            android:src="@drawable/google" />
+
+        <ImageView
+            android:layout_width="66dp"
+            android:layout_height="46dp"
+            android:src="@drawable/face"/>
+
+    </LinearLayout>
 </RelativeLayout>
