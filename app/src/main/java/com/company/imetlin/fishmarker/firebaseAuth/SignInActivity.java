@@ -46,7 +46,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.sign_in_activity);
 
         registrationActivity = new RegistrationActivity();
+
         mAuth = FirebaseAuth.getInstance();
+
         edEmail = (EditText) findViewById(R.id.et_email);
         edPassword = (EditText) findViewById(R.id.et_password);
 
@@ -100,11 +102,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
            signingWithGoogle();
 
 
-
-
-           /* startActivity(new Intent(SignInActivity.this, ForgotPassword.class));
-            finish();*/
-
         } else {
             Toast.makeText(SignInActivity.this, R.string.requirementsy, Toast.LENGTH_SHORT).show();
         }
@@ -112,6 +109,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+
+/////////////////////////////////email and password auth
     public void signing(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -129,6 +128,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+/////////////////////////////////check email
 
     private void checkIfEmailVerified() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
