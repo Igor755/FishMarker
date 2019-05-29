@@ -1,6 +1,8 @@
 package com.company.imetlin.fishmarker.firebaseAuth;
 
+import android.content.Context;
 import android.content.Intent;
+import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,8 +32,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
-public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.HashMap;
+
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "GOOGLE";
     private FirebaseAuth mAuth;
@@ -37,8 +44,16 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private EditText edEmail;
     private EditText edPassword;
     private ImageView gooogle_button;
-    private GoogleSignInClient mGoogleSignInClient;
+    private ImageView facebook_button;
     private RegistrationActivity registrationActivity;
+
+
+    private GoogleApiClient mGoogleApiClient;
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
+    private String idToken;
+    private final Context mContext = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +61,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.sign_in_activity);
 
         registrationActivity = new RegistrationActivity();
-
-        mAuth = FirebaseAuth.getInstance();
-
         edEmail = (EditText) findViewById(R.id.et_email);
         edPassword = (EditText) findViewById(R.id.et_password);
 
@@ -56,10 +68,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.btn_registration).setOnClickListener(this);
         findViewById(R.id.btn_forgot_password).setOnClickListener(this);
         findViewById(R.id.google_button).setOnClickListener(this);
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-
+        findViewById(R.id.facebook_button).setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -67,16 +76,40 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
-        //если уже авторизован
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    finish();
+                }
+            }
+        };
 
-      /*  if (currentUser != null) {
+
+        /*      если уже авторизован
+        if (currentUser != null) {
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }*/
+
+
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+
+// Configure sign-in to request the user's basic profile like name and email
 
 
     @Override
@@ -98,19 +131,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         } else if (view.getId() == R.id.google_button) {
 
+            signingWithGoogle();
 
-           signingWithGoogle();
+        } else if (view.getId() == R.id.facebook_button) {
 
+            signingWithFacebook();
 
-        } else {
+        }
+
+         else {
             Toast.makeText(SignInActivity.this, R.string.requirementsy, Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
-
-/////////////////////////////////email and password auth
+    /////////////////////////////////email and password auth
     public void signing(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -163,16 +199,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 101) {
+        if (requestCode == RC_SIGN_IN) {
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
-
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-
-
                 String name = account.getDisplayName();
                 String email = account.getEmail();
                 String location = "null";
@@ -184,19 +217,20 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 );
 
                 FirebaseDatabase.getInstance().getReference("Users")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(mAuth.getCurrentUser().getUid())
                         .setValue(user);
 
             } catch (ApiException e) {
-
+                // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
+                // ...
             }
+
+
         }
     }
-    private void firebaseAuthWithGoogle (GoogleSignInAccount account){
 
-
-        Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -205,25 +239,38 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
 
-                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            startActivity(intent);
                             finish();
 
                         } else
 
-                        Toast.makeText(SignInActivity.this, R.string.autorithation, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, R.string.autorithation, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-    private void signingWithGoogle(){
+
+    private void signingWithGoogle() {
 
 
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, 101);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+
+
+    }
+    private void signingWithFacebook(){
+
 
 
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
+
+
+}
 

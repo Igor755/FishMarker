@@ -33,12 +33,14 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".userplaces.PlacesUserMapActivity"></activity>
 
-        <activity android:name=".firebaseAuth.SignInActivity"></activity>
 
-        <!--  android:name=".firebaseAuth.SignInActivity"-->
+
+        <activity android:name=".dialog.ProgressActivity"></activity>
+
+        <!--android:name=".firebaseAuth.SignInActivity"-->
 
         <activity
-            android:name=".dialog.ProgressActivity"
+            android:name=".firebaseAuth.SignInActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

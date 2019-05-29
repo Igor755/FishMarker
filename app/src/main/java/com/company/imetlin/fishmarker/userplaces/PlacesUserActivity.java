@@ -50,6 +50,8 @@ public class PlacesUserActivity extends AppCompatActivity {
     public List<Places> image_details;
     private ProgressBar progressBar;
 
+    private FirebaseAuth mAuth;
+
 
 
     @Override
@@ -59,6 +61,7 @@ public class PlacesUserActivity extends AppCompatActivity {
 
 
 
+        mAuth = FirebaseAuth.getInstance();
 
         alldataplaces = new ArrayList<>();
         //progressBar = findViewById(R.id.progressbar_place);
@@ -88,9 +91,9 @@ public class PlacesUserActivity extends AppCompatActivity {
             }
         });
 
-
+        mAuth = FirebaseAuth.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query myRef = database.getReference("Places").orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        Query myRef = database.getReference("Places").orderByChild("uid").equalTo(mAuth.getCurrentUser().getUid());
 
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
