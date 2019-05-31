@@ -9,4 +9,10 @@
         app:showAsAction="always"
         android:title="@string/information" />
 
+    <item
+        android:id="@+id/exit"
+        android:icon="@drawable/exit"
+        app:showAsAction="always"
+        android:title="@string/information" />
+
 </menu>

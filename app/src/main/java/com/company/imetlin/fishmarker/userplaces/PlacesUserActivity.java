@@ -19,22 +19,18 @@ import android.widget.Toast;
 import com.company.imetlin.fishmarker.MapActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
-import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.company.imetlin.fishmarker.pojo.Places;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 public class PlacesUserActivity extends AppCompatActivity {
@@ -64,8 +60,8 @@ public class PlacesUserActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         alldataplaces = new ArrayList<>();
-        //progressBar = findViewById(R.id.progressbar_place);
-        //progressBar.setVisibility(VISIBLE);
+        // progressBar = findViewById(R.id.progressbar_place);
+        // progressBar.setVisibility(VISIBLE);
 
 
         txtnameplace = (TextView) findViewById(R.id.txtnameplace);
@@ -266,12 +262,11 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         String water_object = water.getWaterobject();
         alldataplaces.add(water);
-        //getListData(water_object);
-        //setAdapter(water_object);
+        // getListData(water_object);
+        // setAdapter(water_object);
         // image_details = getListData(water_object);
         // adapter.setItems(image_details);
-
-        //recyclerView.getAdapter().notifyDataSetChanged();
+        // recyclerView.getAdapter().notifyDataSetChanged();
 
     }
 

@@ -13,6 +13,7 @@ import android.widget.GridView;
 
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
 import com.company.imetlin.fishmarker.database.SQLiteHelper;
+import com.company.imetlin.fishmarker.firebaseAuth.SignInActivity;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.company.imetlin.fishmarker.userplaces.PlacesUserActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -105,7 +106,10 @@ public class MainActivity extends AppCompatActivity {
                 //function information
                 InformationWindow();
                 return true;
-
+            case R.id.exit:
+                //function information
+                signOut();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -132,5 +136,12 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    private void signOut() {
+        mAuth.signOut();
+        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

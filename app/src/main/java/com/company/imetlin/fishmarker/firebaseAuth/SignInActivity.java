@@ -7,11 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.company.imetlin.fishmarker.MainActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.Users;
@@ -46,6 +49,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private ImageView gooogle_button;
     private ImageView facebook_button;
     private RegistrationActivity registrationActivity;
+    private Menu menu;
+
 
 
     private GoogleApiClient mGoogleApiClient;
@@ -68,7 +73,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         findViewById(R.id.btn_registration).setOnClickListener(this);
         findViewById(R.id.btn_forgot_password).setOnClickListener(this);
         findViewById(R.id.google_button).setOnClickListener(this);
-        findViewById(R.id.facebook_button).setOnClickListener(this);
+       /* findViewById(R.id.facebook_button).setOnClickListener(this);*/
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -80,7 +85,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
+       /* mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
@@ -88,11 +93,10 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     finish();
                 }
             }
-        };
+        };*/
 
-
-        /*      если уже авторизован
-        if (currentUser != null) {
+        //если уже авторизован
+       /* if (currentUser != null) {
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -102,11 +106,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    @Override
+  /*  @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-    }
+    }*/
 
 
 // Configure sign-in to request the user's basic profile like name and email
@@ -133,9 +137,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
             signingWithGoogle();
 
-        } else if (view.getId() == R.id.facebook_button) {
+      /*  } else if (view.getId() == R.id.facebook_button) {
 
-            signingWithFacebook();
+            signingWithFacebook();*/
 
         }
 
@@ -260,15 +264,44 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
 
     }
-    private void signingWithFacebook(){
+   /* private void signingWithFacebook(){
 
 
 
-    }
+    }*/
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+    private void signOut() {
+        mAuth.signOut();
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+
+            case R.id.information:
+                //function information
+               // InformationWindow();
+                return true;
+            case R.id.exit:
+                //function information
+                signOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

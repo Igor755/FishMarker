@@ -189,6 +189,12 @@
     <string name="name_object">Name object</string>
     <string name="add_place">You want add water object?</string>
 
+    /////////////////////////////////FACEBOOK
+
+    <string name="facebook_app_id">838535596479448</string>
+    <string name="fb_login_protocol_scheme">fb838535596479448</string>
+
+
 
 
 

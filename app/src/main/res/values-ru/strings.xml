@@ -188,6 +188,10 @@
     <string name="name_object">Имя объекта</string>
     <string name="add_place">Вы действительно хотите добавить водный объект?</string>
 
+    /////////////////////////////////FACEBOOK
+
+    <string name="facebook_app_id">838535596479448</string>
+    <string name="fb_login_protocol_scheme">fb838535596479448</string>
 
 
 
