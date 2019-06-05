@@ -83,6 +83,7 @@ public class DatabaseLoad {
         this.cardMarkerActivity = cardMarkerActivity;
 
         Resources res = context.getResources();
+
         final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_another_40);
         final Drawable another_icons_fish = res.getDrawable(R.drawable.fish_another_2);
 
@@ -228,79 +229,49 @@ public class DatabaseLoad {
     public void UpdateMarker(MarkerInformation updatemarker) {
 
 
+        googlemap.clear();
+
+        int my_ic = R.drawable.fish_another_40;
+
+        ArrayList<Marker> markers_array = new ArrayList<Marker>();
+
         ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
         while (iterator.hasNext()) {
+
             MarkerInformation next = iterator.next();
+
+            if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                my_ic = R.drawable.fish_another_2;
+            }
+            else {
+                my_ic = R.drawable.fish_another_40;
+            }
+
             if (next.getLatitude().equals(updatemarker.getLatitude()) &&
                     next.getLongitude().equals(updatemarker.getLongitude())) {
 
                 iterator.set(updatemarker);
-                break;
+
+                Marker marker_update = googlemap.addMarker(new MarkerOptions()
+                        .position(new LatLng(updatemarker.getLatitude(), updatemarker.getLongitude()))
+                        .title(updatemarker.getTitle())
+                        .icon(BitmapDescriptorFactory.fromResource(my_ic)));
+
+                markers_array.add(marker_update);
             }
-        }
+            else {
 
-        for (Marker marker : markers) {
-            if (updatemarker.getLatitude() == marker.getPosition().latitude  &&
-                    updatemarker.getLongitude() == marker.getPosition().longitude) {
-                marker.setTitle(updatemarker.getTitle());
-                break;
+                Marker marker_update = googlemap.addMarker(new MarkerOptions()
+                        .position(new LatLng(next.getLatitude(), next.getLongitude()))
+                        .title(next.getTitle())
+                        .icon(BitmapDescriptorFactory.fromResource(my_ic)));
+
+                markers_array.add(marker_update);
             }
-        }
-        System.out.println("GOOD");
-
-        //update marker in markers cycle
-
-        googlemap.clear();
-
-        ArrayList<Marker> markers_array = new ArrayList<Marker>();
-
-        for (Marker marker : markers) {
-
-
-            Marker marker_update = googlemap.addMarker(new MarkerOptions()
-                    .position(marker.getPosition())
-                    .title(marker.getTitle())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
-                    .zIndex(marker.getZIndex()));
-
-            markers_array.add(marker_update);
-
-                /*if (next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-
-                    Marker marker_update1 = googlemap.addMarker(new MarkerOptions()
-                            .position(marker.getPosition())
-                            .title(marker.getTitle())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.fish_another_40))
-                            .zIndex(marker.getZIndex()));
-
-                    markers_array.add(marker_update1);
-
-
-                } else if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-
-                    Marker marker_update2 = googlemap.addMarker(new MarkerOptions()
-                            .position(marker.getPosition())
-                            .title(marker.getTitle())
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.fish_another_2))
-                            .zIndex(marker.getZIndex()));
-
-                    markers_array.add(marker_update2);
-                */
-
-
-
 
         }
-
 
         markers = new ArrayList<Marker>(markers_array);
-
-        System.out.println("GOOD");
-
-
-
-
-
     }
 
 
