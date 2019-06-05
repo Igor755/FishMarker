@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -19,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +47,8 @@ public class DatabaseLoad {
     public ArrayList<MarkerInformation> alldatamarkers;
     private AlertDialog alertDialog;
     private CardMarkerActivity cardMarkerActivity;
+    private Drawable drawable;
+
 
 
     private static DatabaseLoad instance;
@@ -75,6 +82,13 @@ public class DatabaseLoad {
         this.googlemap = _googlemap;
         this.cardMarkerActivity = cardMarkerActivity;
 
+        Resources res = context.getResources();
+        final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_another_40);
+        final Drawable another_icons_fish = res.getDrawable(R.drawable.fish_another_2);
+
+
+        final Bitmap bitmap_my = ((BitmapDrawable)my_icons_fish).getBitmap();
+        final Bitmap bitmap_another = ((BitmapDrawable)another_icons_fish).getBitmap();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Markers");
@@ -97,8 +111,20 @@ public class DatabaseLoad {
                     double latitude = alldatamarkers.get(i).getLatitude();
                     double longitude = alldatamarkers.get(i).getLongitude();
                     String tittle = alldatamarkers.get(i).getTitle();
+                    String uid = alldatamarkers.get(i).getUid();
 //                    Integer id_marker = Integer.valueOf(alldatamarkers.get(i).getMarker_id());
-                    CreateMarker(latitude, longitude, tittle);
+
+                    if (uid.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        CreateMarker(latitude, longitude, tittle, bitmap_my);
+
+                    }else if (!uid.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        CreateMarker(latitude, longitude, tittle, bitmap_another);
+
+                    }
+
+
 
                 }
                 System.out.println(alldatamarkers);
@@ -115,12 +141,12 @@ public class DatabaseLoad {
 
     }
 
-    public void CreateMarker(final double _lat, final double _lon, String title_marker) {
+    public void CreateMarker(final double _lat, final double _lon, String title_marker, Bitmap icon_marker) {
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
                 .title(title_marker)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker)));
+                .icon(BitmapDescriptorFactory.fromBitmap(icon_marker)));
 
 
         markers.add(marker);
@@ -192,7 +218,6 @@ public class DatabaseLoad {
                 intent.putExtras(bundle);
                 context.startActivity(intent);
 
-
             }
 
         }
@@ -231,6 +256,7 @@ public class DatabaseLoad {
 
         for (Marker marker : markers) {
 
+
             Marker marker_update = googlemap.addMarker(new MarkerOptions()
                     .position(marker.getPosition())
                     .title(marker.getTitle())
@@ -238,7 +264,34 @@ public class DatabaseLoad {
                     .zIndex(marker.getZIndex()));
 
             markers_array.add(marker_update);
+
+                /*if (next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+
+                    Marker marker_update1 = googlemap.addMarker(new MarkerOptions()
+                            .position(marker.getPosition())
+                            .title(marker.getTitle())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.fish_another_40))
+                            .zIndex(marker.getZIndex()));
+
+                    markers_array.add(marker_update1);
+
+
+                } else if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+
+                    Marker marker_update2 = googlemap.addMarker(new MarkerOptions()
+                            .position(marker.getPosition())
+                            .title(marker.getTitle())
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.fish_another_2))
+                            .zIndex(marker.getZIndex()));
+
+                    markers_array.add(marker_update2);
+                */
+
+
+
+
         }
+
 
         markers = new ArrayList<Marker>(markers_array);
 

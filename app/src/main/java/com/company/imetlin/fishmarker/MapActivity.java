@@ -7,6 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -319,9 +323,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String id_marker = data.getStringExtra("id");
 
 
+                Resources res = context.getResources();
+                final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_another_40);
+                final Bitmap bitmap_my = ((BitmapDrawable)my_icons_fish).getBitmap();
 
 
-               DatabaseLoad.getInstance().CreateMarker(modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], title_marker);
+               DatabaseLoad.getInstance().CreateMarker(modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], title_marker, bitmap_my);
                System.out.print("I AM SUPERMAN");
 
             }

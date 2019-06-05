@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
-import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.firebaseAuth.SignInActivity;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.company.imetlin.fishmarker.userplaces.PlacesUserActivity;
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     public Menu menu;
     //private Context context = MainActivity.this;
 
-    SQLiteHelper dbHelper;
     private FirebaseAuth mAuth;
 
     @Override
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         final GridView gridView = (GridView) findViewById(R.id.gridView);
 
+        mAuth = FirebaseAuth.getInstance();
 
         gridView.setAdapter(new AdapterGrid(this, image_details));
 
@@ -106,10 +105,10 @@ public class MainActivity extends AppCompatActivity {
                 //function information
                 InformationWindow();
                 return true;
-            case R.id.exit:
+         /*   case R.id.exit:
                 //function information
                 signOut();
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
