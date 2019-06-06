@@ -236,6 +236,7 @@ public class DatabaseLoad {
         ArrayList<Marker> markers_array = new ArrayList<Marker>();
 
         ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
+
         while (iterator.hasNext()) {
 
             MarkerInformation next = iterator.next();
@@ -281,43 +282,41 @@ public class DatabaseLoad {
 
         public void DeleteMarker(MarkerInformation deletemarker){
 
-            ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
-
-            while (iterator.hasNext()) {
-                MarkerInformation next = iterator.next();
-                if (next.getLatitude().equals(deletemarker.getLatitude()) &&
-                        next.getLongitude().equals(deletemarker.getLongitude())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-
-            for (Marker marker : markers) {
-                if (deletemarker.getLatitude() == marker.getPosition().latitude  &&
-                        deletemarker.getLongitude() == marker.getPosition().longitude) {
-
-                    markers.remove(marker);
-                    break;
-                }
-            }
             googlemap.clear();
+
+            int my_ic = R.drawable.fish_another_40;
 
             ArrayList<Marker> markers_array = new ArrayList<Marker>();
 
-            for (Marker marker : markers) {
+            ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
+            while (iterator.hasNext()) {
 
-                Marker marker_delete = googlemap.addMarker(new MarkerOptions()
-                        .position(marker.getPosition())
-                        .title(marker.getTitle())
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
-                        .zIndex(marker.getZIndex()));
+                MarkerInformation next = iterator.next();
 
-                markers_array.add(marker_delete);
+                if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    my_ic = R.drawable.fish_another_2;
+                } else {
+                    my_ic = R.drawable.fish_another_40;
+                }
+                if (next.getLatitude().equals(deletemarker.getLatitude()) &&
+                        next.getLongitude().equals(deletemarker.getLongitude())) {
+                    iterator.remove();
+
+
+                } else {
+
+                    Marker marker_delete = googlemap.addMarker(new MarkerOptions()
+                            .position(new LatLng(next.getLatitude(), next.getLongitude()))
+                            .title(next.getTitle())
+                            .icon(BitmapDescriptorFactory.fromResource(my_ic)));
+
+                    markers_array.add(marker_delete);
+
+
+                }
             }
-
             markers = new ArrayList<Marker>(markers_array);
-
-
+            
         }
     public boolean SearchMarker (Double lat, Double lon){
 
