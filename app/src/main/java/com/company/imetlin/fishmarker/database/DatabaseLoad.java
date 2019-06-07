@@ -84,8 +84,8 @@ public class DatabaseLoad {
 
         Resources res = context.getResources();
 
-        final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_another_40);
-        final Drawable another_icons_fish = res.getDrawable(R.drawable.fish_another_2);
+        final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_my_30);
+        final Drawable another_icons_fish = res.getDrawable(R.drawable.fish_another_30);
 
 
         final Bitmap bitmap_my = ((BitmapDrawable)my_icons_fish).getBitmap();
@@ -231,7 +231,7 @@ public class DatabaseLoad {
 
         googlemap.clear();
 
-        int my_ic = R.drawable.fish_another_40;
+        int my_ic = R.drawable.fish_my_30;
 
         ArrayList<Marker> markers_array = new ArrayList<Marker>();
 
@@ -242,10 +242,10 @@ public class DatabaseLoad {
             MarkerInformation next = iterator.next();
 
             if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                my_ic = R.drawable.fish_another_2;
+                my_ic = R.drawable.fish_another_30;
             }
             else {
-                my_ic = R.drawable.fish_another_40;
+                my_ic = R.drawable.fish_my_30;
             }
 
             if (next.getLatitude().equals(updatemarker.getLatitude()) &&
@@ -284,7 +284,7 @@ public class DatabaseLoad {
 
             googlemap.clear();
 
-            int my_ic = R.drawable.fish_another_40;
+            int my_ic = R.drawable.fish_my_30;
 
             ArrayList<Marker> markers_array = new ArrayList<Marker>();
 
@@ -294,9 +294,9 @@ public class DatabaseLoad {
                 MarkerInformation next = iterator.next();
 
                 if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                    my_ic = R.drawable.fish_another_2;
+                    my_ic = R.drawable.fish_another_30;
                 } else {
-                    my_ic = R.drawable.fish_another_40;
+                    my_ic = R.drawable.fish_my_30;
                 }
                 if (next.getLatitude().equals(deletemarker.getLatitude()) &&
                         next.getLongitude().equals(deletemarker.getLongitude())) {

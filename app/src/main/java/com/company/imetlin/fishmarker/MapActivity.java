@@ -324,7 +324,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
                 Resources res = context.getResources();
-                final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_another_40);
+                final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_my_30);
                 final Bitmap bitmap_my = ((BitmapDrawable)my_icons_fish).getBitmap();
 
 
