@@ -146,7 +146,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             editTextPassword.requestFocus();
             return;
         }
-        if (isPasswordValid(editTextPassword.getText().toString())){
+        if (!isPasswordValid(editTextPassword.getText().toString())){
             editTextPassword.setError(getText(R.string.password_not_valid));
             editTextPassword.requestFocus();
             return;

@@ -42,7 +42,7 @@ public class PlacesUserActivity extends AppCompatActivity {
     public ImageButton imageButton;
     public Menu menu;
     private RecyclerView.LayoutManager mLayoutManager;
-    private TextView txtnameplace;
+    public static TextView txtnameplace;
     public List<Places> image_details;
     private ProgressBar progressBar;
 
@@ -60,8 +60,8 @@ public class PlacesUserActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         alldataplaces = new ArrayList<>();
-        // progressBar = findViewById(R.id.progressbar_place);
-        // progressBar.setVisibility(VISIBLE);
+        progressBar = findViewById(R.id.progressbar);
+        progressBar.setVisibility(VISIBLE);
 
 
         txtnameplace = (TextView) findViewById(R.id.txtnameplace);
@@ -173,7 +173,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                     }
                 }
                 Collections.sort(list);
-
+                progressBar.setVisibility(View.INVISIBLE);
                 break;
 //////////////////////////////////////////////////////////////
             case "sea":
@@ -184,6 +184,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                     }
                 }
                 Collections.sort(list);
+                progressBar.setVisibility(View.INVISIBLE);
                 break;
 //////////////////////////////////////////////////////////////
             case "lake":
@@ -195,6 +196,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                     }
                 }
                 Collections.sort(list);
+                progressBar.setVisibility(View.INVISIBLE);
                 break;
 //////////////////////////////////////////////////////////////
             case "river":
@@ -205,7 +207,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                     }
                 }
                 Collections.sort(list);
-
+                progressBar.setVisibility(View.INVISIBLE);
                 break;
 //////////////////////////////////////////////////////////////
             case "gulf":
@@ -215,7 +217,7 @@ public class PlacesUserActivity extends AppCompatActivity {
                     }
                 }
                 Collections.sort(list);
-
+                progressBar.setVisibility(View.INVISIBLE);
                 break;
 //////////////////////////////////////////////////////////////
             case "another":
@@ -226,11 +228,12 @@ public class PlacesUserActivity extends AppCompatActivity {
                     }
                 }
                 Collections.sort(list);
-
+                progressBar.setVisibility(View.INVISIBLE);
                 break;
 //////////////////////////////////////////////////////////////
 
             default:
+                progressBar.setVisibility(View.INVISIBLE);
                 break;
         }
         return list;

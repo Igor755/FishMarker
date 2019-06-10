@@ -34,6 +34,7 @@ import java.util.ListIterator;
 import java.util.Queue;
 
 import static android.support.constraint.Constraints.TAG;
+import static android.view.View.VISIBLE;
 
 public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.ViewHolder> {
     private List<Places> listItems;
@@ -65,10 +66,10 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
 
 
         final Places itemList = listItems.get(position);
-        holder.txtNamePlaces.setText(itemList.getNameplace());
-        holder.txtLatitude.setText(Double.toString(itemList.getLatitude()));
-        holder.txtLongitude.setText(Double.toString(itemList.getLongitude()));
-        holder.txtZoom.setText(Double.toString(itemList.getZoom()));
+        holder.txtNamePlaces.setText(mContext.getResources().getString(R.string.name_holder) + ": " + itemList.getNameplace());
+        holder.txtLatitude.setText(mContext.getResources().getString(R.string.latitude_holder) + ": " + Double.toString(itemList.getLatitude()));
+        holder.txtLongitude.setText(mContext.getResources().getString(R.string.longitude_holder) + ": " + Double.toString(itemList.getLongitude()));
+        holder.txtZoom.setText(mContext.getResources().getString(R.string.zoom_holder) + ": " + Double.toString(itemList.getZoom()));
         holder.menu_places.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +126,11 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
                         listItems.remove(position);
                         notifyDataSetChanged();
                         Toast.makeText(mContext, R.string.delete, Toast.LENGTH_LONG).show();
+
+                        if(listItems.size() == 0){
+                            PlacesUserActivity.txtnameplace.setVisibility(VISIBLE);
+
+                        }
                        /*         break;
                             default:
                                 break;

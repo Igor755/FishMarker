@@ -186,8 +186,14 @@
     <string name="delete_place_title">Deleting a fishing place</string>
     <string name="delete_place_message">The place will be removed from the database(, do you really want this?</string>
     <string name="zoom">Zoom: </string>
-    <string name="name_object">Name object</string>
+    <string name="name_object">name object</string>
     <string name="add_place">You want add water object?</string>
+
+    <string name="name_holder">Name</string>
+    <string name="latitude_holder">Latitude</string>
+    <string name="longitude_holder">Longitude</string>
+    <string name="zoom_holder">Zoom</string>
+
 
     /////////////////////////////////FACEBOOK
 
@@ -195,10 +201,23 @@
     <string name="fb_login_protocol_scheme">fb838535596479448</string>
 
 
+    /////////////////////////////////TITLE ACTIVITY
 
 
+    <string name="registration">Registration</string>
+    <string name="places">Places</string>
+    <string name="markers">Markers</string>
+    <string name="add_marker_activity">Add marker</string>
+    <string name="water_object">Water object</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="sign_in_activity">Sign In</string>
+    <string name="add_places">Add place</string>
 
 
+    /////////////////////////////////MARKERS
+
+
+    <string name="foreign_markers">You can not edit or delete foreign markers</string>
 
 
 

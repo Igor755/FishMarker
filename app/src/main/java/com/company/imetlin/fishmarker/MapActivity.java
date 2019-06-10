@@ -144,7 +144,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         DatabaseLoad.getInstance().DetailMarker(marker);
 
-                        Toast.makeText(MapActivity.this, marker.getId(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MapActivity.this, marker.getId(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -175,7 +175,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                         else{
 
-                            Toast.makeText(MapActivity.this, "Don't edit/delete foreign markers ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MapActivity.this, R.string.foreign_markers, Toast.LENGTH_SHORT).show();
 
                         }
 

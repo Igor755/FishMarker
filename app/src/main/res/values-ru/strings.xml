@@ -134,12 +134,13 @@
     <string name="RibinskiyReservoir">Рыбинское водохранилище</string>
     <string name="KuibishivskiyReservoir">Куйбышевское водохранилище</string>
 
-////////////////////////////////////GPS
+    ///////////////////////////////////////////////////////GPS
     <string name="gps_enable">GPS не включен. Пожайлуста включите GPS.</string>
     <string name="gps_settings">GPS настройки</string>
     <string name="settings">Настройки</string>
 
-///////////////////////////////////////////////REGISRATION
+    ///////////////////////////////////////////////////////REGISRATION
+
     <string name="name">name</string>
     <string name="Name">Name</string>
     <string name="email">почта</string>
@@ -173,26 +174,50 @@
 
 
 
-    ///////////////////////////////PLACE_USER_ACTIVITY
-    <string name="text_user_place">Here could be your water features.
-    To add an object, click on the drop and select an object.
-    Specify the middle of the water body using and set the zoom.</string>
+    ///////////////////////////////////////////////////////PLACE_USER_ACTIVITY
+
+    <string name="text_user_place">Здесь могут быть ваши водные объекты.
+    Чтобы добавить объект, нажмите кнопку в правом, нижнем углу экрана.
+    Укажите середину водоема и установите масштаб.</string>
 
 
-    ////////////////////////////////PLACE
+    ///////////////////////////////////////////////////////PLACE
 
     <string name="delete">Удалить</string>
     <string name="delete_place_title">Удаление рыбного места</string>
     <string name="delete_place_message">Место будет удалено из базы(, вы действительно хотите этого?</string>
     <string name="zoom">Zoom: </string>
-    <string name="name_object">Имя объекта</string>
+    <string name="name_object">имя объекта</string>
     <string name="add_place">Вы действительно хотите добавить водный объект?</string>
+    <string name="name_holder">Имя</string>
+    <string name="latitude_holder">Широта</string>
+    <string name="longitude_holder">Долгота</string>
+    <string name="zoom_holder">Зум</string>
 
-    /////////////////////////////////FACEBOOK
+    ///////////////////////////////////////////////////////FACEBOOK
 
     <string name="facebook_app_id">838535596479448</string>
     <string name="fb_login_protocol_scheme">fb838535596479448</string>
 
+
+    ///////////////////////////////////////////////////////TITLE ACTIVITY
+
+
+    <string name="registration">Регистрация</string>
+    <string name="places">Места</string>
+    <string name="markers">Маркера</string>
+    <string name="add_marker_activity">Добавление маркера</string>
+    <string name="water_object">Водные объекты</string>
+    <string name="forgot_password">Забыли пароль</string>
+    <string name="sign_in_activity">Вход</string>
+    <string name="add_places">Добавление места</string>
+
+
+
+    ///////////////////////////////////////////////////////MARKERS
+
+
+    <string name="foreign_markers">Вы не можете удалять или изменять чужие маркера</string>
 
 
 </resources>
