@@ -168,10 +168,14 @@
     <string name="password_not_valid">password not valid</string>
     <string name="check">please check email</string>
     <string name="password_requirements">Password requirements:</string>
-    <string name="requirements">
-    1)At least 8 chars\n2)Contains at least one digit\n3)Contains at least one lower alpha char and one upper alpha char\n4)Contains at least one char within a set of special chars (@#%$^ etc.)\n5)Does not contain space, tab, etc.</string>
+    <string name="requirements">1)At least 8 chars\n2)Digit must occur at least once\n3)A lower case letter must occur at least once\n4)An upper case letter must occur at least once\n5)No whitespace allowed in the entire string</string>
     <string name="sent_pass">Send my Password</string>
     <string name="forgot">Forgot Password</string>
+    <string name="not_valid_name">not valid name</string>
+
+
+
+    not_vali_name
 
 
     ///////////////////////////////PLACE_USER_ACTIVITY
@@ -195,6 +199,7 @@
     <string name="zoom_holder">Zoom</string>
 
 
+
     /////////////////////////////////FACEBOOK
 
     <string name="facebook_app_id">838535596479448</string>
@@ -205,6 +210,7 @@
 
 
     <string name="registration">Registration</string>
+    <string name="registration_big">REGISTRATION</string>
     <string name="places">Places</string>
     <string name="markers">Markers</string>
     <string name="add_marker_activity">Add marker</string>

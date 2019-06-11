@@ -147,7 +147,7 @@
     <string name="Email">Почта</string>
     <string name="password">пароль</string>
     <string name="Password">Пароль</string>
-    <string name="sign_in">Войти</string>
+    <string name="sign_in">ВОЙТИ</string>
     <string name="Location">Страна</string>
     <string name="location">страна</string>
     <string name="Dont_have">Нет аккаунта, создать</string>
@@ -167,10 +167,10 @@
     <string name="password_not_valid">пароль слабый</string>
     <string name="check">проверь email и подтверди регистрацию</string>
     <string name="password_requirements">Рекомендации к паролю:</string>
-    <string name="requirements">
-    1)Минимум 8 символов\n2)Содержит хотябы одну цифру\n3)Содержит хотябы 1 букву нижнего регистра и 1 заглавную букву\n4)Содержит хотя бы один символ в наборе спец. символов(@#%$^ и т.д.)\n5)Не должен содержать пробелов, табуляции и т.д.</string>
+    <string name="requirements">1)Минимум 8 символов\n2)Содержит хотябы одну цифру\n3)Содержит хотябы 1 букву нижнего регистра и 1 заглавную букву (eng)\n4)Не должен содержать пробелов, табуляции и т.д.</string>
     <string name="sent_pass">Отправить пароль</string>
     <string name="forgot">Не помню пароль</string>
+    <string name="not_valid_name">не валидное имя</string>
 
 
 
@@ -204,6 +204,7 @@
 
 
     <string name="registration">Регистрация</string>
+    <string name="registration_big">РЕГИСТРАЦИЯ</string>
     <string name="places">Места</string>
     <string name="markers">Маркера</string>
     <string name="add_marker_activity">Добавление маркера</string>

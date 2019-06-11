@@ -74,7 +74,9 @@
             android:layout_height="wrap_content"
             android:background="@drawable/selector"
             android:layout_marginTop="70dp"
-            android:text="@string/Register"
+            android:textColor="@color/orange"
+            android:textStyle="bold|italic"
+            android:text="@string/registration_big"
             android:textAllCaps="false" />
 
     </LinearLayout>

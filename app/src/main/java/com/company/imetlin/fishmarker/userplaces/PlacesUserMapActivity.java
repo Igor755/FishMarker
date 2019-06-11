@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.CardMarkerActivity;
 import com.company.imetlin.fishmarker.R;
+import com.company.imetlin.fishmarker.firebaseAuth.RegistrationActivity;
 import com.company.imetlin.fishmarker.pojo.Places;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
@@ -211,9 +212,30 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
             public void onClick(DialogInterface dialog, int arg1) {
 
 
+
+
+
+
+
+
+
                 id_place_key = UUID.randomUUID().toString();
                 String name_place = name_water_object.getText().toString();
                 String water_object = getIntent().getStringExtra("name");
+
+                if (name_place.isEmpty()) {
+
+                    Toast.makeText(PlacesUserMapActivity.this, R.string.empty_name, Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+                if (!RegistrationActivity.isNameValid(name_water_object.getText().toString())) {
+
+                    Toast.makeText(PlacesUserMapActivity.this, R.string.not_valid_name, Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+
 
                 Places place_info = new Places(name_place,
                         lat,
