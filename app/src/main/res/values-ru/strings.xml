@@ -47,9 +47,10 @@
 
     ///////////////////////////////////////////////////////
 
-    <string name="edit">Изменить</string>
+    <string name="edit">ИЗМЕНИТЬ</string>
     <string name="update">Изменение маркера</string>
     <string name="unique">Маркер существует</string>
+    <string name="detail">ПОДРОБНО</string>
 
     ///////////////////////////////////////////////////////
 

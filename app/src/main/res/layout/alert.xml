@@ -47,8 +47,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
-        android:hint="@string/name_object">
+        android:hint="@string/name_object"/>
 
-    </EditText>
+
 
 </LinearLayout>

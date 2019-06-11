@@ -50,6 +50,7 @@
     <string name="edit">EDIT</string>
     <string name="update">Update</string>
     <string name="unique">Marker exist</string>
+    <string name="detail">DETAIL</string>
 
 
     ///////////////////////////////////////////////////////
@@ -224,6 +225,14 @@
 
 
     <string name="foreign_markers">You can not edit or delete foreign markers</string>
+
+
+    //////////////////////////////////BOTTOM SHEET
+
+
+
+
+
 
 
 
