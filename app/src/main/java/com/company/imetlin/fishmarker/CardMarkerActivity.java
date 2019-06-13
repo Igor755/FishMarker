@@ -81,8 +81,7 @@ public class CardMarkerActivity extends AppCompatActivity {
         cancel = (Button) findViewById(R.id.btnCancel);
         etlongitute.setEnabled(false);
         etlatitude.setEnabled(false);
-        ok.setTextColor(Color.parseColor("#FFFFFF"));
-        cancel.setTextColor(Color.parseColor("#FFFFFF"));
+
 
 
         String result1;
