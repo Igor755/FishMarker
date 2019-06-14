@@ -6,34 +6,31 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.company.imetlin.fishmarker.CardMarkerActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.firebaseAuth.RegistrationActivity;
 import com.company.imetlin.fishmarker.pojo.Places;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
@@ -53,6 +50,8 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
     private TextView zoom_txt;
     private EditText name_water_object;
     private String id_place_key;
+
+    private TextView title_alert;
 
     private PlacesUserActivity placesUserActivity;
 
@@ -195,6 +194,8 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
         //Настраиваем prompt.xml для нашего AlertDialog:
         add_place_marker_dialog.setView(promptsView);
 
+
+        title_alert = (TextView) promptsView.findViewById(R.id.title_alert);
         name_water_object = (EditText) promptsView.findViewById(R.id.input_text);
         latitude_txt = (TextView) promptsView.findViewById(R.id.latitude_alert);
         longitude_txt = (TextView) promptsView.findViewById(R.id.longitude_alert);
@@ -206,7 +207,9 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
         longitude_txt.setText(context.getResources().getString(R.string.lon_c) + " " + lon);
         zoom_txt.setText(context.getResources().getString(R.string.zoom) + " " + zoom);
 
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), "alert_font_title.ttf");
 
+        title_alert.setTypeface(tf);
 
         add_place_marker_dialog.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
@@ -279,7 +282,20 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
             }
         });
 
-        add_place_marker_dialog.show();
+
+        AlertDialog alert11 = add_place_marker_dialog.create();
+        alert11.getWindow().setBackgroundDrawableResource(R.color.orange);
+        alert11.show();
+
+
+        Button buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE);
+        Button buttonbackground2 = alert11.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+        // buttonbackground.setBackgroundColor(Color.BLUE);
+        buttonbackground.setTextColor(context.getResources().getColor(R.color.colorWhite));
+        buttonbackground2.setTextColor(context.getResources().getColor(R.color.colorWhite));
+
+
 
 
     }

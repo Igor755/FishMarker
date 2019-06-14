@@ -79,63 +79,8 @@
     <string name="ups">Upsss....</string>
 
 
-    ///////////////////////////////////////////////////////OBJECTS WATER
-
-
-    <string name="NorthPacific">Северная часть Тихого Океана</string>
-    <string name="SouthPacific">Южная часть Тихого Океана</string>
-    <string name="Southern">Южный</string>
-    <string name="NorthAtlantic">Северно Атлантический</string>
-    <string name="SouthAtlantic">Южно Атлантический</string>
-    <string name="Indian">Индийский</string>
-    <string name="Arctic">Северно Ледовитый</string>
-
-    <string name="Black">Черное</string>
-    <string name="SeaOfAzov">Азовское море</string>
-    <string name="Baltic">Балтийское</string>
-    <string name="Red">Красное</string>
-    <string name="Caspian">Каспийское</string>
-    <string name="Mediterranean">Средиземное</string>
-    <string name="Arabian">Арабское</string>
-    <string name="SeaofOkhotsk">Охотское</string>
-    <string name="SeaofJapan">Японское</string>
-    <string name="BeringSea">Берингово</string>
-    <string name="NorthSea">Северное</string>
-    <string name="CaribeanSea">Карибское</string>
-
-    <string name="Baikal">Байкал</string>
-    <string name="Victoria">Виктория</string>
-    <string name="Titicaca">Титикака</string>
-    <string name="Superior">Верхнее</string>
-    <string name="Michigan">Мичиган</string>
-    <string name="Huron">Гурон</string>
-    <string name="Onega">Онежское</string>
-    <string name="White">Белое</string>
-    <string name="Ladoga">Ладожское</string>
-
-    <string name="Dnieper">Днепр</string>
-    <string name="Dniester">Днестр</string>
-    <string name="Southern_Bug">Южный буг</string>
-    <string name="Turunchuk">Турунчук</string>
-    <string name="Volga">Волга</string>
-    <string name="Yenisei">Енисей</string>
-    <string name="Lena">Лена</string>
-    <string name="Ob">Обь</string>
-    <string name="Angara">Ангара</string>
-    <string name="Amur">Амур</string>
-    <string name="Amazonka">Амазонка</string>
-
-    <string name="Persian">Персидский</string>
-    <string name="Taharonzka">Тахаронзкий</string>
-    <string name="Finland">Финский</string>
-    <string name="GulfofThailand">Тайландский</string>
-    <string name="Bengal">Бенгальский</string>
-
-    <string name="ReservoirHAES">Водохранилище ХАЕС</string>
-    <string name="RibinskiyReservoir">Рыбинское водохранилище</string>
-    <string name="KuibishivskiyReservoir">Куйбышевское водохранилище</string>
-
     ///////////////////////////////////////////////////////GPS
+
     <string name="gps_enable">GPS не включен. Пожайлуста включите GPS.</string>
     <string name="gps_settings">GPS настройки</string>
     <string name="settings">Настройки</string>
@@ -220,6 +165,12 @@
 
 
     <string name="foreign_markers">Вы не можете удалять или изменять чужие маркера</string>
+
+
+    //////////////////////////////////ALERT
+
+
+    <string name="detail_marker_title_alert">Markers details</string>
 
 
 </resources>

@@ -81,61 +81,6 @@
     <string name="ups">Upsss....</string>
 
 
-    ///////////////////////////////////////////////////////OBJECTS WATER
-
-
-    <string name="NorthPacific">North Pacific</string>
-    <string name="SouthPacific">South Pacific</string>
-    <string name="Southern">Southern</string>
-    <string name="NorthAtlantic">North Atlantic</string>
-    <string name="SouthAtlantic">South Atlantic</string>
-    <string name="Indian">Indian</string>
-    <string name="Arctic">Arctic</string>
-
-    <string name="Black">Black</string>
-    <string name="SeaOfAzov">Sea Of Azov</string>
-    <string name="Baltic">Baltic</string>
-    <string name="Red">Red</string>
-    <string name="Caspian">Caspian</string>
-    <string name="Mediterranean">Mediterranean</string>
-    <string name="Arabian">Arabian</string>
-    <string name="SeaofOkhotsk">Sea of Okhotsk</string>
-    <string name="SeaofJapan">Sea of Japan</string>
-    <string name="BeringSea">Bering Sea</string>
-    <string name="NorthSea">North Sea</string>
-    <string name="CaribeanSea">Caribean Sea</string>
-
-    <string name="Baikal">Baikal</string>
-    <string name="Victoria">Victoria</string>
-    <string name="Titicaca">Titicaca</string>
-    <string name="Superior">Superior</string>
-    <string name="Michigan">Michigan</string>
-    <string name="Huron">Huron</string>
-    <string name="Onega">Onega</string>
-    <string name="White">White</string>
-    <string name="Ladoga">Ladoga</string>
-
-    <string name="Dnieper">Dnieper</string>
-    <string name="Dniester">Dniester</string>
-    <string name="Southern_Bug">Southern_Bug</string>
-    <string name="Turunchuk">Turunchuk</string>
-    <string name="Volga">Volga</string>
-    <string name="Yenisei">Yenisei</string>
-    <string name="Lena">Lena</string>
-    <string name="Ob">Ob</string>
-    <string name="Angara">Angara</string>
-    <string name="Amur">Amur</string>
-    <string name="Amazonka">Amazonka</string>
-
-    <string name="Persian">Persian</string>
-    <string name="Taharonzka">Taharonzka</string>
-    <string name="Finland">Finland</string>
-    <string name="GulfofThailand">Gulf of Thailand</string>
-    <string name="Bengal">Bengal</string>
-    <string name="ReservoirHAES">Reservoir HAES</string>
-    <string name="RibinskiyReservoir">Ribinskiy Reservoir</string>
-    <string name="KuibishivskiyReservoir">Kuibishivskiy Reservoir</string>
-
     ////////////////////////////////////GPS
 
     <string name="gps_enable">GPS is not enabled. Please turn ON GPS.</string>
@@ -176,7 +121,6 @@
 
 
 
-    not_vali_name
 
 
     ///////////////////////////////PLACE_USER_ACTIVITY
@@ -227,7 +171,11 @@
     <string name="foreign_markers">You can not edit or delete foreign markers</string>
 
 
-    //////////////////////////////////BOTTOM SHEET
+    //////////////////////////////////ALERT
+
+
+    <string name="detail_marker_title_alert">Markers details</string>
+
 
 
 

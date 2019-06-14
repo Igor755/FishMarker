@@ -1,20 +1,27 @@
 package com.company.imetlin.fishmarker.database;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.company.imetlin.fishmarker.CardMarkerActivity;
+import com.company.imetlin.fishmarker.MapActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.google.android.gms.maps.GoogleMap;
@@ -47,7 +54,24 @@ public class DatabaseLoad {
     public ArrayList<MarkerInformation> alldatamarkers;
     private AlertDialog alertDialog;
     private CardMarkerActivity cardMarkerActivity;
+
+    private MapActivity mapActivity;
     private Drawable drawable;
+    private AlertDialog.Builder alert_detail;
+
+    /////////////////////////////////////////////////ALERT DIALOG
+
+    private TextView latitude;
+    private TextView longitude;
+    private TextView title_marker;
+    private TextView date;
+    private TextView depth;
+    private TextView amount;
+    private TextView note;
+    private TextView title_alert;
+
+
+
 
 
 
@@ -163,14 +187,45 @@ public class DatabaseLoad {
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void DetailMarker(Marker detailmarker) {
 
         for (final MarkerInformation modelClass : alldatamarkers) {
             if (modelClass.getLatitude() == detailmarker.getPosition().latitude &&
                     modelClass.getLongitude() == detailmarker.getPosition().longitude) {
-                alertDialog = new AlertDialog.Builder(context).create();
 
 
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.detail_marker_dialog, null);
+                alert_detail = new AlertDialog.Builder(context);
+
+
+                alert_detail.setView(promptsView);
+
+
+                title_alert = (TextView) promptsView.findViewById(R.id.title_alert);
+                latitude = (TextView) promptsView.findViewById(R.id.latitude_alert);
+                longitude = (TextView) promptsView.findViewById(R.id.longitude_alert);
+                title_marker = (TextView) promptsView.findViewById(R.id.title);
+                date = (TextView) promptsView.findViewById(R.id.date);
+                depth = (TextView) promptsView.findViewById(R.id.depth);
+                amount = (TextView) promptsView.findViewById(R.id.amount);
+                note = (TextView) promptsView.findViewById(R.id.note);
+
+                Typeface tf = Typeface.createFromAsset(context.getAssets(), "alert_font_title.ttf");
+
+                title_alert.setTypeface(tf);
+
+
+                latitude.setText(latitude.getText() + " " + modelClass.getLatitude());
+                longitude.setText(longitude.getText() + " " + modelClass.getLongitude());
+                title_marker.setText(title_marker.getText() + " " + modelClass.getTitle());
+                date.setText(date.getText() + " " + modelClass.getDate());
+                depth.setText(depth.getText() + " " + modelClass.getDepth());
+                amount.setText(amount.getText() + " " + modelClass.getAmount());
+                note.setText(note.getText() + " " + modelClass.getNote());
+
+                /*
                 alertDialog.setTitle(R.string.complete_c);
                 alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
                         context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
@@ -178,16 +233,21 @@ public class DatabaseLoad {
                         context.getResources().getString(R.string.date_c) + " " + modelClass.getDate() + "\n" +
                         context.getResources().getString(R.string.depth_c) + " " + modelClass.getDepth() + "\n" +
                         context.getResources().getString(R.string.amount_c) + " " + modelClass.getAmount() + "\n" +
-                        context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());
+                        context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());*/
 
-                alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //finish();
+                alert_detail.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
                     }
                 });
 
-                alertDialog.show();
+                AlertDialog alert11 = alert_detail.create();
+                alert11.getWindow().setBackgroundDrawableResource(R.color.orange);
+                alert11.show();
+
+                Button buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE);
+
+                // buttonbackground.setBackgroundColor(Color.BLUE);
+                buttonbackground.setTextColor(context.getResources().getColor(R.color.colorWhite));
                 break;
 
             }
