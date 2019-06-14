@@ -8,7 +8,6 @@ import android.content.Intent;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -196,7 +195,7 @@ public class DatabaseLoad {
 
 
                 LayoutInflater li = LayoutInflater.from(context);
-                View promptsView = li.inflate(R.layout.detail_marker_dialog, null);
+                View promptsView = li.inflate(R.layout.alert_detail_marker, null);
                 alert_detail = new AlertDialog.Builder(context);
 
 

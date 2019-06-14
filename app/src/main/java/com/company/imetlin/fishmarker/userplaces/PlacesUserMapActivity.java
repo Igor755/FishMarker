@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -186,7 +185,7 @@ public class PlacesUserMapActivity extends AppCompatActivity implements OnMapRea
 
 
         LayoutInflater li = LayoutInflater.from(context);
-        View promptsView = li.inflate(R.layout.alert, null);
+        View promptsView = li.inflate(R.layout.alert_add_place, null);
         add_place_marker_dialog = new AlertDialog.Builder(context);
 
 
