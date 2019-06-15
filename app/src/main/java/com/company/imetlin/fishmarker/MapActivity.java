@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.gps.GPSTracker;
@@ -63,6 +66,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     private Button edit, detail;
+
+    private TextView latitude_add_marker;
+    private TextView longitude_add_marker;
+    private TextView title_alert;
+
 
 
 
@@ -425,8 +433,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         StringBuilder stringBuilder = new StringBuilder();
 
         ((MapActivity) context).modelClass = new ModelClass(lat, lon);
+
+
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.alert_add_marker, null);
         add_marker = new AlertDialog.Builder(context);
-        add_marker.setTitle(R.string.addmarker);  // заголовок
+
+        add_marker.setView(promptsView);
+
+/*
 
         stringBuilder.append(context.getResources().getString(R.string.coordinate_add));
         stringBuilder.append("\n");
@@ -435,6 +450,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         stringBuilder.append(context.getResources().getString(R.string.lon_c) + " " + lon);
         add_marker.setMessage(stringBuilder); // сообщение
         add_marker.setIcon(R.drawable.fish2);
+*/
+
+        title_alert = (TextView) promptsView.findViewById(R.id.title_alert);
+        latitude_add_marker = (TextView) promptsView.findViewById(R.id.latitude_alert);
+        longitude_add_marker = (TextView) promptsView.findViewById(R.id.longitude_alert);
+
+        latitude_add_marker.setText(context.getResources().getString(R.string.lat_c) + " " + lat);
+        longitude_add_marker.setText(context.getResources().getString(R.string.lon_c) + " " + lon);
+
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), "alert_font_title.ttf");
+
+        title_alert.setTypeface(tf);
 
 
         add_marker.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -464,7 +491,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        add_marker.show();
+
+
+
+        AlertDialog alert11 = add_marker.create();
+        alert11.getWindow().setBackgroundDrawableResource(R.color.orange);
+        alert11.show();
+
+
+        Button buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE);
+        Button buttonbackground2 = alert11.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+        // buttonbackground.setBackgroundColor(Color.BLUE);
+        buttonbackground.setTextColor(context.getResources().getColor(R.color.colorWhite));
+        buttonbackground2.setTextColor(context.getResources().getColor(R.color.colorWhite));
 
 
     }

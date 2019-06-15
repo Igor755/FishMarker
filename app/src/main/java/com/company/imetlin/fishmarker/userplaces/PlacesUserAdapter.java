@@ -66,7 +66,7 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
 
 
         final Places itemList = listItems.get(position);
-        holder.txtNamePlaces.setText(mContext.getResources().getString(R.string.name_holder) + ": " + itemList.getNameplace());
+        holder.txtNamePlaces.setText(itemList.getNameplace());
         holder.txtLatitude.setText(mContext.getResources().getString(R.string.latitude_holder) + ": " + Double.toString(itemList.getLatitude()));
         holder.txtLongitude.setText(mContext.getResources().getString(R.string.longitude_holder) + ": " + Double.toString(itemList.getLongitude()));
         holder.txtZoom.setText(mContext.getResources().getString(R.string.zoom_holder) + ": " + Double.toString(itemList.getZoom()));
