@@ -3,13 +3,19 @@ package com.company.imetlin.fishmarker;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
 import com.company.imetlin.fishmarker.firebaseAuth.SignInActivity;
@@ -28,11 +34,16 @@ public class MainActivity extends AppCompatActivity {
     //private Context context = MainActivity.this;
 
     private FirebaseAuth mAuth;
+    FrameLayout frameLayout;
+    private int mGridViewBGColor = Color.parseColor("#cce6ff");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+
+
 
 
         List<ModelClass> image_details = getListData();
@@ -43,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         gridView.setAdapter(new AdapterGrid(this, image_details));
 
+       // gridView.setBackgroundResource(R.drawable.fon4);
         // When the user clicks on the GridItem
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -50,6 +62,35 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = gridView.getItemAtPosition(position);
                 ModelClass _modelClass = (ModelClass) o;
+
+                frameLayout = (FrameLayout) findViewById(R.id.frame);
+               // gridView.setBackgroundColor(mGridViewBGColor);
+
+
+                String selectedItem = a.getItemAtPosition(position).toString();
+
+                Snackbar snackbar = Snackbar.make(
+                        frameLayout,
+                        "Selected : " + selectedItem,
+                        Snackbar.LENGTH_LONG
+                );
+                snackbar.getView().setBackgroundColor(Color.parseColor("#FF66729B"));
+                snackbar.show();
+
+                // Initialize a new color drawable array
+                ColorDrawable[] colors = {
+                        new ColorDrawable(Color.RED), // Animation starting color
+                        new ColorDrawable(mGridViewBGColor) // Animation ending color
+                };
+
+                TransitionDrawable transitionDrawable = new TransitionDrawable(colors);
+
+                // Set the clicked item background
+                v.setBackground(transitionDrawable);
+
+                // Finally, Run the item background color animation
+                // This is the grid view item click effect
+                transitionDrawable.startTransition(600);
 
 
                 Intent intent = new Intent(getBaseContext(), PlacesUserActivity.class);
@@ -66,13 +107,13 @@ public class MainActivity extends AppCompatActivity {
 
         List<ModelClass> list = new ArrayList<ModelClass>();
         ModelClass ocean = new ModelClass(getApplicationContext().getResources().getString(R.string.ocean), "ocean","ocean");
-        ModelClass sea = new ModelClass(getApplicationContext().getResources().getString(R.string.sea), "sea","sea");
-        ModelClass river = new ModelClass(getApplicationContext().getResources().getString(R.string.river), "river", "river");
-        ModelClass lake = new ModelClass(getApplicationContext().getResources().getString(R.string.lake), "ozero","lake");
+        ModelClass sea = new ModelClass(getApplicationContext().getResources().getString(R.string.sea), "sea_n","sea");
+        ModelClass river = new ModelClass(getApplicationContext().getResources().getString(R.string.river), "river_n", "river");
+        ModelClass lake = new ModelClass(getApplicationContext().getResources().getString(R.string.lake), "lake_n","lake");
 
         ////zaliv
-        ModelClass Gulf = new ModelClass(getApplicationContext().getResources().getString(R.string.gulf), "zaliv","gulf");
-        ModelClass Another = new ModelClass(getApplicationContext().getResources().getString(R.string.another), "reservior", "another");
+        ModelClass Gulf = new ModelClass(getApplicationContext().getResources().getString(R.string.gulf), "gulf_n","gulf");
+        ModelClass Another = new ModelClass(getApplicationContext().getResources().getString(R.string.another), "another_n", "another");
 
 
         list.add(ocean);

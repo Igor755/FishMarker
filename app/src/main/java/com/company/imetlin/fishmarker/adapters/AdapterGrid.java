@@ -80,22 +80,14 @@ public class AdapterGrid extends BaseAdapter {
 
 
 
-    static class ViewHolder implements View.OnClickListener {
+    static class ViewHolder  {
         ImageView PhotoWater;
         TextView NameWater;
 
-       public RelativeLayout relativeLayout;
-
-
-        @Override
-        public void onClick(View v) {
-
-            relativeLayout = (RelativeLayout) v.findViewById(R.id.relative);
-            relativeLayout.setBackgroundColor(Color.green(R.color.colorRed));
 
 
 
-        }
+
     }
 
 }
