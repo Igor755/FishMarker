@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -32,16 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
     public Menu menu;
     //private Context context = MainActivity.this;
-
     private FirebaseAuth mAuth;
     FrameLayout frameLayout;
+    boolean flag = false;
     private int mGridViewBGColor = Color.parseColor("#cce6ff");
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
 
 
 
@@ -53,21 +53,25 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         gridView.setAdapter(new AdapterGrid(this, image_details));
-
        // gridView.setBackgroundResource(R.drawable.fon4);
         // When the user clicks on the GridItem
+
+
+
+
+
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-                Object o = gridView.getItemAtPosition(position);
-                ModelClass _modelClass = (ModelClass) o;
 
                 frameLayout = (FrameLayout) findViewById(R.id.frame);
-               // gridView.setBackgroundColor(mGridViewBGColor);
-
-
                 String selectedItem = a.getItemAtPosition(position).toString();
+
+
+
+
 
                 Snackbar snackbar = Snackbar.make(
                         frameLayout,
@@ -77,9 +81,27 @@ public class MainActivity extends AppCompatActivity {
                 snackbar.getView().setBackgroundColor(Color.parseColor("#FF66729B"));
                 snackbar.show();
 
+
+                Object o = gridView.getItemAtPosition(position);
+                ModelClass _modelClass = (ModelClass) o;
+
+               // gridView.setBackgroundColor(mGridViewBGColor);
+
+             /*   flag = true;
+                    v.setBackgroundResource(R.drawable.lay_2);
+
+                    // возвращаем первую картинку
+                    v.setBackgroundResource(R.drawable.lay);
+
+                if (flag == true) {
+                    v.setBackgroundResource(R.drawable.lay);
+                }*/
+
+
+
                 // Initialize a new color drawable array
                 ColorDrawable[] colors = {
-                        new ColorDrawable(Color.RED), // Animation starting color
+                        new ColorDrawable(Color.GRAY), // Animation starting color
                         new ColorDrawable(mGridViewBGColor) // Animation ending color
                 };
 
@@ -88,9 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 // Set the clicked item background
                 v.setBackground(transitionDrawable);
 
+
                 // Finally, Run the item background color animation
                 // This is the grid view item click effect
-                transitionDrawable.startTransition(600);
+                transitionDrawable.startTransition(500);
 
 
                 Intent intent = new Intent(getBaseContext(), PlacesUserActivity.class);
@@ -98,8 +121,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
 
+
             }
         });
+
     }
 
 
