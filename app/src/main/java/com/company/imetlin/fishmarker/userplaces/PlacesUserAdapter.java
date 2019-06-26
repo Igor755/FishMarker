@@ -66,6 +66,9 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
 
 
         final Places itemList = listItems.get(position);
+
+
+
         holder.txtNamePlaces.setText(itemList.getNameplace());
         holder.txtLatitude.setText(mContext.getResources().getString(R.string.latitude_holder) + ": " + Double.toString(itemList.getLatitude()));
         holder.txtLongitude.setText(mContext.getResources().getString(R.string.longitude_holder) + ": " + Double.toString(itemList.getLongitude()));
@@ -75,22 +78,13 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
             public void onClick(View v) {
 
 
-               // Context context = new PlacesUserActivity().getBaseContext();
-
-
                 builder = new AlertDialog.Builder(v.getRootView().getContext()).create();
-
-
                 builder.setTitle(R.string.delete_place_title);
                 builder.setMessage(mContext.getResources().getString(R.string.delete_place_message));
-
-
                 builder.setButton(Dialog.BUTTON_POSITIVE, mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //finish();
 
-                        // User clicked OK button
 
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                         Query delmark =  ref.child("Places").
@@ -131,62 +125,6 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
                             PlacesUserActivity.txtnameplace.setVisibility(VISIBLE);
 
                         }
-                       /*         break;
-                            default:
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.show();*/
-
-                        //Display option menu
-/*
-
-                PopupMenu popupMenu = new PopupMenu(mContext, holder.menu_places);
-
-
-                popupMenu.inflate(R.menu.menu_places);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        switch (item.getItemId()) {
-*/
-
-
-
-
-///////////////////////////////////////////////////////////UPDATE PLACES
-                         /*   case R.id.update:
-
-                                float f3 = Float.parseFloat(itemList.getZoom().toString());
-                                PlacesUserMapActivity placesUserMapActivity = new PlacesUserMapActivity();
-                                placesUserMapActivity.UpdatePlace(itemList.getLatitude(),itemList.getLongitude(),f3);
-
-
-
-                                *//*String id_place = itemList.getPlace_id();
-                                FirebaseDatabase.getInstance().getReference("Places").child(id_place).setValue(itemList);
-
-                                ListIterator<Places> iterator_update = PlacesUserActivity.alldataplaces.listIterator();
-                                while (iterator_update.hasNext()) {
-                                    Places next = iterator_update.next();
-                                    if (next.getPlace_id().equals(itemList.getPlace_id())) {
-
-                                        iterator_update.set(itemList);
-                                        break;
-                                    }
-                                }
-                                notifyDataSetChanged();*//*
-
-
-                                Toast.makeText(mContext, "update", Toast.LENGTH_LONG).show();
-                                break;*/
-
-///////////////////////////////////////////////////////////DELETE PLACES
-                        /*   case R.id.delete:
-                         */
 
 
                     }

@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         gridView.setAdapter(new AdapterGrid(this, image_details));
-       // gridView.setBackgroundResource(R.drawable.fon4);
-        // When the user clicks on the GridItem
-
-
-
-
 
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,34 +66,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-                Snackbar snackbar = Snackbar.make(
-                        frameLayout,
-                        "Selected : " + selectedItem,
-                        Snackbar.LENGTH_LONG
-                );
-                snackbar.getView().setBackgroundColor(Color.parseColor("#FF66729B"));
-                snackbar.show();
-
-
                 Object o = gridView.getItemAtPosition(position);
                 ModelClass _modelClass = (ModelClass) o;
 
-               // gridView.setBackgroundColor(mGridViewBGColor);
-
-             /*   flag = true;
-                    v.setBackgroundResource(R.drawable.lay_2);
-
-                    // возвращаем первую картинку
-                    v.setBackgroundResource(R.drawable.lay);
-
-                if (flag == true) {
-                    v.setBackgroundResource(R.drawable.lay);
-                }*/
 
 
 
-                // Initialize a new color drawable array
+
                 ColorDrawable[] colors = {
                         new ColorDrawable(Color.GRAY), // Animation starting color
                         new ColorDrawable(mGridViewBGColor) // Animation ending color
@@ -107,12 +80,11 @@ public class MainActivity extends AppCompatActivity {
 
                 TransitionDrawable transitionDrawable = new TransitionDrawable(colors);
 
-                // Set the clicked item background
                 v.setBackground(transitionDrawable);
 
 
-                // Finally, Run the item background color animation
-                // This is the grid view item click effect
+                //Finally, Run the item background color animation
+                //This is the grid view item click effect
                 transitionDrawable.startTransition(500);
 
 

@@ -2,6 +2,8 @@ package com.company.imetlin.fishmarker.userplaces;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +49,11 @@ public class PlacesUserActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
+
+
+    private int mGridViewBGColor1 = Color.parseColor("#cce6ff");
+    private int mGridViewBGColor2 = Color.parseColor("#FFFefd");
+
 
 
 
@@ -135,9 +142,27 @@ public class PlacesUserActivity extends AppCompatActivity {
 
         }
 
+
+
+
         adapter = new PlacesUserAdapter(image_details, getBaseContext(), new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
+
+
+
+                ColorDrawable[] colors = {
+                        new ColorDrawable(mGridViewBGColor1), // Animation starting color
+                        new ColorDrawable(mGridViewBGColor2) // Animation ending color
+                };
+
+                TransitionDrawable transitionDrawable = new TransitionDrawable(colors);
+                view.setBackground(transitionDrawable);
+                transitionDrawable.startTransition(500);
+
+
+
 
 
                 Intent intent = new Intent(PlacesUserActivity.this, MapActivity.class);
