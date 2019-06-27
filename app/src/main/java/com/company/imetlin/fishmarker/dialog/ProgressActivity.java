@@ -49,7 +49,7 @@ public class ProgressActivity extends AppCompatActivity {
                 public void run() {
                     while (progress < 100) {
                         progress++;
-                        android.os.SystemClock.sleep(100);
+                        android.os.SystemClock.sleep(50);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {

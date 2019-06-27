@@ -218,7 +218,7 @@
             android:textColor="@color/orange"
             android:background="@drawable/selector"
             android:layout_height="wrap_content"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             android:layout_gravity="start"
             android:text="@string/cancel"/>
 
@@ -228,7 +228,7 @@
             android:background="@drawable/selector"
             android:layout_height="wrap_content"
             android:textColor="@color/orange"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             android:layout_gravity="end"
             android:text="@string/ok"/>
 

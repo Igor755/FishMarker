@@ -64,7 +64,7 @@
             android:layout_height="40dp"
             android:background="@drawable/selector"
             android:textColor="@color/orange"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             android:layout_marginTop="200dp"
             android:text="@string/sign_in" />
 

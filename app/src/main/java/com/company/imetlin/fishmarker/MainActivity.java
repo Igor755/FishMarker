@@ -157,11 +157,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Developer information")
-                .setMessage("Developer: i.metlin" + "\n" +
-                        "                    Ukraine" + "\n" +
-                        "                    Odessa" + "\n" +
-                        "                    metlin.igor@gmail.com" + "\n" +
-                        "                    Metlin Igor")
+                .setMessage(" Developer: Metlin Igor" + "\n" +
+                        " Coutry: Ukraine" + "\n" +
+                        " City: Odessa" + "\n" +
+                        " Email: metlin.igor@gmail.com")
                 .setIcon(R.drawable.information)
                 .setCancelable(false)
                 .setNegativeButton(getApplicationContext().getResources().getString(R.string.ok),

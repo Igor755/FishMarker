@@ -28,7 +28,7 @@
 
 
         app:wlv_progressValue="0"
-        app:wlv_waveAmplitude="30"
+        app:wlv_waveAmplitude="40"
         app:wlv_waveColor="@color/colorPrimary"
         tools:layout_editor_absoluteX="105dp"
         tools:layout_editor_absoluteY="238dp">

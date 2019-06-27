@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/information"
-        android:icon="@drawable/information_ico"
+        android:icon="@drawable/info_64p"
         app:showAsAction="always"
         android:title="@string/information" />
 

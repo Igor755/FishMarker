@@ -75,7 +75,7 @@
             android:background="@drawable/selector"
             android:layout_marginTop="70dp"
             android:textColor="@color/orange"
-            android:textStyle="bold|italic"
+            android:textStyle="bold"
             android:text="@string/registration_big"
             android:textAllCaps="false" />
 
