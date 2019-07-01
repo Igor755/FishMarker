@@ -87,8 +87,8 @@
 
     ///////////////////////////////////////////////////////REGISRATION
 
-    <string name="name">name</string>
-    <string name="Name">Name</string>
+    <string name="name">имя</string>
+    <string name="Name">Имя</string>
     <string name="email">почта</string>
     <string name="Email">Почта</string>
     <string name="password">пароль</string>
