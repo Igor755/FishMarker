@@ -1,16 +1,26 @@
 package com.company.imetlin.fishmarker.database;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 import com.company.imetlin.fishmarker.CardMarkerActivity;
+import com.company.imetlin.fishmarker.MapActivity;
 import com.company.imetlin.fishmarker.R;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +53,25 @@ public class DatabaseLoad {
     public ArrayList<MarkerInformation> alldatamarkers;
     private AlertDialog alertDialog;
     private CardMarkerActivity cardMarkerActivity;
+
+    private MapActivity mapActivity;
+    private Drawable drawable;
+    private AlertDialog.Builder alert_detail;
+
+    /////////////////////////////////////////////////ALERT DIALOG
+
+    private TextView latitude;
+    private TextView longitude;
+    private TextView title_marker;
+    private TextView date;
+    private TextView depth;
+    private TextView amount;
+    private TextView note;
+    private TextView title_alert;
+
+
+
+
 
 
     private static DatabaseLoad instance;
@@ -75,6 +105,14 @@ public class DatabaseLoad {
         this.googlemap = _googlemap;
         this.cardMarkerActivity = cardMarkerActivity;
 
+        Resources res = context.getResources();
+
+        final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_my_30);
+        final Drawable another_icons_fish = res.getDrawable(R.drawable.fish_another_30);
+
+
+        final Bitmap bitmap_my = ((BitmapDrawable)my_icons_fish).getBitmap();
+        final Bitmap bitmap_another = ((BitmapDrawable)another_icons_fish).getBitmap();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Markers");
@@ -97,8 +135,20 @@ public class DatabaseLoad {
                     double latitude = alldatamarkers.get(i).getLatitude();
                     double longitude = alldatamarkers.get(i).getLongitude();
                     String tittle = alldatamarkers.get(i).getTitle();
+                    String uid = alldatamarkers.get(i).getUid();
 //                    Integer id_marker = Integer.valueOf(alldatamarkers.get(i).getMarker_id());
-                    CreateMarker(latitude, longitude, tittle);
+
+                    if (uid.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        CreateMarker(latitude, longitude, tittle, bitmap_my);
+
+                    }else if (!uid.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        CreateMarker(latitude, longitude, tittle, bitmap_another);
+
+                    }
+
+
 
                 }
                 System.out.println(alldatamarkers);
@@ -115,12 +165,12 @@ public class DatabaseLoad {
 
     }
 
-    public void CreateMarker(final double _lat, final double _lon, String title_marker) {
+    public void CreateMarker(final double _lat, final double _lon, String title_marker, Bitmap icon_marker) {
 
         Marker marker = googlemap.addMarker(new MarkerOptions()
                 .position(new LatLng(_lat, _lon))
                 .title(title_marker)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker)));
+                .icon(BitmapDescriptorFactory.fromBitmap(icon_marker)));
 
 
         markers.add(marker);
@@ -136,14 +186,45 @@ public class DatabaseLoad {
 
     }
 
+    @SuppressLint("SetTextI18n")
     public void DetailMarker(Marker detailmarker) {
 
         for (final MarkerInformation modelClass : alldatamarkers) {
             if (modelClass.getLatitude() == detailmarker.getPosition().latitude &&
                     modelClass.getLongitude() == detailmarker.getPosition().longitude) {
-                alertDialog = new AlertDialog.Builder(context).create();
 
 
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.alert_detail_marker, null);
+                alert_detail = new AlertDialog.Builder(context);
+
+
+                alert_detail.setView(promptsView);
+
+
+                title_alert = (TextView) promptsView.findViewById(R.id.title_alert);
+                latitude = (TextView) promptsView.findViewById(R.id.latitude_alert);
+                longitude = (TextView) promptsView.findViewById(R.id.longitude_alert);
+                title_marker = (TextView) promptsView.findViewById(R.id.title);
+                date = (TextView) promptsView.findViewById(R.id.date);
+                depth = (TextView) promptsView.findViewById(R.id.depth);
+                amount = (TextView) promptsView.findViewById(R.id.amount);
+                note = (TextView) promptsView.findViewById(R.id.note);
+
+                Typeface tf = Typeface.createFromAsset(context.getAssets(), "alert_font_title.ttf");
+
+                title_alert.setTypeface(tf);
+
+
+                latitude.setText(latitude.getText() + " " + modelClass.getLatitude());
+                longitude.setText(longitude.getText() + " " + modelClass.getLongitude());
+                title_marker.setText(title_marker.getText() + " " + modelClass.getTitle());
+                date.setText(date.getText() + " " + modelClass.getDate());
+                depth.setText(depth.getText() + " " + modelClass.getDepth());
+                amount.setText(amount.getText() + " " + modelClass.getAmount());
+                note.setText(note.getText() + " " + modelClass.getNote());
+
+                /*
                 alertDialog.setTitle(R.string.complete_c);
                 alertDialog.setMessage(context.getResources().getString(R.string.lat_c) + " " + modelClass.getLatitude() + "\n" +
                         context.getResources().getString(R.string.lon_c) + " " + modelClass.getLongitude() + "\n" +
@@ -151,16 +232,21 @@ public class DatabaseLoad {
                         context.getResources().getString(R.string.date_c) + " " + modelClass.getDate() + "\n" +
                         context.getResources().getString(R.string.depth_c) + " " + modelClass.getDepth() + "\n" +
                         context.getResources().getString(R.string.amount_c) + " " + modelClass.getAmount() + "\n" +
-                        context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());
+                        context.getResources().getString(R.string.note_c) + " " + modelClass.getNote());*/
 
-                alertDialog.setButton(Dialog.BUTTON_POSITIVE, context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //finish();
+                alert_detail.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
                     }
                 });
 
-                alertDialog.show();
+                AlertDialog alert11 = alert_detail.create();
+                alert11.getWindow().setBackgroundDrawableResource(R.color.orange);
+                alert11.show();
+
+                Button buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE);
+
+                // buttonbackground.setBackgroundColor(Color.BLUE);
+                buttonbackground.setTextColor(context.getResources().getColor(R.color.colorWhite));
                 break;
 
             }
@@ -192,7 +278,6 @@ public class DatabaseLoad {
                 intent.putExtras(bundle);
                 context.startActivity(intent);
 
-
             }
 
         }
@@ -203,51 +288,50 @@ public class DatabaseLoad {
     public void UpdateMarker(MarkerInformation updatemarker) {
 
 
+        googlemap.clear();
+
+        int my_ic = R.drawable.fish_my_30;
+
+        ArrayList<Marker> markers_array = new ArrayList<Marker>();
+
         ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
+
         while (iterator.hasNext()) {
+
             MarkerInformation next = iterator.next();
+
+            if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                my_ic = R.drawable.fish_another_30;
+            }
+            else {
+                my_ic = R.drawable.fish_my_30;
+            }
+
             if (next.getLatitude().equals(updatemarker.getLatitude()) &&
                     next.getLongitude().equals(updatemarker.getLongitude())) {
 
                 iterator.set(updatemarker);
-                break;
+
+                Marker marker_update = googlemap.addMarker(new MarkerOptions()
+                        .position(new LatLng(updatemarker.getLatitude(), updatemarker.getLongitude()))
+                        .title(updatemarker.getTitle())
+                        .icon(BitmapDescriptorFactory.fromResource(my_ic)));
+
+                markers_array.add(marker_update);
             }
-        }
+            else {
 
-        for (Marker marker : markers) {
-            if (updatemarker.getLatitude() == marker.getPosition().latitude  &&
-                    updatemarker.getLongitude() == marker.getPosition().longitude) {
-                marker.setTitle(updatemarker.getTitle());
-                break;
+                Marker marker_update = googlemap.addMarker(new MarkerOptions()
+                        .position(new LatLng(next.getLatitude(), next.getLongitude()))
+                        .title(next.getTitle())
+                        .icon(BitmapDescriptorFactory.fromResource(my_ic)));
+
+                markers_array.add(marker_update);
             }
-        }
-        System.out.println("GOOD");
 
-        //update marker in markers cycle
-
-        googlemap.clear();
-
-        ArrayList<Marker> markers_array = new ArrayList<Marker>();
-
-        for (Marker marker : markers) {
-
-            Marker marker_update = googlemap.addMarker(new MarkerOptions()
-                    .position(marker.getPosition())
-                    .title(marker.getTitle())
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
-                    .zIndex(marker.getZIndex()));
-
-            markers_array.add(marker_update);
         }
 
         markers = new ArrayList<Marker>(markers_array);
-
-        System.out.println("GOOD");
-
-
-
-
-
     }
 
 
@@ -257,43 +341,41 @@ public class DatabaseLoad {
 
         public void DeleteMarker(MarkerInformation deletemarker){
 
-            ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
-
-            while (iterator.hasNext()) {
-                MarkerInformation next = iterator.next();
-                if (next.getLatitude().equals(deletemarker.getLatitude()) &&
-                        next.getLongitude().equals(deletemarker.getLongitude())) {
-                    iterator.remove();
-                    break;
-                }
-            }
-
-            for (Marker marker : markers) {
-                if (deletemarker.getLatitude() == marker.getPosition().latitude  &&
-                        deletemarker.getLongitude() == marker.getPosition().longitude) {
-
-                    markers.remove(marker);
-                    break;
-                }
-            }
             googlemap.clear();
+
+            int my_ic = R.drawable.fish_my_30;
 
             ArrayList<Marker> markers_array = new ArrayList<Marker>();
 
-            for (Marker marker : markers) {
+            ListIterator<MarkerInformation> iterator = alldatamarkers.listIterator();
+            while (iterator.hasNext()) {
 
-                Marker marker_delete = googlemap.addMarker(new MarkerOptions()
-                        .position(marker.getPosition())
-                        .title(marker.getTitle())
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.fishmarker))
-                        .zIndex(marker.getZIndex()));
+                MarkerInformation next = iterator.next();
 
-                markers_array.add(marker_delete);
+                if (!next.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                    my_ic = R.drawable.fish_another_30;
+                } else {
+                    my_ic = R.drawable.fish_my_30;
+                }
+                if (next.getLatitude().equals(deletemarker.getLatitude()) &&
+                        next.getLongitude().equals(deletemarker.getLongitude())) {
+                    iterator.remove();
+
+
+                } else {
+
+                    Marker marker_delete = googlemap.addMarker(new MarkerOptions()
+                            .position(new LatLng(next.getLatitude(), next.getLongitude()))
+                            .title(next.getTitle())
+                            .icon(BitmapDescriptorFactory.fromResource(my_ic)));
+
+                    markers_array.add(marker_delete);
+
+
+                }
             }
-
             markers = new ArrayList<Marker>(markers_array);
-
-
+            
         }
     public boolean SearchMarker (Double lat, Double lon){
 

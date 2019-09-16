@@ -42,7 +42,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration_activity);
+        setContentView(R.layout.reg_activity);
 
         editTextName = findViewById(R.id.edit_text_name);
         editTextEmail = findViewById(R.id.edit_text_email);
@@ -56,7 +56,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
 
         findViewById(R.id.button_register).setOnClickListener(this);
-        ///////24
+
 
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -131,6 +131,11 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             editTextName.requestFocus();
             return;
         }
+        if (!isNameValid(editTextName.getText().toString())) {
+            editTextName.setError(getText(R.string.not_valid_name));
+            editTextName.requestFocus();
+            return;
+        }
         if (email.isEmpty()) {
             editTextEmail.setError(getText(R.string.empty_email));
             editTextEmail.requestFocus();
@@ -146,7 +151,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             editTextPassword.requestFocus();
             return;
         }
-        if (isPasswordValid(editTextPassword.getText().toString())){
+        if (!isPasswordValid(editTextPassword.getText().toString())){
             editTextPassword.setError(getText(R.string.password_not_valid));
             editTextPassword.requestFocus();
             return;
@@ -196,13 +201,24 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     }
     public static boolean isEmailValid(String email) {
-        final Pattern EMAIL_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
+        final Pattern EMAIL_REGEX =
+                Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+                        Pattern.CASE_INSENSITIVE);
         return EMAIL_REGEX.matcher(email).matches();
     }
 
     public static boolean isPasswordValid(String password) {
-        final Pattern PASSWORD_REGEX = Pattern.compile("^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", Pattern.CASE_INSENSITIVE);
+        final Pattern PASSWORD_REGEX =
+                Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$",
+                        Pattern.CASE_INSENSITIVE);
         return PASSWORD_REGEX.matcher(password).matches();
+    }
+/////////////////т.е. разрешены все английские и русские буквы, цифры, символ нижнего подчеркивания и пробел. Всё остальное запрещено.
+    public static boolean isNameValid(String name) {
+        final Pattern PASSWORD_REGEX =
+                Pattern.compile("^[_a-zA-Z0-9абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ]+$",
+                        Pattern.CASE_INSENSITIVE);
+        return PASSWORD_REGEX.matcher(name).matches();
     }
 
 
@@ -251,7 +267,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         alert.show();
 
     }
-    private void sendVerificationEmail()
+    public void sendVerificationEmail()
     {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -261,8 +277,6 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             // email sent
-
-
                             // after email is sent just logout the user and finish this activity
                             FirebaseAuth.getInstance().signOut();
                             startActivity(new Intent(RegistrationActivity.this, SignInActivity.class));

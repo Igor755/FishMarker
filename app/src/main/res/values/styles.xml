@@ -6,7 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:itemTextAppearance">@style/MenuTextStyle</item>
+        <item name="android:itemBackground">@color/colorPrimary</item>
     </style>
+
+    <style name="MenuTextStyle">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+
+
+
 
     <style name="CategoryStyle">
         <item name="android:layout_height">wrap_content</item>
@@ -36,6 +49,14 @@
 
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorAccent</item>
+        <item name="android:itemBackground">@color/colorAccent</item>
+        <item name="android:panelBackground">@color/colorAccent</item>
+        <item name="android:background">@color/colorAccent</item>
     </style>
 
    

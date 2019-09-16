@@ -21,6 +21,7 @@ public class ModelClass implements  Comparable<ModelClass> {
     private Integer amount;
     private String note;
     private String uid;
+    private String name_fbase;
 
     public ModelClass(){
 
@@ -72,6 +73,14 @@ public class ModelClass implements  Comparable<ModelClass> {
 
     }
 
+    public String getName_fbase() {
+        return name_fbase;
+    }
+
+    public void setName_fbase(String name_fbase) {
+        this.name_fbase = name_fbase;
+    }
+
     public ModelClass(Double latitude, Double longitude, String date) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -79,9 +88,10 @@ public class ModelClass implements  Comparable<ModelClass> {
 
     }
 
-    public ModelClass(String name, String photo) {
+    public ModelClass(String name, String photo, String name_fbase) {
         this.name = name;
         this.photo = photo;
+        this.name_fbase = name_fbase;
     }
 
     public ModelClass(String name) {

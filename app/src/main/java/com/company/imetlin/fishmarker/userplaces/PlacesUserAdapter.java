@@ -1,25 +1,56 @@
 package com.company.imetlin.fishmarker.userplaces;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.R;
+import com.company.imetlin.fishmarker.database.DatabaseLoad;
+import com.company.imetlin.fishmarker.myinterfaces.OnItemClickListener;
+import com.company.imetlin.fishmarker.pojo.MarkerInformation;
+import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.company.imetlin.fishmarker.pojo.Places;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Queue;
+
+import static android.support.constraint.Constraints.TAG;
+import static android.view.View.VISIBLE;
 
 public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.ViewHolder> {
     private List<Places> listItems;
-    private Context mContext;
+    public Context mContext;
+    private OnItemClickListener itemClickListener;
+    private AlertDialog builder;
+    private PlacesUserActivity placesUserActivity;
 
-    public PlacesUserAdapter(List<Places> listItems, Context mContext) {
+
+    /*public PlacesUserAdapter(List<Places> listItems, Context mContext) {
+        this.listItems = listItems;
+        this.mContext = mContext;
+    }*/
+
+    public PlacesUserAdapter(List<Places> listItems,Context mContext, OnItemClickListener itemClickListener) {
+        this.itemClickListener =itemClickListener;
         this.listItems = listItems;
         this.mContext = mContext;
     }
@@ -33,39 +64,83 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+
         final Places itemList = listItems.get(position);
+
+
+
         holder.txtNamePlaces.setText(itemList.getNameplace());
-        holder.txtLatitude.setText(Double.toString(itemList.getLatitude()));
-        holder.txtLongitude.setText(Double.toString(itemList.getLongitude()));
-        holder.txtZoom.setText(Integer.toString(itemList.getZoom()));
-        holder.txt_menu_places.setOnClickListener(new View.OnClickListener() {
+        holder.txtLatitude.setText(mContext.getResources().getString(R.string.latitude_holder) + ": " + Double.toString(itemList.getLatitude()));
+        holder.txtLongitude.setText(mContext.getResources().getString(R.string.longitude_holder) + ": " + Double.toString(itemList.getLongitude()));
+        holder.txtZoom.setText(mContext.getResources().getString(R.string.zoom_holder) + ": " + Double.toString(itemList.getZoom()));
+        holder.menu_places.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Display option menu
 
-                PopupMenu popupMenu = new PopupMenu(mContext, holder.txt_menu_places);
-                popupMenu.inflate(R.menu.menu_places);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                builder = new AlertDialog.Builder(v.getRootView().getContext()).create();
+                builder.setTitle(R.string.delete_place_title);
+                builder.setMessage(mContext.getResources().getString(R.string.delete_place_message));
+                builder.setButton(Dialog.BUTTON_POSITIVE, mContext.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
-                    public boolean onMenuItemClick(MenuItem item) {
+                    public void onClick(DialogInterface dialog, int which) {
 
-                        switch (item.getItemId()) {
-                            case R.id.update:
-                                Toast.makeText(mContext, "update", Toast.LENGTH_LONG).show();
+
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                        Query delmark =  ref.child("Places").
+                                orderByChild("place_id").
+                                equalTo(itemList.getPlace_id());
+
+                        ListIterator<Places> iterator = PlacesUserActivity.alldataplaces.listIterator();
+
+                        while (iterator.hasNext()) {
+                            Places next = iterator.next();
+                            if (next.getPlace_id().equals(itemList.getPlace_id())) {
+                                iterator.remove();
                                 break;
-                            case R.id.delete:
-                                //Delete item
-                                listItems.remove(position);
-                                notifyDataSetChanged();
-                                Toast.makeText(mContext, "delete", Toast.LENGTH_LONG).show();
-                                break;
-                            default:
-                                break;
+                            }
                         }
-                        return false;
+
+
+                        delmark.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, String.valueOf(R.string.cancel), databaseError.toException());
+                            }
+                        });
+
+
+                        listItems.remove(position);
+                        notifyDataSetChanged();
+                        Toast.makeText(mContext, R.string.delete, Toast.LENGTH_LONG).show();
+
+                        if(listItems.size() == 0){
+                            PlacesUserActivity.txtnameplace.setVisibility(VISIBLE);
+
+                        }
+
+
                     }
                 });
-                popupMenu.show();
+                builder.setButton(Dialog.BUTTON_NEGATIVE, mContext.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(mContext, mContext.getResources().getString(R.string.cancel), Toast.LENGTH_LONG).show();
+
+
+                    }
+                });
+
+                builder.show();
+
+
             }
         });
     }
@@ -81,7 +156,7 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
          TextView txtLatitude;
          TextView txtLongitude;
          TextView txtZoom;
-         TextView txt_menu_places;
+         ImageButton menu_places;
 
          ViewHolder(View itemView) {
             super(itemView);
@@ -90,7 +165,17 @@ public class PlacesUserAdapter extends RecyclerView.Adapter<PlacesUserAdapter.Vi
             txtLatitude = (TextView) itemView.findViewById(R.id.txtlatitude);
             txtLongitude = (TextView) itemView.findViewById(R.id.txtlongitude);
             txtZoom = (TextView) itemView.findViewById(R.id.txtzoom);
-            txt_menu_places = (TextView) itemView.findViewById(R.id.txt_menu_places);
+             menu_places = (ImageButton) itemView.findViewById(R.id.txt_menu_places);
+
+             itemView.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     int pos = ViewHolder.super.getAdapterPosition();
+                     itemClickListener.onItemClick(v,pos);
+
+                 }
+             });
         }
     }
+
 }

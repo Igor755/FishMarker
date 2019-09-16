@@ -3,16 +3,23 @@ package com.company.imetlin.fishmarker;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 
 import com.company.imetlin.fishmarker.adapters.AdapterGrid;
-import com.company.imetlin.fishmarker.database.SQLiteHelper;
+import com.company.imetlin.fishmarker.firebaseAuth.SignInActivity;
 import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.company.imetlin.fishmarker.userplaces.PlacesUserActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,54 +33,84 @@ public class MainActivity extends AppCompatActivity {
 
     public Menu menu;
     //private Context context = MainActivity.this;
-
-    SQLiteHelper dbHelper;
     private FirebaseAuth mAuth;
+    FrameLayout frameLayout;
+    boolean flag = false;
+    private int mGridViewBGColor = Color.parseColor("#cce6ff");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
+
+
 
 
         List<ModelClass> image_details = getListData();
 
         final GridView gridView = (GridView) findViewById(R.id.gridView);
 
+        mAuth = FirebaseAuth.getInstance();
 
         gridView.setAdapter(new AdapterGrid(this, image_details));
 
-        // When the user clicks on the GridItem
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+
+                frameLayout = (FrameLayout) findViewById(R.id.frame);
+                String selectedItem = a.getItemAtPosition(position).toString();
+
+
+
+
                 Object o = gridView.getItemAtPosition(position);
                 ModelClass _modelClass = (ModelClass) o;
-                //Toast.makeText(MainActivity.this, "Selected :"
-                //    + " " + ModelClass.getName(), Toast.LENGTH_LONG).show();
+
+
+
+
+
+                ColorDrawable[] colors = {
+                        new ColorDrawable(Color.GRAY), // Animation starting color
+                        new ColorDrawable(mGridViewBGColor) // Animation ending color
+                };
+
+                TransitionDrawable transitionDrawable = new TransitionDrawable(colors);
+
+                v.setBackground(transitionDrawable);
+
+
+                //Finally, Run the item background color animation
+                //This is the grid view item click effect
+                transitionDrawable.startTransition(500);
+
 
                 Intent intent = new Intent(getBaseContext(), PlacesUserActivity.class);
-                intent.putExtra("name", _modelClass.getName());
+                intent.putExtra("name", _modelClass.getName_fbase());
                 startActivity(intent);
+
 
 
             }
         });
+
     }
 
 
     private List<ModelClass> getListData() {
 
         List<ModelClass> list = new ArrayList<ModelClass>();
-        ModelClass ocean = new ModelClass(getApplicationContext().getResources().getString(R.string.ocean), "ocean");
-        ModelClass sea = new ModelClass(getApplicationContext().getResources().getString(R.string.sea), "sea");
-        ModelClass river = new ModelClass(getApplicationContext().getResources().getString(R.string.river), "river");
-        ModelClass lake = new ModelClass(getApplicationContext().getResources().getString(R.string.lake), "ozero");
+        ModelClass ocean = new ModelClass(getApplicationContext().getResources().getString(R.string.ocean), "ocean","ocean");
+        ModelClass sea = new ModelClass(getApplicationContext().getResources().getString(R.string.sea), "sea_n","sea");
+        ModelClass river = new ModelClass(getApplicationContext().getResources().getString(R.string.river), "river_n", "river");
+        ModelClass lake = new ModelClass(getApplicationContext().getResources().getString(R.string.lake), "lake_n","lake");
 
         ////zaliv
-        ModelClass Gulf = new ModelClass(getApplicationContext().getResources().getString(R.string.gulf), "zaliv");
-        ModelClass Another = new ModelClass(getApplicationContext().getResources().getString(R.string.another), "reservior");
+        ModelClass Gulf = new ModelClass(getApplicationContext().getResources().getString(R.string.gulf), "gulf_n","gulf");
+        ModelClass Another = new ModelClass(getApplicationContext().getResources().getString(R.string.another), "another_n", "another");
 
 
         list.add(ocean);
@@ -106,7 +143,10 @@ public class MainActivity extends AppCompatActivity {
                 //function information
                 InformationWindow();
                 return true;
-
+         /*   case R.id.exit:
+                //function information
+                signOut();
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -117,11 +157,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Developer information")
-                .setMessage("Developer: i.metlin" + "\n" +
-                        "                    Ukraine" + "\n" +
-                        "                    Odessa" + "\n" +
-                        "                    metlin.igor@gmail.com" + "\n" +
-                        "                    Metlin Igor")
+                .setMessage(" Developer: Metlin Igor" + "\n" +
+                        " Coutry: Ukraine" + "\n" +
+                        " City: Odessa" + "\n" +
+                        " Email: metlin.igor@gmail.com")
                 .setIcon(R.drawable.information)
                 .setCancelable(false)
                 .setNegativeButton(getApplicationContext().getResources().getString(R.string.ok),
@@ -133,5 +172,12 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
 
+    }
+
+    private void signOut() {
+        mAuth.signOut();
+        Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

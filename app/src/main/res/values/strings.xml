@@ -50,6 +50,7 @@
     <string name="edit">EDIT</string>
     <string name="update">Update</string>
     <string name="unique">Marker exist</string>
+    <string name="detail">DETAIL</string>
 
 
     ///////////////////////////////////////////////////////
@@ -79,61 +80,6 @@
 
     <string name="ups">Upsss....</string>
 
-
-    ///////////////////////////////////////////////////////OBJECTS WATER
-
-
-    <string name="NorthPacific">North Pacific</string>
-    <string name="SouthPacific">South Pacific</string>
-    <string name="Southern">Southern</string>
-    <string name="NorthAtlantic">North Atlantic</string>
-    <string name="SouthAtlantic">South Atlantic</string>
-    <string name="Indian">Indian</string>
-    <string name="Arctic">Arctic</string>
-
-    <string name="Black">Black</string>
-    <string name="SeaOfAzov">Sea Of Azov</string>
-    <string name="Baltic">Baltic</string>
-    <string name="Red">Red</string>
-    <string name="Caspian">Caspian</string>
-    <string name="Mediterranean">Mediterranean</string>
-    <string name="Arabian">Arabian</string>
-    <string name="SeaofOkhotsk">Sea of Okhotsk</string>
-    <string name="SeaofJapan">Sea of Japan</string>
-    <string name="BeringSea">Bering Sea</string>
-    <string name="NorthSea">North Sea</string>
-    <string name="CaribeanSea">Caribean Sea</string>
-
-    <string name="Baikal">Baikal</string>
-    <string name="Victoria">Victoria</string>
-    <string name="Titicaca">Titicaca</string>
-    <string name="Superior">Superior</string>
-    <string name="Michigan">Michigan</string>
-    <string name="Huron">Huron</string>
-    <string name="Onega">Onega</string>
-    <string name="White">White</string>
-    <string name="Ladoga">Ladoga</string>
-
-    <string name="Dnieper">Dnieper</string>
-    <string name="Dniester">Dniester</string>
-    <string name="Southern_Bug">Southern_Bug</string>
-    <string name="Turunchuk">Turunchuk</string>
-    <string name="Volga">Volga</string>
-    <string name="Yenisei">Yenisei</string>
-    <string name="Lena">Lena</string>
-    <string name="Ob">Ob</string>
-    <string name="Angara">Angara</string>
-    <string name="Amur">Amur</string>
-    <string name="Amazonka">Amazonka</string>
-
-    <string name="Persian">Persian</string>
-    <string name="Taharonzka">Taharonzka</string>
-    <string name="Finland">Finland</string>
-    <string name="GulfofThailand">Gulf of Thailand</string>
-    <string name="Bengal">Bengal</string>
-    <string name="ReservoirHAES">Reservoir HAES</string>
-    <string name="RibinskiyReservoir">Ribinskiy Reservoir</string>
-    <string name="KuibishivskiyReservoir">Kuibishivskiy Reservoir</string>
 
     ////////////////////////////////////GPS
 
@@ -168,10 +114,77 @@
     <string name="password_not_valid">password not valid</string>
     <string name="check">please check email</string>
     <string name="password_requirements">Password requirements:</string>
-    <string name="requirements">
-    1)At least 8 chars\n2)Contains at least one digit\n3)Contains at least one lower alpha char and one upper alpha char\n4)Contains at least one char within a set of special chars (@#%$^ etc.)\n5)Does not contain space, tab, etc.</string>
+    <string name="requirements">1)At least 8 chars\n2)Digit must occur at least once\n3)A lower case letter must occur at least once\n4)An upper case letter must occur at least once\n5)No whitespace allowed in the entire string</string>
     <string name="sent_pass">Send my Password</string>
     <string name="forgot">Forgot Password</string>
+    <string name="not_valid_name">not valid name</string>
+
+
+
+
+
+    ///////////////////////////////PLACE_USER_ACTIVITY
+    <string name="text_user_place">Here could be your water features.
+    To add an object, click on the drop and select an object.
+    Specify the middle of the water body using and set the zoom.
+    Anchor to the right place.</string>
+
+    ////////////////////////////////PLACE
+
+    <string name="delete">Delete</string>
+    <string name="delete_place_title">Deleting a fishing place</string>
+    <string name="delete_place_message">The place will be removed from the database(, do you really want this?</string>
+    <string name="zoom">Zoom: </string>
+    <string name="name_object">name object</string>
+    <string name="add_place">You want add water object?</string>
+
+    <string name="name_holder">Name</string>
+    <string name="latitude_holder">Latitude</string>
+    <string name="longitude_holder">Longitude</string>
+    <string name="zoom_holder">Zoom</string>
+
+
+
+    /////////////////////////////////FACEBOOK
+
+    <string name="facebook_app_id">838535596479448</string>
+    <string name="fb_login_protocol_scheme">fb838535596479448</string>
+
+
+    /////////////////////////////////TITLE ACTIVITY
+
+
+    <string name="registration">Registration</string>
+    <string name="registration_big">REGISTRATION</string>
+    <string name="places">Places</string>
+    <string name="markers">Markers</string>
+    <string name="add_marker_activity">Add marker</string>
+    <string name="water_object">Water object</string>
+    <string name="forgot_password">Forgot password</string>
+    <string name="sign_in_activity">Sign In</string>
+    <string name="add_places">Add place</string>
+
+
+    /////////////////////////////////MARKERS
+
+
+    <string name="foreign_markers">You can not edit or delete foreign markers</string>
+
+
+    //////////////////////////////////ALERT
+
+
+    <string name="detail_marker_title_alert">Markers details</string>
+    <string name="add_marker">You want add marker on map?</string>
+
+
+
+
+
+
+
+
+
 
 
 </resources>

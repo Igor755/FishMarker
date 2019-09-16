@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_margin="0dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
     android:background="#cce6ff"
-    android:padding="10dp"
-    android:elevation="10dp"
-    >
+    android:orientation="vertical"
+
+    android:id="@+id/relative">
+
+
 
     <ImageView
+        android:id="@+id/imageViewWater"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:id="@+id/imageViewWater"
-        android:layout_centerHorizontal="true"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_gravity="center" />
+
+
+    <TextView
+        android:id="@+id/textViewWaterName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rl_content"
-        android:layout_below="@+id/imageViewWater">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewWaterName"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18dp"
-            android:layout_centerHorizontal="true"/>
-
-
-
-    </RelativeLayout>
+        android:text="@string/cancel"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+       />
 
 
 
 
+<!--
+  android:layout_below="@+id/imageViewWater"
+-->
+   <!-- android:background="#cce6ff"-->
 
-</RelativeLayout>
+
+
+</LinearLayout>
 
 

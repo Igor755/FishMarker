@@ -30,7 +30,7 @@ public class ForgotPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.forgot_password_activity);
+        setContentView(R.layout.reg_forgot_password_activity);
 
         progressBar = findViewById(R.id.progressbar);
         et_email = findViewById(R.id.et_email);

@@ -7,8 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,9 +23,7 @@ import android.widget.Toast;
 import java.util.UUID;
 
 import com.company.imetlin.fishmarker.database.DatabaseLoad;
-import com.company.imetlin.fishmarker.database.SQLiteHelper;
 import com.company.imetlin.fishmarker.pojo.MarkerInformation;
-import com.company.imetlin.fishmarker.pojo.ModelClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -56,7 +52,6 @@ public class CardMarkerActivity extends AppCompatActivity {
     static AtomicInteger atom = new AtomicInteger(0);
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-    private SQLiteHelper dbHelper;
     private String id_marker_key;
 
     public Boolean isnull;
@@ -68,7 +63,7 @@ public class CardMarkerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_marker);
+        setContentView(R.layout.card_marker_activity);
 
         this.id = id;
         this.id_marker_key = id_marker_key;
@@ -84,12 +79,10 @@ public class CardMarkerActivity extends AppCompatActivity {
         cancel = (Button) findViewById(R.id.btnCancel);
         etlongitute.setEnabled(false);
         etlatitude.setEnabled(false);
-        ok.setTextColor(Color.parseColor("#FFFFFF"));
-        cancel.setTextColor(Color.parseColor("#FFFFFF"));
+
 
 
         String result1;
-        dbHelper = new SQLiteHelper(this);
 
 
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -225,7 +218,6 @@ public class CardMarkerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
 
                 ContentValues contentValues = new ContentValues();
 

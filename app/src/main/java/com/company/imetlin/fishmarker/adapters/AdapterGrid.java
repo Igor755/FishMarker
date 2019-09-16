@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Shader;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.company.imetlin.fishmarker.R;
@@ -22,6 +24,7 @@ public class AdapterGrid extends BaseAdapter {
     private List<ModelClass> listData;
     private LayoutInflater layoutInflater;
     private Context context;
+
 
     public AdapterGrid(Context aContext,  List<ModelClass> listData) {
         this.context = aContext;
@@ -46,18 +49,12 @@ public class AdapterGrid extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+
         if (convertView == null) {
-
-
-
-
-
             convertView = layoutInflater.inflate(R.layout.one_item_grid, null);
             holder = new ViewHolder();
             holder.PhotoWater = (ImageView) convertView.findViewById(R.id.imageViewWater);
             holder.NameWater = (TextView) convertView.findViewById(R.id.textViewWaterName);
-
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -66,13 +63,7 @@ public class AdapterGrid extends BaseAdapter {
         ModelClass ModelClass = this.listData.get(position);
         holder.NameWater.setText(ModelClass.getName());
 
-
-
-
         int imageId = this.getMipmapResIdByName(ModelClass.getPhoto());
-
-
-
         holder.PhotoWater.setImageResource(imageId);
 
         return convertView;
@@ -89,9 +80,13 @@ public class AdapterGrid extends BaseAdapter {
 
 
 
-    static class ViewHolder {
+    static class ViewHolder  {
         ImageView PhotoWater;
         TextView NameWater;
+
+
+
+
 
     }
 

@@ -7,6 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -14,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +27,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.company.imetlin.fishmarker.gps.GPSTracker;
@@ -59,6 +66,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
     private Button edit, detail;
+
+    private TextView latitude_add_marker;
+    private TextView longitude_add_marker;
+    private TextView title_alert;
+
 
 
 
@@ -140,7 +152,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         DatabaseLoad.getInstance().DetailMarker(marker);
 
-                        Toast.makeText(MapActivity.this, marker.getId(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MapActivity.this, marker.getId(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -171,7 +183,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                         else{
 
-                            Toast.makeText(MapActivity.this, "Don't edit/delete foreign markers ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MapActivity.this, R.string.foreign_markers, Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -276,13 +288,26 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         this.googlemap = google;
-        double[] cats = getIntent().getDoubleArrayExtra("coordinates");
-        Integer myZoom = getIntent().getExtras().getInt("zoom");
+      /*  double[] cats = getIntent().getDoubleArrayExtra("coordinates");
+        Integer myZoom = getIntent().getExtras().getInt("zoom");*/
+
+        Bundle arguments = getIntent().getExtras();
+
+
+            String latitude_water = arguments.get("latitude").toString();
+            String longitude_water = arguments.get("longitude").toString();
+            String zoom_water = arguments.get("zoom").toString();
+
+            Double lat = Double.valueOf(latitude_water);
+            Double lon = Double.valueOf(longitude_water);
+            Float zom = Float.valueOf(zoom_water);
+
+
 
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(cats[0], cats[1]))
-                .zoom(myZoom)
+                .target(new LatLng(lat, lon))
+                .zoom(zom)
                 .build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         google.animateCamera(cameraUpdate);
@@ -306,9 +331,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String id_marker = data.getStringExtra("id");
 
 
+                Resources res = context.getResources();
+                final Drawable my_icons_fish = res.getDrawable(R.drawable.fish_my_30);
+                final Bitmap bitmap_my = ((BitmapDrawable)my_icons_fish).getBitmap();
 
 
-               DatabaseLoad.getInstance().CreateMarker(modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], title_marker);
+               DatabaseLoad.getInstance().CreateMarker(modelClass.getCoordinates()[0], modelClass.getCoordinates()[1], title_marker, bitmap_my);
                System.out.print("I AM SUPERMAN");
 
             }
@@ -405,8 +433,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         StringBuilder stringBuilder = new StringBuilder();
 
         ((MapActivity) context).modelClass = new ModelClass(lat, lon);
+
+
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.alert_add_marker, null);
         add_marker = new AlertDialog.Builder(context);
-        add_marker.setTitle(R.string.addmarker);  // заголовок
+
+        add_marker.setView(promptsView);
+
+/*
 
         stringBuilder.append(context.getResources().getString(R.string.coordinate_add));
         stringBuilder.append("\n");
@@ -415,6 +450,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         stringBuilder.append(context.getResources().getString(R.string.lon_c) + " " + lon);
         add_marker.setMessage(stringBuilder); // сообщение
         add_marker.setIcon(R.drawable.fish2);
+*/
+
+        title_alert = (TextView) promptsView.findViewById(R.id.title_alert);
+        latitude_add_marker = (TextView) promptsView.findViewById(R.id.latitude_alert);
+        longitude_add_marker = (TextView) promptsView.findViewById(R.id.longitude_alert);
+
+        latitude_add_marker.setText(context.getResources().getString(R.string.lat_c) + " " + lat);
+        longitude_add_marker.setText(context.getResources().getString(R.string.lon_c) + " " + lon);
+
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), "alert_font_title.ttf");
+
+        title_alert.setTypeface(tf);
 
 
         add_marker.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
@@ -444,9 +491,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        add_marker.show();
+
+
+
+        AlertDialog alert11 = add_marker.create();
+        alert11.getWindow().setBackgroundDrawableResource(R.color.orange);
+        alert11.show();
+
+
+        Button buttonbackground = alert11.getButton(DialogInterface.BUTTON_POSITIVE);
+        Button buttonbackground2 = alert11.getButton(DialogInterface.BUTTON_NEGATIVE);
+
+        // buttonbackground.setBackgroundColor(Color.BLUE);
+        buttonbackground.setTextColor(context.getResources().getColor(R.color.colorWhite));
+        buttonbackground2.setTextColor(context.getResources().getColor(R.color.colorWhite));
 
 
     }
+
 
 }
