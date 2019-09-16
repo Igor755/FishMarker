@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -49,3 +48,4 @@ dependencies {
     //UI
     implementation 'me.itangqi.waveloadingview:library:0.3.5'
 }
+apply plugin: 'com.google.gms.google-services'
